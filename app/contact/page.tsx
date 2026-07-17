@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { MessageCircle } from "lucide-react";
+import { siteConfig } from "@/lib/siteConfig";
 
 import ContactHero from "@/components/ContactHero";
 import ContactInfo, { ContactCards } from "@/components/ContactInfo";
@@ -9,7 +10,7 @@ import GoogleMap from "@/components/GoogleMap";
 export const metadata: Metadata = {
   title: "Contact Us | Ramdan Flex Printers",
   description:
-    "Get in touch with Ramdan Flex Printers for all your printing and branding requirements. Visit our Lahore DHA branch, call, email, or message us on WhatsApp.",
+    "Get in touch with Ramdan Flex Printers for all your printing and branding requirements. Visit our Lahore Valencia Town branch, call, email, or message us on WhatsApp.",
 };
 
 export default function ContactPage() {
@@ -38,7 +39,7 @@ export default function ContactPage() {
             Find Us
           </h2>
           <p className="text-neutral-600">
-            Visit our Lahore DHA branch for walk-in consultations and orders.
+            Visit our Lahore Valencia Town branch for walk-in consultations and orders.
           </p>
         </div>
         <GoogleMap />
@@ -63,7 +64,7 @@ export default function ContactPage() {
               printing or branding project.
             </p>
             <a
-              href="https://wa.me/923311146549"
+              href={`https://wa.me/${siteConfig.whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-white hover:bg-neutral-100 text-[#E31E24] font-semibold text-base sm:text-lg py-4 px-8 transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-0.5"

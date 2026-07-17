@@ -1,20 +1,21 @@
 import { MapPin, Phone, Mail, Clock, Truck, Building2, MessageCircle } from "lucide-react";
+import { siteConfig } from "@/lib/siteConfig";
 
 const contactCards = [
   {
     icon: MapPin,
     title: "Address",
-    lines: ["Lahore DHA Branch"],
+    lines: ["Lahore Valencia Town Branch"],
   },
   {
     icon: Phone,
     title: "Phone",
-    lines: ["0331 1146549"],
+    lines: [siteConfig.phoneDisplay],
   },
   {
     icon: Mail,
     title: "Email",
-    lines: ["ramdanprinters@gmail.com"],
+    lines: [siteConfig.email],
   },
   {
     icon: Clock,
@@ -112,7 +113,7 @@ export default function ContactInfo() {
       </div>
 
       <a
-        href="https://wa.me/923311146549"
+        href={`https://wa.me/${siteConfig.whatsappNumber}`}
         target="_blank"
         rel="noopener noreferrer"
         className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] hover:bg-[#1ebe57] text-white font-semibold py-3.5 px-6 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5"

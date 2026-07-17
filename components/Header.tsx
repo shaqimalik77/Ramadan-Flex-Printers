@@ -23,7 +23,7 @@ import {
 const META = {
   location: "Lahore Valencia Town A Block",
   hours: "11:00 AM - 7:00 PM",
-  phone: "0331 1146549",
+  phone: "0301 7413377",
 };
 
 type NavItem = {
