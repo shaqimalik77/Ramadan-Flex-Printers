@@ -14,7 +14,12 @@ import {
   X,
   ChevronDown,
   HelpCircle,
+  FileText,
+  Send,
+  Tag,
+  Truck,
 } from "lucide-react";
+import { siteConfig } from "@/lib/siteConfig";
 
 /* ------------------------------------------------------------------ */
 /*  Config — edit these to fit your business, no markup changes needed */
@@ -97,6 +102,7 @@ export default function Header() {
   );
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authTab, setAuthTab] = useState<"login" | "register">("login");
+  const [guideOpen, setGuideOpen] = useState(false);
 
   // Drives the shrink-on-scroll effect. Sticky (not fixed) keeps the
   // header in normal document flow, so Hero always starts right below
@@ -109,14 +115,15 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close Auth Modal on Escape key press, and disable body scroll when open
+  // Close Modals on Escape key press, and disable body scroll when open
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setAuthModalOpen(false);
+        setGuideOpen(false);
       }
     };
-    if (authModalOpen) {
+    if (authModalOpen || guideOpen) {
       window.addEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "hidden";
     }
@@ -124,7 +131,7 @@ export default function Header() {
       window.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
     };
-  }, [authModalOpen]);
+  }, [authModalOpen, guideOpen]);
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
@@ -224,13 +231,14 @@ export default function Header() {
         </button>
 
         {/* How to Order — always visible */}
-        <Link
-          href="/contact"
-          className="ml-auto flex shrink-0 items-center gap-1.5 rounded-md bg-[#E41F26] px-3 py-1.5 text-xs font-semibold text-white transition-transform hover:brightness-110 active:scale-95 sm:px-3 sm:py-2 sm:text-sm"
+        <button
+          onClick={() => setGuideOpen(true)}
+          className="ml-auto flex shrink-0 items-center gap-1.5 rounded-md bg-[#E41F26] p-2 text-xs font-semibold text-white transition-transform hover:brightness-110 active:scale-95 sm:px-3 sm:py-2 sm:text-sm cursor-pointer"
+          aria-label="How to Order Guide"
         >
           <HelpCircle className="h-4 w-4" />
-          How to Order
-        </Link>
+          <span className="hidden sm:inline">How to Order</span>
+        </button>
 
         {/* Mobile hamburger */}
         <button
@@ -277,17 +285,28 @@ export default function Header() {
               key={item.label}
               className="group relative shrink-0 overflow-visible"
             >
-              <Link
-                href={item.href}
-                className="relative flex items-center gap-1 py-1 transition-colors hover:text-[#E41F26]"
-              >
-                {item.label}
-                {item.children && (
-                  <ChevronDown className="h-3 w-3 transition-transform group-hover:rotate-180" />
-                )}
-                {/* Small underline-grow animation on hover */}
-                <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-[#E41F26] transition-all duration-300 ease-in-out group-hover:w-full" />
-              </Link>
+              {item.label === "How to Order" ? (
+                <button
+                  onClick={() => setGuideOpen(true)}
+                  className="relative flex items-center gap-1 py-1 transition-colors hover:text-[#E41F26] cursor-pointer font-semibold text-sm"
+                >
+                  {item.label}
+                  {/* Small underline-grow animation on hover */}
+                  <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-[#E41F26] transition-all duration-300 ease-in-out group-hover:w-full" />
+                </button>
+              ) : (
+                <Link
+                  href={item.href}
+                  className="relative flex items-center gap-1 py-1 transition-colors hover:text-[#E41F26]"
+                >
+                  {item.label}
+                  {item.children && (
+                    <ChevronDown className="h-3 w-3 transition-transform group-hover:rotate-180" />
+                  )}
+                  {/* Small underline-grow animation on hover */}
+                  <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-[#E41F26] transition-all duration-300 ease-in-out group-hover:w-full" />
+                </Link>
+              )}
 
               {item.label === "Bundles" && (
                 <div className="invisible absolute left-0 top-full z-50 w-[500px] translate-y-2 rounded-xl border border-[#ECECEC] bg-white p-6 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
@@ -427,6 +446,16 @@ export default function Header() {
                       )
                     }
                     className="text-sm font-semibold text-[#1A1A1A] transition-colors hover:text-[#E41F26] text-left flex-1 cursor-pointer"
+                  >
+                    {item.label}
+                  </button>
+                ) : item.label === "How to Order" ? (
+                  <button
+                    onClick={() => {
+                      setMobileOpen(false);
+                      setGuideOpen(true);
+                    }}
+                    className="text-sm font-semibold text-[#1A1A1A] transition-colors hover:text-[#E41F26] flex-1 text-left cursor-pointer"
                   >
                     {item.label}
                   </button>
@@ -624,6 +653,126 @@ export default function Header() {
                 {authTab === "login" ? "Sign In" : "Create Account"}
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* How to Order Guide Modal */}
+      {guideOpen && (
+        <div
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setGuideOpen(false);
+          }}
+          className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm animate-[headerFadeIn_0.2s_ease-out] cursor-pointer"
+        >
+          <div className="relative w-full max-w-lg rounded-2xl border border-[#ECECEC] bg-white p-6 shadow-2xl transition-all duration-300 sm:p-8 animate-[headerScaleIn_0.2s_ease-out] cursor-default">
+            {/* Close Button */}
+            <button
+              onClick={() => setGuideOpen(false)}
+              className="absolute right-4 top-4 rounded-full p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors cursor-pointer"
+              aria-label="Close guide modal"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            {/* Header */}
+            <div className="mb-6 flex items-center gap-3 border-b border-[#ECECEC]/70 pb-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E41F26]/10 text-[#E41F26]">
+                <HelpCircle className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-[#1A1A1A]">
+                  How to Order
+                </h3>
+                <p className="text-xs text-gray-500">
+                  Follow these 4 simple steps to place your order
+                </p>
+              </div>
+            </div>
+
+            {/* Steps list */}
+            <div className="space-y-5">
+              {/* Step 1 */}
+              <div className="flex gap-4">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-neutral-100 text-xs font-bold text-neutral-600">
+                  1
+                </div>
+                <div className="flex-1">
+                  <h4 className="flex items-center gap-1.5 text-sm font-bold text-[#1A1A1A]">
+                    <FileText className="h-4 w-4 text-[#E41F26]" />
+                    Select Product & Specs
+                  </h4>
+                  <p className="mt-0.5 text-xs text-gray-600 leading-relaxed">
+                    Browse our products (Boxes, Stickers, Ribbons, Cards, etc.) and decide on your required size, material, and quantity.
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="flex gap-4">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-neutral-100 text-xs font-bold text-neutral-600">
+                  2
+                </div>
+                <div className="flex-1">
+                  <h4 className="flex items-center gap-1.5 text-sm font-bold text-[#1A1A1A]">
+                    <Send className="h-4 w-4 text-[#E41F26]" />
+                    Share Design via WhatsApp
+                  </h4>
+                  <p className="mt-0.5 text-xs text-gray-600 leading-relaxed">
+                    Click any product&apos;s quote button to start a WhatsApp chat. Share your details, logo, or design files (PDF/AI/PNG).
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="flex gap-4">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-neutral-100 text-xs font-bold text-neutral-600">
+                  3
+                </div>
+                <div className="flex-1">
+                  <h4 className="flex items-center gap-1.5 text-sm font-bold text-[#1A1A1A]">
+                    <Tag className="h-4 w-4 text-[#E41F26]" />
+                    Review Pricing & Quote
+                  </h4>
+                  <p className="mt-0.5 text-xs text-gray-600 leading-relaxed">
+                    Our team will quickly calculate costs and reply with a custom price quote, payment details, and estimated time.
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 4 */}
+              <div className="flex gap-4">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-neutral-100 text-xs font-bold text-neutral-600">
+                  4
+                </div>
+                <div className="flex-1">
+                  <h4 className="flex items-center gap-1.5 text-sm font-bold text-[#1A1A1A]">
+                    <Truck className="h-4 w-4 text-[#E41F26]" />
+                    Confirm & Doorstep Delivery
+                  </h4>
+                  <p className="mt-0.5 text-xs text-gray-600 leading-relaxed">
+                    Upon deposit confirmation, we process printing and ship the final goods safely to your address in Lahore or nationwide!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA Button */}
+            <div className="mt-7">
+              <a
+                href={`https://wa.me/${siteConfig.whatsappNumber}${
+                  siteConfig.whatsappDefaultMessage
+                    ? `?text=${encodeURIComponent(siteConfig.whatsappDefaultMessage)}`
+                    : ""
+                }`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setGuideOpen(false)}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#E41F26] py-3.5 text-sm font-bold text-white shadow-md shadow-[#E41F26]/10 transition-all hover:brightness-110 active:scale-[0.98] cursor-pointer"
+              >
+                Start WhatsApp Chat
+              </a>
+            </div>
           </div>
         </div>
       )}
