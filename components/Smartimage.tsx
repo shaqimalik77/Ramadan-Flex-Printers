@@ -22,6 +22,7 @@ export default function SmartImage({
 
   // Synchronize state when the src prop updates dynamically
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCurrentSrc(src);
     setHasError(false);
   }, [src]);

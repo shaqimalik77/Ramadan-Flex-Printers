@@ -13,6 +13,7 @@ export default function ShareButtons({ title, slug }: ShareButtonsProps) {
   const [pageUrl, setPageUrl] = useState(`/blog/${slug}`);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPageUrl(window.location.href);
   }, []);
 

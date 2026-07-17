@@ -14,7 +14,6 @@ export default function Preloader() {
       document.body.style.overflow = "hidden";
     }
 
-    let safetyTimer: NodeJS.Timeout;
     let removeTimer: NodeJS.Timeout;
 
     const startFadeOut = () => {
@@ -29,7 +28,7 @@ export default function Preloader() {
 
     // Safety fallback: Always hide loader after maximum 1100ms
     // This guarantees the 400ms fade-out transition concludes by 1500ms max.
-    safetyTimer = setTimeout(() => {
+    const safetyTimer = setTimeout(() => {
       startFadeOut();
     }, 1100);
 
