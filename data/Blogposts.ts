@@ -28,7 +28,7 @@ export const blogPosts: BlogPost[] = [
     category: "Packaging",
     publishDate: "Jul 1, 2026",
     readingTime: "5 min read",
-    image: "/images/logo/logo.png",
+    image: "/images/categories/ecommerce-boxes.png",
   },
   {
     id: "business-cards-lasting-impression",
@@ -50,7 +50,7 @@ export const blogPosts: BlogPost[] = [
     category: "Stickers",
     publishDate: "Jun 17, 2026",
     readingTime: "4 min read",
-    image: "/images/logo/logo.png",
+    image: "/images/categories/stickers.png",
   },
   {
     id: "corporate-gifts-customer-loyalty",
@@ -61,7 +61,7 @@ export const blogPosts: BlogPost[] = [
     category: "Corporate Gifts",
     publishDate: "Jun 10, 2026",
     readingTime: "5 min read",
-    image: "/images/logo/logo.png",
+    image: "/images/categories/promotional-products.png",
   },
   {
     id: "printed-ribbons-luxury-packaging",
@@ -72,7 +72,7 @@ export const blogPosts: BlogPost[] = [
     category: "Packaging",
     publishDate: "Jun 3, 2026",
     readingTime: "3 min read",
-    image: "/images/logo/logo.png",
+    image: "/images/categories/ribbons.png",
   },
   {
     id: "wedding-card-printing-guide",

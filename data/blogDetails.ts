@@ -26,7 +26,7 @@ export const blogDetails: BlogDetail[] = [
     author: "Ayesha Malik",
     publishDate: "July 2, 2026",
     readingTime: "8 min read",
-    heroImage: "/Images/blog/branding-guide.jpg",
+    heroImage: "/images/blog/branding-guide.jpg",
     content: [
       {
         type: "paragraph",
@@ -38,7 +38,7 @@ export const blogDetails: BlogDetail[] = [
       },
       {
         type: "image",
-        src: "/Images/blog/branding-guide.jpg",
+        src: "/images/blog/branding-guide.jpg",
         alt: "Custom branded packaging box on a table",
       },
       {
@@ -89,7 +89,7 @@ export const blogDetails: BlogDetail[] = [
       },
       {
         type: "image",
-        src: "/Images/blog/packaging-guide.jpg",
+        src: "/images/blog/packaging-guide.jpg",
         alt: "Stack of branded packaging boxes ready for delivery",
       },
       {
@@ -149,7 +149,7 @@ export const blogDetails: BlogDetail[] = [
     author: "Bilal Ahmed",
     publishDate: "June 21, 2026",
     readingTime: "9 min read",
-    heroImage: "/Images/blog/printing-tips.jpg",
+    heroImage: "/images/blog/printing-tips.jpg",
     content: [
       {
         type: "paragraph",
@@ -161,7 +161,7 @@ export const blogDetails: BlogDetail[] = [
       },
       {
         type: "image",
-        src: "/Images/blog/printing-tips.jpg",
+        src: "/images/blog/printing-tips.jpg",
         alt: "Assortment of printing materials and samples",
       },
       {
@@ -210,7 +210,7 @@ export const blogDetails: BlogDetail[] = [
       },
       {
         type: "image",
-        src: "/Images/blog/printing-tips.jpg",
+        src: "/images/blog/printing-tips.jpg",
         alt: "Close-up of a durable printed label on a product",
       },
       {
@@ -265,7 +265,7 @@ export const blogDetails: BlogDetail[] = [
     author: "Sara Yousaf",
     publishDate: "June 10, 2026",
     readingTime: "7 min read",
-    heroImage: "/Images/blog/packaging-guide.jpg",
+    heroImage: "/images/blog/packaging-guide.jpg",
     content: [
       {
         type: "paragraph",
@@ -273,7 +273,7 @@ export const blogDetails: BlogDetail[] = [
       },
       {
         type: "image",
-        src: "/Images/blog/packaging-guide.jpg",
+        src: "/images/blog/packaging-guide.jpg",
         alt: "Modern minimalist packaging design on a shelf",
       },
       {

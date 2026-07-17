@@ -7,7 +7,7 @@ import { MessageCircle, Grid, ChevronRight } from "lucide-react";
 import { categoryProducts } from "@/data/categoryProducts";
 import { siteConfig } from "@/lib/siteConfig";
 
-const FALLBACK_LOGO_SRC = "/Images/logo/logo.png";
+const FALLBACK_LOGO_SRC = "/images/logo/logo.png";
 
 function buildWhatsAppLink(productName: string): string {
   const message = `Hi, I'm interested in getting a quote for ${productName}. Could you please share pricing and details?`;

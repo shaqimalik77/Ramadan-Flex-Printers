@@ -6,7 +6,7 @@ import { clientsData, type ClientLogo } from "@/data/clientsdata";
 
 // Falls back here if a client logo 404s or fails to load.
 // Add your logo file at this path in /public.
-const FALLBACK_LOGO_SRC = "/Images/logo/logo.png";
+const FALLBACK_LOGO_SRC = "/images/logo/logo.png";
 
 function ClientCard({ client, hidden }: { client: ClientLogo; hidden?: boolean }) {
   const [imgSrc, setImgSrc] = useState(client.image);

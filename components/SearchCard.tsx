@@ -24,7 +24,7 @@ export default function SearchCard({ item }: SearchCardProps) {
 
       <div className="relative w-full h-44 bg-gray-50 overflow-hidden">
         <SmartImage
-          src={item.image || "/Images/logo/logo.png"}
+          src={item.image || "/images/logo/logo.png"}
           alt={item.title}
           fill
           sizes="(max-width: 768px) 100vw, 33vw"

@@ -72,7 +72,7 @@ export default function Preloader() {
         <div className="absolute flex items-center justify-center">
           <div className="relative w-[120px] h-[56px] sm:w-[150px] sm:h-[70px] lg:w-[180px] lg:h-[84px] animate-[preloaderLogoPulse_2s_infinite_cubic-bezier(0.4, 0, 0.2, 1)]">
             <Image
-              src="/Images/logo/logo.png"
+              src="/images/logo/logo.png"
               alt="Ramdan Flex Printers"
               fill
               priority

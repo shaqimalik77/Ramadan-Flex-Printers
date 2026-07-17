@@ -13,7 +13,7 @@ export const featuredProducts: FeaturedProduct[] = [
     name: "Custom Stickers",
     description:
       "Premium quality custom stickers for branding, packaging, promotions, and product labeling.",
-    image: "/Images/products/custom-stickers.png",
+    image: "/images/categories/stickers.png",
   },
   {
     id: "business-cards",
@@ -21,7 +21,7 @@ export const featuredProducts: FeaturedProduct[] = [
     name: "Business Cards",
     description:
       "High-quality business cards with premium finishes including matte, glossy, and spot UV.",
-    image: "/Images/products/business-cards.png",
+    image: "/images/categories/business-cards.png",
   },
   {
     id: "wedding-cards",
@@ -29,7 +29,7 @@ export const featuredProducts: FeaturedProduct[] = [
     name: "Wedding Cards",
     description:
       "Luxury wedding invitation cards with elegant printing, foil stamping, and custom designs.",
-    image: "/Images/products/wedding-cards.png",
+    image: "/images/categories/wedding-cards.png",
   },
   {
     id: "hang-tags",
@@ -37,7 +37,7 @@ export const featuredProducts: FeaturedProduct[] = [
     name: "Label & Hang Tags",
     description:
       "Premium printed hang tags and clothing labels for fashion brands and retail products.",
-    image: "/Images/products/hang-tags.png",
+    image: "/images/categories/label-and-hang-tags.png",
   },
   {
     id: "custom-boxes",
@@ -45,7 +45,7 @@ export const featuredProducts: FeaturedProduct[] = [
     name: "Custom Boxes",
     description:
       "Custom printed packaging boxes for cosmetics, gifts, food, and ecommerce businesses.",
-    image: "/Images/products/custom-boxes.png",
+    image: "/images/categories/ecommerce-boxes.png",
   },
   {
     id: "paper-bags",
@@ -53,7 +53,7 @@ export const featuredProducts: FeaturedProduct[] = [
     name: "Paper Bags",
     description:
       "Eco-friendly custom printed paper bags for retail stores, restaurants, and boutiques.",
-    image: "/Images/products/paper-bags.png",
+    image: "/images/categories/courier-bags.png",
   },
   {
     id: "mugs",
@@ -61,7 +61,7 @@ export const featuredProducts: FeaturedProduct[] = [
     name: "Printed Mugs",
     description:
       "Personalized ceramic mugs with vibrant, long-lasting custom printing for gifts and branding.",
-    image: "/Images/products/mugs.png",
+    image: "/images/categories/mugs.png",
   },
   {
     id: "ribbons",
@@ -69,6 +69,6 @@ export const featuredProducts: FeaturedProduct[] = [
     name: "Printed Ribbons",
     description:
       "Custom satin ribbons with premium printing for gifts, packaging, and special occasions.",
-    image: "/Images/products/ribbons.png",
+    image: "/images/categories/ribbons.png",
   },
 ];

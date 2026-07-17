@@ -61,7 +61,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   const relatedProducts = getRelatedProducts(product.category, product.slug, 4);
 
   return (
-    <main>
+    <main className="bg-white text-neutral-900 min-h-screen">
       <nav
         aria-label="Breadcrumb"
         className="mx-auto max-w-5xl px-4 pt-4 text-sm text-neutral-500 sm:px-6 lg:px-8"

@@ -43,7 +43,7 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
   }
 
   return (
-    <main>
+    <main className="bg-white text-neutral-900 min-h-screen">
       <nav
         aria-label="Breadcrumb"
         className="mx-auto max-w-5xl px-4 pt-4 text-sm text-neutral-500 sm:px-6 lg:px-8"

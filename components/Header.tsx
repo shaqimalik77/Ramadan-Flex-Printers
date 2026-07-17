@@ -38,16 +38,38 @@ const NAV_ITEMS: NavItem[] = [
     label: "Bundles",
     href: "/categories/promotional-products",
     children: [
-      { label: "Starter Bundle", href: "/categories/promotional-products" },
-      { label: "Pro Bundle", href: "/categories/promotional-products" },
+      { label: "Mini Startup Packaging Bundle", href: "/categories/ecommerce-boxes" },
+      { label: "Jewelry Packaging Bundle", href: "/categories/jewellery-cards" },
+      { label: "Clothing Packaging Bundle", href: "/categories/fabric-tags" },
+      { label: "Clothing Bulk Packaging Bundle", href: "/categories/ziplock-frosted-bags" },
     ],
   },
   {
     label: "All",
-    href: "/",
+    href: "/categories",
     children: [
-      { label: "New Arrivals", href: "/" },
-      { label: "Best Sellers", href: "/" },
+      { label: "Keychains", href: "/categories/promotional-products" },
+      { label: "Mugs", href: "/categories/mugs" },
+      { label: "Notebooks", href: "/categories/promotional-products" },
+      { label: "Pens", href: "/categories/promotional-products" },
+      { label: "Water Bottles", href: "/categories/promotional-products" },
+      { label: "Stickers", href: "/categories/stickers" },
+      { label: "Label & Hang Tags", href: "/categories/label-hang-tags" },
+      { label: "Thankyou Cards", href: "/categories/thank-you-cards" },
+      { label: "Butter Paper", href: "/categories/butter-paper" },
+      { label: "Shirts", href: "/categories/custom-t-shirts" },
+      { label: "Polaroids", href: "/categories/polaroids" },
+      { label: "Cosmetic Boxes", href: "/categories/ecommerce-boxes" },
+      { label: "Gift Bags", href: "/categories/ecommerce-boxes" },
+      { label: "Shopping Bags", href: "/categories/ecommerce-boxes" },
+      { label: "Drawer Hard Box", href: "/categories/hard-drawer-boxes" },
+      { label: "Standup Pouches", href: "/categories/stand-up-pouches" },
+      { label: "Ziplock Frosted Bags", href: "/categories/ziplock-frosted-bags" },
+      { label: "Courier Flyer Bags", href: "/categories/courier-flyer-poly-bags" },
+      { label: "Business Cards", href: "/categories/business-cards" },
+      { label: "Jewellery Cards", href: "/categories/jewellery-cards" },
+      { label: "Fabric Tags", href: "/categories/fabric-tags" },
+      { label: "Wedding Cards", href: "/categories/wedding-cards" },
     ],
   },
   { label: "Wedding Specials", href: "/categories/wedding-cards" },
@@ -119,23 +141,28 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-[9999] w-full border-b border-[#ECECEC] bg-white transition-shadow duration-300 ${
-        isScrolled ? "shadow-md" : "shadow-none"
+      className={`sticky top-0 z-[9999] w-full border-b border-[#ECECEC]/30 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white/85 backdrop-blur-md shadow-md"
+          : "bg-white shadow-none"
       }`}
     >
       {/* ---------------------------------------------------------- */}
       {/* Row 1 — logo, search, meta, login, cart (~60px)             */}
       {/* ---------------------------------------------------------- */}
       <div
-        className={`mx-auto flex max-w-7xl items-center gap-3 px-4 transition-all duration-300 ease-in-out md:gap-4 lg:px-8 ${
+        className={`mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 transition-all duration-300 ease-in-out md:gap-4 lg:px-8 ${
           isScrolled ? "h-[52px]" : "h-[60px]"
         }`}
       >
-        {/* Logo — fixed 58px height, width auto, aspect ratio preserved */}
+        {/* Left Spacer to balance hamburger on mobile and keep logo centered */}
+        <div className="w-10 shrink-0 md:hidden" />
+
+        {/* Logo — fixed height, auto width, centered on mobile */}
         <Link
           href="/"
           aria-label="Go to homepage"
-          className={`flex shrink-0 items-center self-center origin-left transition-transform duration-300 ease-in-out hover:opacity-80 ${
+          className={`flex-1 md:flex-none flex justify-center md:justify-start shrink-0 items-center self-center origin-center md:origin-left transition-all duration-300 ease-in-out hover:opacity-80 ${
             isScrolled ? "scale-90" : "scale-100"
           }`}
         >
@@ -144,7 +171,7 @@ export default function Header() {
             alt="Ramdan Flex Printers"
             width={703}
             height={401}
-            className="h-[58px] w-auto object-contain"
+            className="h-[48px] sm:h-[58px] w-auto object-contain"
             priority
           />
         </Link>
@@ -157,7 +184,7 @@ export default function Header() {
               placeholder="Type here to search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className={`w-full rounded-full border border-[#ECECEC] bg-white pl-4 pr-10 text-sm text-[#1A1A1A] placeholder:text-gray-400 outline-none transition-all duration-300 ease-in-out focus:border-[#E41F26] focus:ring-2 focus:ring-[#E41F26]/20 ${
+              className={`w-full rounded-full border border-[#ECECEC] bg-white/70 pl-4 pr-10 text-sm text-[#1A1A1A] placeholder:text-gray-400 outline-none transition-all duration-300 ease-in-out focus:border-[#E41F26] focus:ring-2 focus:ring-[#E41F26]/20 ${
                 isScrolled ? "h-9" : "h-10"
               }`}
             />
@@ -199,10 +226,10 @@ export default function Header() {
           Login / Register
         </button>
 
-        {/* Cart — always visible */}
+        {/* Cart — hidden on mobile, visible on tablet/desktop */}
         <Link
           href="/cart"
-          className="ml-auto flex shrink-0 items-center gap-2 rounded-md bg-[#E41F26] px-3 py-2 text-sm font-semibold text-white transition-transform hover:brightness-110 active:scale-95 md:ml-0"
+          className="ml-auto hidden md:flex shrink-0 items-center gap-2 rounded-md bg-[#E41F26] px-3 py-2 text-sm font-semibold text-white transition-transform hover:brightness-110 active:scale-95 md:ml-0"
         >
           <ShoppingCart className="h-4 w-4" />
           Cart / Rs {CART_COUNT}
@@ -211,7 +238,7 @@ export default function Header() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMobileOpen((v) => !v)}
-          className="ml-1 flex items-center justify-center rounded-md p-2 text-[#1A1A1A] transition-colors hover:bg-gray-100 lg:hidden"
+          className="ml-1 flex items-center justify-center rounded-md p-2 text-[#1A1A1A] transition-colors hover:bg-gray-100 lg:hidden w-10 h-10"
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
         >
@@ -265,19 +292,118 @@ export default function Header() {
                 <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-[#E41F26] transition-all duration-300 ease-in-out group-hover:w-full" />
               </Link>
 
-              {item.children && (
-                <ul className="invisible absolute left-0 top-full z-10 min-w-[180px] translate-y-1 rounded-md border border-[#ECECEC] bg-white py-2 opacity-0 shadow-lg transition-all duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-                  {item.children.map((child) => (
-                    <li key={child.label}>
-                      <Link
-                        href={child.href}
-                        className="block px-4 py-2 text-xs font-medium text-[#1A1A1A] transition-colors hover:bg-gray-50 hover:text-[#E41F26]"
-                      >
-                        {child.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+              {item.label === "Bundles" && (
+                <div className="invisible absolute left-0 top-full z-50 w-[500px] translate-y-2 rounded-xl border border-[#ECECEC] bg-white p-6 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                  <div className="grid grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-100 pb-2 mb-3">
+                        Startup Bundle
+                      </h4>
+                      <ul className="space-y-2.5">
+                        <li>
+                          <Link href="/categories/ecommerce-boxes" className="block text-xs font-medium text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">
+                            Mini Startup Packaging Bundle
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/categories/jewellery-cards" className="block text-xs font-medium text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">
+                            Jewelry Packaging Bundle
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href="/categories/fabric-tags" className="block text-xs font-medium text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">
+                            Clothing Packaging Bundle
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-100 pb-2 mb-3">
+                        Bulk Packaging
+                      </h4>
+                      <ul className="space-y-2.5">
+                        <li>
+                          <Link href="/categories/ziplock-frosted-bags" className="block text-xs font-medium text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">
+                            Clothing Bulk Packaging Bundle
+                          </Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {item.label === "All" && (
+                <div className="invisible absolute left-0 top-full z-50 w-[920px] translate-y-2 rounded-xl border border-[#ECECEC] bg-white p-6 opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                  <div className="grid grid-cols-6 gap-6">
+                    <div>
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-100 pb-2 mb-3">
+                        Promotional
+                      </h4>
+                      <ul className="space-y-2">
+                        <li><Link href="/categories/promotional-products" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Keychains</Link></li>
+                        <li><Link href="/categories/mugs" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Mugs</Link></li>
+                        <li><Link href="/categories/promotional-products" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Notebooks</Link></li>
+                        <li><Link href="/categories/promotional-products" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Pens</Link></li>
+                        <li><Link href="/categories/promotional-products" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Water Bottles</Link></li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-100 pb-2 mb-3">
+                        Hot Selling
+                      </h4>
+                      <ul className="space-y-2">
+                        <li><Link href="/categories/stickers" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Stickers</Link></li>
+                        <li><Link href="/categories/label-hang-tags" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Label & Hang Tags</Link></li>
+                        <li><Link href="/categories/thank-you-cards" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Thankyou Cards</Link></li>
+                        <li><Link href="/categories/butter-paper" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Butter Paper</Link></li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-100 pb-2 mb-3">
+                        Personalized
+                      </h4>
+                      <ul className="space-y-2">
+                        <li><Link href="/categories/custom-t-shirts" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Shirts</Link></li>
+                        <li><Link href="/categories/mugs" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Mugs</Link></li>
+                        <li><Link href="/categories/polaroids" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Polaroids</Link></li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-100 pb-2 mb-3">
+                        Boxes & Bags
+                      </h4>
+                      <ul className="space-y-2">
+                        <li><Link href="/categories/ecommerce-boxes" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Cosmetic Boxes</Link></li>
+                        <li><Link href="/categories/ecommerce-boxes" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Gift Bags</Link></li>
+                        <li><Link href="/categories/ecommerce-boxes" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Shopping Bags</Link></li>
+                        <li><Link href="/categories/hard-drawer-boxes" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Drawer Hard Box</Link></li>
+                        <li><Link href="/categories/stand-up-pouches" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Standup Pouches</Link></li>
+                        <li><Link href="/categories/ziplock-frosted-bags" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Ziplock Frosted Bags</Link></li>
+                        <li><Link href="/categories/courier-flyer-poly-bags" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Courier Flyer Bags</Link></li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-100 pb-2 mb-3">
+                        Cards & Tags
+                      </h4>
+                      <ul className="space-y-2">
+                        <li><Link href="/categories/business-cards" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Business Cards</Link></li>
+                        <li><Link href="/categories/jewellery-cards" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Jewellery Cards</Link></li>
+                        <li><Link href="/categories/fabric-tags" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Fabric Tags</Link></li>
+                        <li><Link href="/categories/label-hang-tags" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Label & Hang Tags</Link></li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="text-[11px] font-bold uppercase tracking-wider text-neutral-800 border-b border-neutral-100 pb-2 mb-3">
+                        Wedding
+                      </h4>
+                      <ul className="space-y-2">
+                        <li><Link href="/categories/wedding-cards" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Wedding Cards</Link></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               )}
             </li>
           ))}

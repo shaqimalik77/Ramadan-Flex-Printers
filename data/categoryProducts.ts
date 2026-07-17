@@ -48,35 +48,35 @@ export const categoryProducts: Category[] = [
         title: "Premium Satin Ribbon",
         shortDescription:
           "Smooth, high-sheen satin ribbon that holds custom print cleanly and ties beautifully on any package.",
-        image: "/images/logo/logo.png",
+        image: "/images/products/ribbons/premium-satin-ribbon.png",
       },
       {
         slug: "printed-ribbon-roll",
         title: "Printed Ribbon Roll",
         shortDescription:
           "Bulk ribbon rolls printed with your logo or brand name, ideal for ongoing packaging needs.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/ribbons.png",
       },
       {
         slug: "gold-foil-ribbon",
         title: "Gold Foil Ribbon",
         shortDescription:
           "Luxury foil-printed ribbon that adds a premium finishing touch to gift and retail packaging.",
-        image: "/images/logo/logo.png",
+        image: "/images/products/ribbons/gold-foil-ribbon.png",
       },
       {
         slug: "custom-gift-ribbon",
         title: "Custom Gift Ribbon",
         shortDescription:
           "Personalised ribbon for gift boxes and hampers, printed with names, logos, or short messages.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/ribbons.png",
       },
       {
         slug: "luxury-packaging-ribbon",
         title: "Luxury Packaging Ribbon",
         shortDescription:
           "Wider, premium-weight ribbon designed for high-end retail and corporate gifting packaging.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/ribbons.png",
       },
     ],
   },
@@ -99,35 +99,35 @@ export const categoryProducts: Category[] = [
         title: "Vinyl Stickers",
         shortDescription:
           "Durable, weatherproof vinyl stickers ideal for outdoor use, product labelling, and packaging seals.",
-        image: "/images/logo/logo.png",
+        image: "/images/products/stickers/vinyl-stickers.png",
       },
       {
         slug: "die-cut-stickers",
         title: "Die Cut Stickers",
         shortDescription:
           "Custom-shaped stickers cut precisely to your logo or artwork outline for a clean, professional look.",
-        image: "/images/logo/logo.png",
+        image: "/images/products/stickers/die-cut-stickers.png",
       },
       {
         slug: "holographic-stickers",
         title: "Holographic Stickers",
         shortDescription:
           "Eye-catching holographic finish stickers that add a premium, hard-to-copy look to your packaging.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/stickers.png",
       },
       {
         slug: "kiss-cut-sticker-sheets",
         title: "Kiss Cut Sticker Sheets",
         shortDescription:
           "Multiple stickers arranged on one easy-peel sheet, perfect for retail packs and giveaways.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/stickers.png",
       },
       {
         slug: "waterproof-label-stickers",
         title: "Waterproof Label Stickers",
         shortDescription:
           "Smudge-proof, waterproof labels built for jars, bottles, and packaging exposed to moisture.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/stickers.png",
       },
     ],
   },
@@ -150,35 +150,35 @@ export const categoryProducts: Category[] = [
         title: "Printed Butter Paper Sheets",
         shortDescription:
           "Grease-resistant sheets printed with your logo, ideal for wrapping food items and lining trays.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/butter-paper.png",
       },
       {
         slug: "custom-butter-paper-rolls",
         title: "Custom Butter Paper Rolls",
         shortDescription:
           "Bulk printed rolls for kitchens and bakeries that need a continuous supply of branded wrap.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/butter-paper.png",
       },
       {
         slug: "branded-food-wrap-paper",
         title: "Branded Food Wrap Paper",
         shortDescription:
           "Food-safe wrap paper printed with your cafe or restaurant branding for takeaway orders.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/butter-paper.png",
       },
       {
         slug: "butter-paper-bakery-sheets",
         title: "Butter Paper Bakery Sheets",
         shortDescription:
           "Lightweight sheets designed for lining cake boxes and separating baked goods cleanly.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/butter-paper.png",
       },
       {
         slug: "grease-resistant-butter-paper",
         title: "Grease-Resistant Butter Paper",
         shortDescription:
           "Heavy-duty grease-resistant paper built for wrapping oily or fried food items securely.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/butter-paper.png",
       },
     ],
   },
@@ -201,35 +201,35 @@ export const categoryProducts: Category[] = [
         title: "Earring Display Cards",
         shortDescription:
           "Die-cut cards with precise post holes, printed with your logo for a clean retail presentation.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/jewellery-cards.png",
       },
       {
         slug: "necklace-packaging-cards",
         title: "Necklace Packaging Cards",
         shortDescription:
           "Sturdy cards designed to hold and display necklaces and pendants without tangling.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/jewellery-cards.png",
       },
       {
         slug: "ring-display-cards",
         title: "Ring Display Cards",
         shortDescription:
           "Compact printed cards with slots built for securely displaying rings in retail or online orders.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/jewellery-cards.png",
       },
       {
         slug: "kraft-jewellery-cards",
         title: "Kraft Jewellery Cards",
         shortDescription:
           "Natural kraft-finish cards for brands wanting a rustic, minimal jewellery presentation.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/jewellery-cards.png",
       },
       {
         slug: "foil-stamped-jewellery-cards",
         title: "Foil Stamped Jewellery Cards",
         shortDescription:
           "Premium foil-stamped cards that give jewellery packaging a luxury, boutique-store feel.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/jewellery-cards.png",
       },
     ],
   },
@@ -252,35 +252,35 @@ export const categoryProducts: Category[] = [
         title: "Custom Polaroid Prints",
         shortDescription:
           "Your photos printed on classic polaroid-style cards with a clean, branded border.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/polaroids.png",
       },
       {
         slug: "wedding-polaroid-favours",
         title: "Wedding Polaroid Favours",
         shortDescription:
           "Personalised polaroid-style keepsakes designed as memorable wedding guest favours.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/polaroids.png",
       },
       {
         slug: "instax-style-photo-prints",
         title: "Instax Style Photo Prints",
         shortDescription:
           "Compact, sharp photo prints in the popular instant-camera format for gifting and decor.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/polaroids.png",
       },
       {
         slug: "branded-polaroid-cards",
         title: "Branded Polaroid Cards",
         shortDescription:
           "Event or product photos printed with subtle brand marks for launches and activations.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/polaroids.png",
       },
       {
         slug: "polaroid-gift-sets",
         title: "Polaroid Gift Sets",
         shortDescription:
           "A curated set of printed polaroid photos packaged together as a ready-to-gift keepsake.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/polaroids.png",
       },
     ],
   },
@@ -303,35 +303,35 @@ export const categoryProducts: Category[] = [
         title: "Matte Business Cards",
         shortDescription:
           "Clean, non-reflective matte finish cards suited for a professional, minimal brand look.",
-        image: "/images/logo/logo.png",
+        image: "/images/products/business-cards/matte-business-cards.png",
       },
       {
         slug: "gold-foil-business-cards",
         title: "Gold Foil Business Cards",
         shortDescription:
           "Premium cards with gold foil detailing for a luxury, high-end professional impression.",
-        image: "/images/logo/logo.png",
+        image: "/images/products/business-cards/gold-foil-business-cards.png",
       },
       {
         slug: "spot-uv-business-cards",
         title: "Spot UV Business Cards",
         shortDescription:
           "Cards with glossy spot UV highlights on selected design elements for a striking contrast.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/business-cards.png",
       },
       {
         slug: "embossed-business-cards",
         title: "Embossed Business Cards",
         shortDescription:
           "Textured, raised-print cards that add a tactile, premium feel to your business identity.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/business-cards.png",
       },
       {
         slug: "transparent-business-cards",
         title: "Transparent Business Cards",
         shortDescription:
           "Modern clear plastic cards that stand out instantly from traditional paper cards.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/business-cards.png",
       },
     ],
   },
@@ -456,35 +456,35 @@ export const categoryProducts: Category[] = [
         title: "Woven Fabric Tags",
         shortDescription:
           "Durable woven tags built to survive years of washing while keeping your logo sharp.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/fabric-tags.png",
       },
       {
         slug: "printed-satin-tags",
         title: "Printed Satin Tags",
         shortDescription:
           "Cost-effective printed satin tags suited for detailed designs and smaller runs.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/fabric-tags.png",
       },
       {
         slug: "care-label-tags",
         title: "Care Label Tags",
         shortDescription:
           "Clear, long-lasting care instruction labels sewn into garments for wash and fabric guidance.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/fabric-tags.png",
       },
       {
         slug: "leather-patch-tags",
         title: "Leather Patch Tags",
         shortDescription:
           "Premium leather-look patches stitched onto denim, bags, and outerwear for a branded finish.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/fabric-tags.png",
       },
       {
         slug: "custom-brand-fabric-tags",
         title: "Custom Brand Fabric Tags",
         shortDescription:
           "Fully custom fabric tags matched to your brand's colours, thread weight, and placement needs.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/fabric-tags.png",
       },
     ],
   },
@@ -507,35 +507,35 @@ export const categoryProducts: Category[] = [
         title: "Corrugated Shipping Boxes",
         shortDescription:
           "Sturdy corrugated boxes printed with your branding, built to survive courier handling.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/ecommerce-boxes.png",
       },
       {
         slug: "branded-mailer-boxes",
         title: "Branded Mailer Boxes",
         shortDescription:
           "Compact, flat-packed mailer boxes ideal for apparel, accessories, and small product shipping.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/ecommerce-boxes.png",
       },
       {
         slug: "custom-printed-ecommerce-boxes",
         title: "Custom Printed Ecommerce Boxes",
         shortDescription:
           "Full-colour printed boxes designed to create a memorable unboxing experience.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/ecommerce-boxes.png",
       },
       {
         slug: "rigid-product-boxes",
         title: "Rigid Product Boxes",
         shortDescription:
           "Sturdy rigid boxes for premium products that need extra protection and a high-end feel.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/ecommerce-boxes.png",
       },
       {
         slug: "kraft-ecommerce-boxes",
         title: "Kraft Ecommerce Boxes",
         shortDescription:
           "Natural kraft boxes printed with simple branding for an eco-friendly shipping presentation.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/ecommerce-boxes.png",
       },
     ],
   },
@@ -609,35 +609,35 @@ export const categoryProducts: Category[] = [
         title: "Rigid Drawer Boxes",
         shortDescription:
           "Sturdy slide-open drawer boxes offering a premium unboxing experience for gifting products.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/hard-drawer-boxes.png",
       },
       {
         slug: "foil-stamped-drawer-boxes",
         title: "Foil Stamped Drawer Boxes",
         shortDescription:
           "Luxury drawer boxes finished with gold or silver foil stamping for a high-end presentation.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/hard-drawer-boxes.png",
       },
       {
         slug: "luxury-gift-drawer-boxes",
         title: "Luxury Gift Drawer Boxes",
         shortDescription:
           "Rigid gift boxes built for hampers, jewellery, and premium corporate gifting sets.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/hard-drawer-boxes.png",
       },
       {
         slug: "slide-out-packaging-boxes",
         title: "Slide Out Packaging Boxes",
         shortDescription:
           "Two-piece slide-out packaging offering a satisfying, tactile product reveal.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/hard-drawer-boxes.png",
       },
       {
         slug: "custom-printed-drawer-boxes",
         title: "Custom Printed Drawer Boxes",
         shortDescription:
           "Fully custom printed drawer boxes matched to your brand colours and product dimensions.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/hard-drawer-boxes.png",
       },
     ],
   },
@@ -660,35 +660,35 @@ export const categoryProducts: Category[] = [
         title: "Frosted Ziplock Bags",
         shortDescription:
           "Soft frosted-finish bags with a secure zip seal, printed with your brand's logo.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/ziplock-frosted-bags.png",
       },
       {
         slug: "printed-frosted-poly-bags",
         title: "Printed Frosted Poly Bags",
         shortDescription:
           "Custom printed poly bags with a frosted finish for a subtle, boutique packaging look.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/ziplock-frosted-bags.png",
       },
       {
         slug: "clothing-ziplock-packaging",
         title: "Clothing Ziplock Packaging",
         shortDescription:
           "Sized specifically for garments, these bags keep folded clothing neat and presentable.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/ziplock-frosted-bags.png",
       },
       {
         slug: "custom-branded-frosted-bags",
         title: "Custom Branded Frosted Bags",
         shortDescription:
           "Fully custom sizing and printing for accessory and small product packaging needs.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/ziplock-frosted-bags.png",
       },
       {
         slug: "reusable-ziplock-pouches",
         title: "Reusable Ziplock Pouches",
         shortDescription:
           "Durable, reusable pouches customers can keep and use again after the original purchase.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/ziplock-frosted-bags.png",
       },
     ],
   },
@@ -711,35 +711,35 @@ export const categoryProducts: Category[] = [
         title: "Tamper Proof Courier Bags",
         shortDescription:
           "Secure, tamper-evident poly bags printed with your branding for safe order shipping.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/courier-flyer-poly-bags.png",
       },
       {
         slug: "printed-flyer-poly-bags",
         title: "Printed Flyer Poly Bags",
         shortDescription:
           "Custom printed poly mailers designed to keep contents protected and branding visible.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/courier-flyer-poly-bags.png",
       },
       {
         slug: "self-seal-courier-bags",
         title: "Self Seal Courier Bags",
         shortDescription:
           "Easy-to-use self-sealing bags that keep packing quick without sacrificing security.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/courier-flyer-poly-bags.png",
       },
       {
         slug: "branded-shipping-poly-bags",
         title: "Branded Shipping Poly Bags",
         shortDescription:
           "Bulk shipping bags printed with your logo to reinforce branding on every order shipped.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/courier-flyer-poly-bags.png",
       },
       {
         slug: "biodegradable-courier-bags",
         title: "Biodegradable Courier Bags",
         shortDescription:
           "Eco-friendly courier bags for brands wanting sustainable shipping packaging.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/courier-flyer-poly-bags.png",
       },
     ],
   },
@@ -762,35 +762,35 @@ export const categoryProducts: Category[] = [
         title: "Foil Stamped Wedding Cards",
         shortDescription:
           "Elegant wedding invitations finished with gold or silver foil detailing.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/wedding-cards.png",
       },
       {
         slug: "laser-cut-wedding-invitations",
         title: "Laser Cut Wedding Invitations",
         shortDescription:
           "Intricately laser-cut invitation designs for a distinctive, high-end wedding announcement.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/wedding-cards.png",
       },
       {
         slug: "boxed-wedding-invitation-sets",
         title: "Boxed Wedding Invitation Sets",
         shortDescription:
           "Complete invitation sets presented in a matching printed box for a grand first impression.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/wedding-cards.png",
       },
       {
         slug: "acrylic-wedding-cards",
         title: "Acrylic Wedding Cards",
         shortDescription:
           "Modern UV-printed acrylic cards offering a sleek, contemporary invitation style.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/wedding-cards.png",
       },
       {
         slug: "traditional-wedding-card-sets",
         title: "Traditional Wedding Card Sets",
         shortDescription:
           "Classic multi-function wedding card sets covering mehndi, baraat, and walima events.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/wedding-cards.png",
       },
     ],
   },
@@ -813,35 +813,35 @@ export const categoryProducts: Category[] = [
         title: "Premium Ceramic Mugs",
         shortDescription:
           "High-quality ceramic mugs with sharp, fade-resistant full-colour printing.",
-        image: "/images/logo/logo.png",
+        image: "/images/products/mugs/premium-ceramic-mugs.png",
       },
       {
         slug: "magic-colour-changing-mugs",
         title: "Magic Colour Changing Mugs",
         shortDescription:
           "Heat-reactive mugs that reveal a hidden design once hot liquid is poured in.",
-        image: "/images/logo/logo.png",
+        image: "/images/products/mugs/magic-colour-changing-mugs.png",
       },
       {
         slug: "photo-printed-mugs",
         title: "Photo Printed Mugs",
         shortDescription:
           "Personalised mugs printed with your favourite photos, perfect for gifting.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/mugs.png",
       },
       {
         slug: "corporate-branded-mugs",
         title: "Corporate Branded Mugs",
         shortDescription:
           "Bulk-printed mugs for office gifting, client appreciation, and staff onboarding kits.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/mugs.png",
       },
       {
         slug: "two-tone-ceramic-mugs",
         title: "Two Tone Ceramic Mugs",
         shortDescription:
           "Bold two-tone mugs with a coloured interior and handle for a distinctive branded look.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/mugs.png",
       },
     ],
   },
@@ -864,35 +864,35 @@ export const categoryProducts: Category[] = [
         title: "Branded Pens",
         shortDescription:
           "Classic printed pens ideal for conferences, office giveaways, and client kits.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/promotional-products.png",
       },
       {
         slug: "custom-keychains",
         title: "Custom Keychains",
         shortDescription:
           "Compact, durable keychains printed or engraved with your logo for everyday visibility.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/promotional-products.png",
       },
       {
         slug: "printed-notebooks",
         title: "Printed Notebooks",
         shortDescription:
           "Branded notebooks suited for staff onboarding kits, events, and client gifting.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/promotional-products.png",
       },
       {
         slug: "branded-tote-bags",
         title: "Branded Tote Bags",
         shortDescription:
           "Reusable printed tote bags that carry your logo well beyond a single event.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/promotional-products.png",
       },
       {
         slug: "corporate-desk-calendars",
         title: "Corporate Desk Calendars",
         shortDescription:
           "Printed desk calendars keeping your brand visible in a client's office all year round.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/promotional-products.png",
       },
     ],
   },
@@ -966,35 +966,35 @@ export const categoryProducts: Category[] = [
         title: "Custom LED Neon Signs",
         shortDescription:
           "Bright, energy-efficient LED neon signs custom shaped to your logo or text.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/neon-signs.png",
       },
       {
         slug: "business-logo-neon-signs",
         title: "Business Logo Neon Signs",
         shortDescription:
           "Glowing logo signage designed to make a strong visual statement at your storefront.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/neon-signs.png",
       },
       {
         slug: "wedding-name-neon-signs",
         title: "Wedding Name Neon Signs",
         shortDescription:
           "Custom name signage designed as a striking backdrop for wedding stages and events.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/neon-signs.png",
       },
       {
         slug: "shop-front-neon-signs",
         title: "Shop Front Neon Signs",
         shortDescription:
           "Weatherproof neon signage built to stand out on retail shop fronts day and night.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/neon-signs.png",
       },
       {
         slug: "rgb-colour-changing-neon-signs",
         title: "RGB Colour Changing Neon Signs",
         shortDescription:
           "Multi-colour LED neon signs with remote-controlled colour changing effects.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/neon-signs.png",
       },
     ],
   },
@@ -1017,35 +1017,35 @@ export const categoryProducts: Category[] = [
         title: "3D Acrylic Letter Boards",
         shortDescription:
           "Clean, modern acrylic letters cut and layered for a sharp, dimensional logo display.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/3d-boards.png",
       },
       {
         slug: "backlit-3d-sign-boards",
         title: "Backlit 3D Sign Boards",
         shortDescription:
           "Illuminated 3D signage that glows evenly for strong visibility day and night.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/3d-boards.png",
       },
       {
         slug: "foam-board-3d-logos",
         title: "Foam Board 3D Logos",
         shortDescription:
           "Lightweight raised logo boards ideal for interior office and reception branding.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/3d-boards.png",
       },
       {
         slug: "metal-3d-letter-signs",
         title: "Metal 3D Letter Signs",
         shortDescription:
           "Durable metal letter signage built for permanent, industrial-grade shop front branding.",
-        image: "/images/products/3d-boards/metal-3d-letter-signs.png",
+        image: "/images/categories/3d-boards.png",
       },
       {
         slug: "custom-3d-nameplate-boards",
         title: "Custom 3D Nameplate Boards",
         shortDescription:
           "Raised nameplate signage designed for offices, reception desks, and meeting rooms.",
-        image: "/images/products/flex-designs/custom-3d-nameplate-boards.png",
+        image: "/images/categories/3d-boards.png",
       },
     ],
   },
@@ -1068,35 +1068,35 @@ export const categoryProducts: Category[] = [
         title: "Outdoor Flex Banners",
         shortDescription:
           "Weather-resistant flex banners built for long-term outdoor advertising and signage.",
-        image: "/images/products/flex-designs/outdoor-flex-banners.png",
+        image: "/images/categories/flex-designs.png",
       },
       {
         slug: "shop-front-flex-boards",
         title: "Shop Front Flex Boards",
         shortDescription:
           "Large-format printed boards designed to make a shop front visible from a distance.",
-        image: "/images/products/flex-designs/shop-front-flex-boards.png",
+        image: "/images/categories/flex-designs.png",
       },
       {
         slug: "event-flex-banners",
         title: "Event Flex Banners",
         shortDescription:
           "Vibrant, quick-turnaround banners for launches, sales, and one-off event backdrops.",
-        image: "/images/products/flex-designs/event-flex-banners.png",
+        image: "/images/categories/flex-designs.png",
       },
       {
         slug: "vinyl-flex-prints",
         title: "Vinyl Flex Prints",
         shortDescription:
           "Durable vinyl flex prints suited for both indoor displays and outdoor signage.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/flex-designs.png",
       },
       {
         slug: "backlit-flex-signage",
         title: "Backlit Flex Signage",
         shortDescription:
           "Illuminated flex signage designed for strong visibility after dark.",
-        image: "/images/logo/logo.png",
+        image: "/images/categories/flex-designs.png",
       },
     ],
   },

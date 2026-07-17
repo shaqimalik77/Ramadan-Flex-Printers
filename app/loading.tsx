@@ -7,7 +7,7 @@ export default function Loading() {
         {/* Soft pulse animation for the brand logo */}
         <div className="relative h-20 w-48 animate-pulse">
           <Image
-            src="/Images/logo/logo.png"
+            src="/images/logo/logo.png"
             alt="Ramdan Flex Printers Logo"
             fill
             priority
