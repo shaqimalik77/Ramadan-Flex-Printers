@@ -90,8 +90,8 @@ export default function ContactInfo() {
               Delivery Areas
             </h3>
             <p className="text-neutral-600 text-sm leading-relaxed">
-              We deliver across Lahore and nationwide via trusted courier
-              partners.
+              We deliver across all Pakistan and also offer international
+              shipping via trusted courier partners.
             </p>
           </div>
         </div>

@@ -35,9 +35,9 @@ const features: Feature[] = [
   },
   {
     icon: Truck,
-    title: "Nationwide Delivery",
+    title: "Pakistan & International Delivery",
     description:
-      "Reliable delivery to Lahore, Karachi, Islamabad, Faisalabad, Multan, Sialkot, and beyond.",
+      "We deliver across all Pakistan and also offer international shipping via trusted courier partners.",
   },
   {
     icon: PenTool,

@@ -3,9 +3,27 @@ import Image from "next/image";
 export default function Loading() {
   return (
     <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-white">
-      <div className="flex flex-col items-center gap-4">
-        {/* Soft pulse animation for the brand logo */}
-        <div className="relative h-20 w-48 animate-pulse">
+      <div className="relative flex items-center justify-center w-[180px] h-[180px]">
+        {/* Spinning ring */}
+        <svg
+          className="absolute inset-0 w-full h-full animate-spin"
+          style={{ animationDuration: "2s" }}
+          viewBox="0 0 100 100"
+          fill="none"
+        >
+          <circle
+            cx="50"
+            cy="50"
+            r="44"
+            stroke="#E41F26"
+            strokeWidth="1.5"
+            strokeDasharray="55 220"
+            strokeLinecap="round"
+          />
+        </svg>
+
+        {/* Logo center */}
+        <div className="relative w-[90px] h-[42px] animate-pulse">
           <Image
             src="/images/logo/logo.png"
             alt="Ramdan Flex Printers Logo"
@@ -14,8 +32,6 @@ export default function Loading() {
             className="object-contain"
           />
         </div>
-        {/* Smooth spinner matching brand colors */}
-        <div className="h-5.5 w-5.5 animate-spin rounded-full border-2 border-neutral-100 border-t-[#E41F26]" />
       </div>
     </div>
   );
