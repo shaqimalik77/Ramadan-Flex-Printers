@@ -28,6 +28,7 @@ export const bestSellingProducts: CategoryItem[] = [
   { id: "3d-boards", name: "3D Boards", image: "/images/categories/3d-boards.png", href: "/products?category=3d-boards" },
   { id: "flex-designs", name: "Flex Designs", image: "/images/categories/flex-designs.png", href: "/products?category=flex-designs" },
   { id: "promotional-products", name: "Promotional Products", image: "/images/categories/promotional-products.png", href: "/products?category=promotional-products" },
+  { id: "mugs", name: "Mugs", image: "/images/categories/mugs.png", href: "/products?category=mugs" },
 ];
 
 /**

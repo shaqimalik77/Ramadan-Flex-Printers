@@ -81,8 +81,8 @@ export default function BestSelling() {
         {/* Centered max-w-5xl container */}
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <SectionHeading title="Best Selling Products" />
-          {/* 5 items on a single row on desktop, wrapping to 3/2 on tablets */}
-          <ul className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-5 p-0 m-0">
+          {/* 6 items on a single row on desktop, wrapping to 3/2 on tablets */}
+          <ul className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-6 p-0 m-0">
             {bestSellingProducts.map((category) => (
               <CategoryCard key={category.id} category={category} />
             ))}
