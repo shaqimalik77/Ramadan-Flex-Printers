@@ -54,7 +54,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-black aspect-[16/9] md:aspect-auto md:h-[420px] lg:h-[480px] xl:h-[550px]"
+      className="relative w-full overflow-hidden bg-black aspect-[1672/941]"
       aria-roledescription="carousel"
       aria-label="Featured products and services"
       onMouseEnter={() => setPaused(true)}
