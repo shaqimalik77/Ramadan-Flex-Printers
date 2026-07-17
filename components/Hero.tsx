@@ -54,8 +54,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-black"
-      style={{ height: "clamp(280px, 50vw, 580px)" }}
+      className="relative w-full overflow-hidden bg-black aspect-[16/9] md:aspect-auto md:h-[420px] lg:h-[480px] xl:h-[550px]"
       aria-roledescription="carousel"
       aria-label="Featured products and services"
       onMouseEnter={() => setPaused(true)}
@@ -111,29 +110,29 @@ export default function Hero() {
       </button>
 
       {/* Bottom overlay — CTAs + dots */}
-      <div className="absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black/75 via-black/25 to-transparent pb-4 pt-14 sm:pb-5 sm:pt-16">
-        <div className="mx-auto flex max-w-5xl flex-col items-center gap-3.5 px-4">
-          <div className="flex flex-col items-center gap-3 sm:flex-row">
+      <div className="absolute inset-x-0 bottom-0 z-20 bg-gradient-to-t from-black/85 via-black/30 to-transparent pb-2 pt-6 sm:pb-4 sm:pt-14">
+        <div className="mx-auto flex max-w-5xl flex-col items-center gap-2 sm:gap-3.5 px-4">
+          <div className="flex flex-row items-center justify-center gap-2 sm:gap-3">
             <a
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-[#E31E24] px-5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-black/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#C81920] hover:shadow-lg active:translate-y-0 cursor-pointer"
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#E31E24] px-3.5 py-1.5 text-[10px] sm:text-xs md:text-sm font-bold text-white shadow-md shadow-black/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#C81920] hover:shadow-lg active:translate-y-0 cursor-pointer whitespace-nowrap"
             >
-              <MessageCircle className="h-4 w-4" />
-              Get Quote on WhatsApp
+              <MessageCircle className="h-3.5 w-3.5" />
+              Get Quote
             </a>
 
             <Link
               href="/products"
-              className="inline-flex items-center gap-2 rounded-full border border-white/70 px-5 py-2.5 text-xs sm:text-sm font-bold text-white backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:text-[#E31E24] active:translate-y-0 cursor-pointer"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/70 px-3.5 py-1.5 text-[10px] sm:text-xs md:text-sm font-bold text-white backdrop-blur-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:text-[#E31E24] active:translate-y-0 cursor-pointer whitespace-nowrap"
             >
               View Products
             </Link>
           </div>
 
           {/* Pagination dots */}
-          <div className="flex items-center gap-2" role="tablist" aria-label="Select slide">
+          <div className="flex items-center gap-1 sm:gap-2" role="tablist" aria-label="Select slide">
             {heroSlides.map((_, index) => (
               <button
                 key={index}
@@ -144,7 +143,7 @@ export default function Hero() {
                 onClick={() => setCurrent(index)}
                 className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                   index === current
-                    ? "w-6 bg-[#E31E24]"
+                    ? "w-4 sm:w-6 bg-[#E31E24]"
                     : "w-1.5 bg-neutral-300/80 hover:bg-neutral-100"
                 }`}
               />
