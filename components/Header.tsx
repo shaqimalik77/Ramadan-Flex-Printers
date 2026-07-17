@@ -10,10 +10,10 @@ import {
   Clock,
   Phone,
   User,
-  ShoppingCart,
   Menu,
   X,
   ChevronDown,
+  HelpCircle,
 } from "lucide-react";
 
 /* ------------------------------------------------------------------ */
@@ -155,14 +155,11 @@ export default function Header() {
           isScrolled ? "h-[52px]" : "h-[60px]"
         }`}
       >
-        {/* Left Spacer to balance hamburger on mobile and keep logo centered */}
-        <div className="w-10 shrink-0 md:hidden" />
-
-        {/* Logo — fixed height, auto width, centered on mobile */}
+        {/* Logo — fixed height, auto width */}
         <Link
           href="/"
           aria-label="Go to homepage"
-          className={`flex-1 md:flex-none flex justify-center md:justify-start shrink-0 items-center self-center origin-center md:origin-left transition-all duration-300 ease-in-out hover:opacity-80 ${
+          className={`flex shrink-0 items-center self-center origin-left transition-all duration-300 ease-in-out hover:opacity-80 ${
             isScrolled ? "scale-90" : "scale-100"
           }`}
         >
@@ -226,13 +223,13 @@ export default function Header() {
           Login / Register
         </button>
 
-        {/* Cart — hidden on mobile, visible on tablet/desktop */}
+        {/* How to Order — always visible */}
         <Link
-          href="/cart"
-          className="ml-auto hidden md:flex shrink-0 items-center gap-2 rounded-md bg-[#E41F26] px-3 py-2 text-sm font-semibold text-white transition-transform hover:brightness-110 active:scale-95 md:ml-0"
+          href="/contact"
+          className="ml-auto flex shrink-0 items-center gap-1.5 rounded-md bg-[#E41F26] px-3 py-1.5 text-xs font-semibold text-white transition-transform hover:brightness-110 active:scale-95 sm:px-3 sm:py-2 sm:text-sm"
         >
-          <ShoppingCart className="h-4 w-4" />
-          Cart / Rs {CART_COUNT}
+          <HelpCircle className="h-4 w-4" />
+          How to Order
         </Link>
 
         {/* Mobile hamburger */}
