@@ -5,7 +5,7 @@
   "scripts": {
     "prebuild": "rimraf .next",
     "dev": "next dev",
-    "build": "npm run prebuild && next build",
+    "build": "npm run prebuild && next build && mkdir -p tmp && touch tmp/restart.txt",
     "start": "next start",
     "lint": "eslint"
   },
