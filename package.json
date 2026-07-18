@@ -5,7 +5,7 @@
   "scripts": {
     "prebuild": "rimraf .next",
     "dev": "next dev",
-    "build": "npm run prebuild && next build && mkdir -p tmp && touch tmp/restart.txt",
+    "build": "npm run prebuild && next build && node -e \"const fs = require('fs'); if (!fs.existsSync('tmp')) { fs.mkdirSync('tmp'); } fs.writeFileSync('tmp/restart.txt', String(Date.now()));\"",
     "start": "next start",
     "lint": "eslint"
   },
