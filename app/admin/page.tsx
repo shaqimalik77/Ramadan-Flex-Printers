@@ -15,7 +15,8 @@ import {
   PlusCircle, 
   Loader2, 
   Search,
-  ChevronDown
+  Upload,
+  Image as ImageIcon
 } from "lucide-react";
 import { 
   loginAdmin, 
@@ -24,14 +25,41 @@ import {
   getAdminData, 
   saveProduct, 
   deleteProduct, 
-  saveSlides 
+  saveSlides,
+  uploadImageToGithub
 } from "./actions";
+
+// Category display mapping for nice names
+const categoryNames: Record<string, string> = {
+  ribbons: "Ribbons",
+  stickers: "Stickers",
+  "butter-paper": "Butter Paper",
+  "jewellery-cards": "Jewellery Cards",
+  polaroids: "Polaroids",
+  "business-cards": "Business Cards",
+  "label-and-hang-tags": "Label & Hang Tags",
+  "thankyou-cards": "Thank You Cards",
+  "fabric-tags": "Fabric Tags",
+  "ecommerce-boxes": "Ecommerce Boxes",
+  "standup-pouches": "Standup Pouches",
+  "hard-drawer-boxes": "Hard Drawer Boxes",
+  "ziplock-frosted-bags": "Ziplock Frosted Bags",
+  "courier-flyer-poly-bags": "Courier Flyer Poly Bags",
+  "wedding-cards": "Wedding Cards",
+  mugs: "Mugs",
+  shirts: "Shirts",
+  "neon-signs": "Neon Signs",
+  "3d-boards": "3D Boards",
+  "flex-designs": "Flex Designs",
+  "promotional-products": "Promotional Products"
+};
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [activeTab, setActiveTab] = useState<"products" | "slides">("products");
 
   // Data State
@@ -49,12 +77,11 @@ export default function AdminPage() {
   const [currentProduct, setCurrentProduct] = useState<any>({
     slug: "",
     category: "ribbons",
-    categoryName: "Ribbons",
     title: "",
-    images: [""],
+    images: [], // List of uploaded image paths
     shortDescription: "",
-    longDescription: "",
-    features: [""],
+    longDescription: "", // Stored as textarea text, split on save
+    featuresText: "", // One feature per line text
     specifications: [{ key: "", value: "" }],
     faq: [{ question: "", answer: "" }]
   });
@@ -130,6 +157,28 @@ export default function AdminPage() {
     setSlides(updated);
   }
 
+  // Handle uploading slide image from computer
+  async function handleSlideImageUpload(e: React.ChangeEvent<HTMLInputElement>, index: number) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingImage(true);
+    try {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64 = (reader.result as string).split(",")[1];
+        const res = await uploadImageToGithub("hero", file.name, base64);
+        handleSlideChange(index, "src", res.url);
+        showMsg("Banner image uploaded successfully!", "success");
+      };
+      reader.readAsDataURL(file);
+    } catch (err: any) {
+      showMsg(err.message || "Failed to upload image", "error");
+    } finally {
+      setUploadingImage(false);
+    }
+  }
+
   async function handleSaveSlides() {
     setIsSubmitting(true);
     try {
@@ -142,24 +191,42 @@ export default function AdminPage() {
     }
   }
 
-  // Product Form helper handlers
+  // Image Upload handler for product details
+  async function handleProductImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingImage(true);
+    try {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64 = (reader.result as string).split(",")[1];
+        const res = await uploadImageToGithub(currentProduct.category, file.name, base64);
+        
+        // Add to image list
+        setCurrentProduct((prev: any) => ({
+          ...prev,
+          images: [...prev.images, res.url]
+        }));
+        showMsg("Product image uploaded successfully!", "success");
+      };
+      reader.readAsDataURL(file);
+    } catch (err: any) {
+      showMsg(err.message || "Failed to upload image", "error");
+    } finally {
+      setUploadingImage(false);
+    }
+  }
+
+  function handleRemoveProductImage(idxToRemove: number) {
+    setCurrentProduct((prev: any) => ({
+      ...prev,
+      images: prev.images.filter((_: any, idx: number) => idx !== idxToRemove)
+    }));
+  }
+
   function handleFieldChange(field: string, value: any) {
-    setCurrentProduct({ ...currentProduct, [field]: value });
-  }
-
-  function handleNestedChange(field: "images" | "features", index: number, value: string) {
-    const arr = [...currentProduct[field]];
-    arr[index] = value;
-    setCurrentProduct({ ...currentProduct, [field]: arr });
-  }
-
-  function addNestedField(field: "images" | "features") {
-    setCurrentProduct({ ...currentProduct, [field]: [...currentProduct[field], ""] });
-  }
-
-  function removeNestedField(field: "images" | "features", index: number) {
-    const arr = currentProduct[field].filter((_: any, i: number) => i !== index);
-    setCurrentProduct({ ...currentProduct, [field]: arr.length ? arr : [""] });
+    setCurrentProduct((prev: any) => ({ ...prev, [field]: value }));
   }
 
   // Specifications key-value handlers
@@ -211,13 +278,16 @@ export default function AdminPage() {
     setCurrentProduct({
       slug: "",
       category: "ribbons",
-      categoryName: "Ribbons",
       title: "",
-      images: [""],
+      images: [],
       shortDescription: "",
       longDescription: "",
-      features: [""],
-      specifications: [{ key: "", value: "" }],
+      featuresText: "",
+      specifications: [
+        { key: "Material", value: "" },
+        { key: "Minimum Order", value: "" },
+        { key: "Turnaround Time", value: "" }
+      ],
       faq: [{ question: "", answer: "" }]
     });
     setIsEditingProduct(true);
@@ -233,14 +303,13 @@ export default function AdminPage() {
     setCurrentProduct({
       slug: prod.slug,
       category: prod.category,
-      categoryName: prod.categoryName,
       title: prod.title,
-      images: prod.images && prod.images.length ? prod.images : [""],
+      images: prod.images || [],
       shortDescription: prod.shortDescription || "",
       longDescription: Array.isArray(prod.longDescription) 
         ? prod.longDescription.join("\n\n") 
         : prod.longDescription || "",
-      features: prod.features && prod.features.length ? prod.features : [""],
+      featuresText: (prod.features || []).join("\n"),
       specifications: specsArray.length ? specsArray : [{ key: "", value: "" }],
       faq: prod.faq && prod.faq.length ? prod.faq : [{ question: "", answer: "" }]
     });
@@ -252,6 +321,13 @@ export default function AdminPage() {
     setIsSubmitting(true);
 
     try {
+      // Auto-compute slug from title
+      const computedSlug = currentProduct.slug || currentProduct.title
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9 ]/g, "") // remove special chars
+        .replace(/\s+/g, "-");     // replace spaces with hyphens
+
       // Map specs array back to object
       const specsObj: Record<string, string> = {};
       currentProduct.specifications.forEach((spec: any) => {
@@ -260,57 +336,35 @@ export default function AdminPage() {
         }
       });
 
-      // Filter empty inputs
-      const filteredImages = currentProduct.images.filter((img: string) => img.trim() !== "");
-      const filteredFeatures = currentProduct.features.filter((f: string) => f.trim() !== "");
-      const filteredFaq = currentProduct.faq.filter((f: any) => f.question.trim() !== "" && f.answer.trim() !== "");
+      // Split features by line
+      const featuresList = currentProduct.featuresText
+        .split("\n")
+        .map((f: string) => f.trim())
+        .filter((f: string) => f !== "");
 
-      // Split paragraphs
+      // Split long description paragraphs
       const longDescParagraphs = currentProduct.longDescription
         .split("\n\n")
         .map((p: string) => p.trim())
         .filter((p: string) => p !== "");
 
-      // Category auto-formatting mapping
-      const categoryNames: Record<string, string> = {
-        ribbons: "Ribbons",
-        stickers: "Stickers",
-        "butter-paper": "Butter Paper",
-        "jewellery-cards": "Jewellery Cards",
-        polaroids: "Polaroids",
-        "business-cards": "Business Cards",
-        "label-and-hang-tags": "Label & Hang Tags",
-        "thankyou-cards": "Thank You Cards",
-        "fabric-tags": "Fabric Tags",
-        "ecommerce-boxes": "Ecommerce Boxes",
-        "standup-pouches": "Standup Pouches",
-        "hard-drawer-boxes": "Hard Drawer Boxes",
-        "ziplock-frosted-bags": "Ziplock Frosted Bags",
-        "courier-flyer-poly-bags": "Courier Flyer Poly Bags",
-        "wedding-cards": "Wedding Cards",
-        mugs: "Mugs",
-        shirts: "Shirts",
-        "neon-signs": "Neon Signs",
-        "3d-boards": "3D Boards",
-        "flex-designs": "Flex Designs",
-        "promotional-products": "Promotional Products"
-      };
+      const filteredFaq = currentProduct.faq.filter((f: any) => f.question.trim() !== "" && f.answer.trim() !== "");
 
       const payload = {
-        slug: currentProduct.slug.trim().toLowerCase().replace(/[^a-z0-9-_]/g, "-"),
+        slug: computedSlug,
         category: currentProduct.category,
         categoryName: categoryNames[currentProduct.category] || currentProduct.category,
         title: currentProduct.title.trim(),
-        images: filteredImages.length ? filteredImages : ["/images/logo/logo.png"],
+        images: currentProduct.images.length ? currentProduct.images : ["/images/logo/logo.png"],
         shortDescription: currentProduct.shortDescription.trim(),
         longDescription: longDescParagraphs,
-        features: filteredFeatures,
+        features: featuresList,
         specifications: specsObj,
         faq: filteredFaq
       };
 
       await saveProduct(payload);
-      showMsg(`Product "${payload.title}" saved successfully! Auto-deploy triggered.`, "success");
+      showMsg(`Product "${payload.title}" saved successfully! Auto-deploy started.`, "success");
       setIsEditingProduct(false);
       loadData();
     } catch (err: any) {
@@ -339,9 +393,10 @@ export default function AdminPage() {
   // Filter products based on search
   const filteredProducts = products.filter((prod) => {
     const q = searchQuery.toLowerCase();
+    const catName = categoryNames[prod.category] || prod.category;
     return (
       prod.title.toLowerCase().includes(q) ||
-      prod.category.toLowerCase().includes(q) ||
+      catName.toLowerCase().includes(q) ||
       prod.slug.toLowerCase().includes(q)
     );
   });
@@ -416,7 +471,7 @@ export default function AdminPage() {
 
   // --- ADMIN CONSOLE DASHBOARD ---
   return (
-    <div className="min-h-screen bg-neutral-950 text-white font-sans">
+    <div className="min-h-screen bg-neutral-950 text-white font-sans pb-12">
       {/* Top Banner Message */}
       {message && (
         <div className={`fixed top-4 right-4 z-[9999] flex items-center gap-2 rounded-lg border px-4 py-3 text-sm shadow-xl backdrop-blur-md animate-[slideIn_0.2s_ease-out] ${
@@ -503,7 +558,7 @@ export default function AdminPage() {
                           type="text"
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
-                          placeholder="Search product name, slug, or category..."
+                          placeholder="Search product by name or category..."
                           className="block w-full pl-10 pr-3 py-2 border border-white/10 rounded-lg bg-black/40 text-sm text-white placeholder-neutral-500 focus:outline-none focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition"
                         />
                       </div>
@@ -528,10 +583,7 @@ export default function AdminPage() {
                           <div>
                             <div className="flex items-center justify-between mb-2">
                               <span className="inline-flex items-center rounded-full bg-[#00AEEF]/10 px-2.5 py-0.5 text-xs font-bold text-[#00AEEF]">
-                                {prod.categoryName || prod.category}
-                              </span>
-                              <span className="text-[10px] text-neutral-500 font-mono">
-                                /{prod.slug}
+                                {categoryNames[prod.category] || prod.category}
                               </span>
                             </div>
                             <h3 className="text-base font-bold text-white group-hover:text-[#00AEEF] transition">
@@ -574,9 +626,9 @@ export default function AdminPage() {
                     <div className="flex items-center justify-between border-b border-white/10 pb-4">
                       <div>
                         <h2 className="text-lg font-bold text-white">
-                          {currentProduct.slug ? "Edit Product Details" : "Add New Product"}
+                          {currentProduct.slug ? `Edit Product: ${currentProduct.title}` : "Add New Product"}
                         </h2>
-                        <p className="text-xs text-neutral-400">Provide product details. Saved updates will auto-compile.</p>
+                        <p className="text-xs text-neutral-400">Provide details. Data saves directly to GitHub and auto-rebuilds the website.</p>
                       </div>
                       <button
                         type="button"
@@ -591,7 +643,7 @@ export default function AdminPage() {
                       {/* Title */}
                       <div>
                         <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-2">
-                          Product Title
+                          Product Name (Title)
                         </label>
                         <input
                           type="text"
@@ -603,165 +655,134 @@ export default function AdminPage() {
                         />
                       </div>
 
-                      {/* Slug */}
-                      <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-2">
-                          URL Slug (Unique identifier)
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          disabled={!!currentProduct.slug}
-                          value={currentProduct.slug}
-                          onChange={(e) => handleFieldChange("slug", e.target.value)}
-                          placeholder="E.g., matte-business-cards"
-                          className="block w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2.5 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition disabled:opacity-50 disabled:cursor-not-allowed"
-                        />
-                      </div>
-
                       {/* Category Selection */}
                       <div>
                         <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-2">
-                          Category Slug
+                          Product Category
                         </label>
                         <select
                           value={currentProduct.category}
                           onChange={(e) => handleFieldChange("category", e.target.value)}
                           className="block w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2.5 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition cursor-pointer"
                         >
-                          <option value="ribbons">Ribbons</option>
-                          <option value="stickers">Stickers</option>
-                          <option value="butter-paper">Butter Paper</option>
-                          <option value="jewellery-cards">Jewellery Cards</option>
-                          <option value="polaroids">Polaroids</option>
-                          <option value="business-cards">Business Cards</option>
-                          <option value="label-and-hang-tags">Label & Hang Tags</option>
-                          <option value="thankyou-cards">Thank You Cards</option>
-                          <option value="fabric-tags">Fabric Tags</option>
-                          <option value="ecommerce-boxes">Ecommerce Boxes</option>
-                          <option value="standup-pouches">Standup Pouches</option>
-                          <option value="hard-drawer-boxes">Hard Drawer Boxes</option>
-                          <option value="ziplock-frosted-bags">Ziplock Frosted Bags</option>
-                          <option value="courier-flyer-poly-bags">Courier Flyer Poly Bags</option>
-                          <option value="wedding-cards">Wedding Cards</option>
-                          <option value="mugs">Mugs</option>
-                          <option value="shirts">Shirts</option>
-                          <option value="neon-signs">Neon Signs</option>
-                          <option value="3d-boards">3D Boards</option>
-                          <option value="flex-designs">Flex Designs</option>
-                          <option value="promotional-products">Promotional Products</option>
+                          {Object.entries(categoryNames).map(([slug, name]) => (
+                            <option key={slug} value={slug}>{name}</option>
+                          ))}
                         </select>
                       </div>
 
                       {/* Short Description */}
                       <div className="md:col-span-2">
                         <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-2">
-                          Short Summary Description (Shown on card grids)
+                          Short Description (1-2 sentences shown on grids)
                         </label>
                         <textarea
                           required
                           rows={2}
                           value={currentProduct.shortDescription}
                           onChange={(e) => handleFieldChange("shortDescription", e.target.value)}
-                          placeholder="Provide a 1-2 sentence quick highlight of the product..."
+                          placeholder="E.g., High-quality business cards printed on premium cardstock with smooth matte laminate."
                           className="block w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition"
                         />
+                      </div>
+
+                      {/* Image Upload Block */}
+                      <div className="md:col-span-2 space-y-4">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300">
+                          Product Images
+                        </label>
+                        
+                        {/* Drag/Drop Box */}
+                        <div className="flex items-center justify-center w-full">
+                          <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-white/10 border-dashed rounded-xl cursor-pointer bg-black/20 hover:bg-black/35 hover:border-white/20 transition">
+                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                              {uploadingImage ? (
+                                <>
+                                  <Loader2 className="w-8 h-8 animate-spin text-[#00AEEF] mb-2" />
+                                  <p className="text-xs text-neutral-400">Uploading file to GitHub...</p>
+                                </>
+                              ) : (
+                                <>
+                                  <Upload className="w-8 h-8 text-neutral-400 mb-2" />
+                                  <p className="text-xs text-neutral-300"><span className="font-bold">Click to upload image</span> from computer</p>
+                                  <p className="text-[10px] text-neutral-500 mt-1">PNG, JPG, JPEG supported</p>
+                                </>
+                              )}
+                            </div>
+                            <input 
+                              type="file" 
+                              accept="image/*"
+                              disabled={uploadingImage}
+                              onChange={handleProductImageUpload}
+                              className="hidden" 
+                            />
+                          </label>
+                        </div>
+
+                        {/* Images Thumbnails Preview Grid */}
+                        {currentProduct.images && currentProduct.images.length > 0 && (
+                          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-6 mt-4">
+                            {currentProduct.images.map((img: string, idx: number) => (
+                              <div key={idx} className="group relative aspect-square border border-white/10 rounded-lg overflow-hidden bg-black/40">
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img 
+                                  src={img} 
+                                  alt="Product Preview" 
+                                  className="w-full h-full object-contain"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => handleRemoveProductImage(idx)}
+                                  className="absolute top-1 right-1 p-1 rounded bg-red-950/80 text-red-400 border border-red-500/20 opacity-0 group-hover:opacity-100 transition cursor-pointer"
+                                >
+                                  <X className="h-3 w-3" />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
 
                       {/* Long Description */}
                       <div className="md:col-span-2">
                         <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-2">
-                          Long Description Copy (Separate paragraphs with double Enter / blank line)
+                          Detailed Description (Para text. Press Enter twice to start a new paragraph)
                         </label>
                         <textarea
                           required
-                          rows={8}
+                          rows={6}
                           value={currentProduct.longDescription}
                           onChange={(e) => handleFieldChange("longDescription", e.target.value)}
-                          placeholder="Write long form copy paragraphs. Press Enter twice to start a new paragraph..."
+                          placeholder="Write long description here. Double line breaks make clean paragraphs."
                           className="block w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition"
                         />
                       </div>
-                    </div>
 
-                    {/* Image URL list */}
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between border-b border-white/5 pb-2">
-                        <h3 className="text-sm font-bold text-neutral-200">Product Images (URLs or local paths)</h3>
-                        <button
-                          type="button"
-                          onClick={() => addNestedField("images")}
-                          className="flex items-center gap-1 text-xs text-[#00AEEF] font-bold hover:underline cursor-pointer"
-                        >
-                          <Plus className="h-3.5 w-3.5" /> Add Image
-                        </button>
-                      </div>
-                      <div className="space-y-2">
-                        {currentProduct.images.map((img: string, idx: number) => (
-                          <div key={idx} className="flex gap-2">
-                            <input
-                              type="text"
-                              value={img}
-                              onChange={(e) => handleNestedChange("images", idx, e.target.value)}
-                              placeholder="E.g., /images/products/cards/card-1.png"
-                              className="block flex-grow rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => removeNestedField("images", idx)}
-                              className="p-2 rounded-lg bg-red-950/40 text-red-400 border border-red-500/10 hover:bg-red-950/70 transition cursor-pointer"
-                            >
-                              <X className="h-4 w-4" />
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Features list */}
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between border-b border-white/5 pb-2">
-                        <h3 className="text-sm font-bold text-neutral-200">Key Features List</h3>
-                        <button
-                          type="button"
-                          onClick={() => addNestedField("features")}
-                          className="flex items-center gap-1 text-xs text-[#00AEEF] font-bold hover:underline cursor-pointer"
-                        >
-                          <Plus className="h-3.5 w-3.5" /> Add Feature
-                        </button>
-                      </div>
-                      <div className="space-y-2">
-                        {currentProduct.features.map((feat: string, idx: number) => (
-                          <div key={idx} className="flex gap-2">
-                            <input
-                              type="text"
-                              value={feat}
-                              onChange={(e) => handleNestedChange("features", idx, e.target.value)}
-                              placeholder="E.g., Durable matte double-sided coating"
-                              className="block flex-grow rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => removeNestedField("features", idx)}
-                              className="p-2 rounded-lg bg-red-950/40 text-red-400 border border-red-500/10 hover:bg-red-950/70 transition cursor-pointer"
-                            >
-                              <X className="h-4 w-4" />
-                            </button>
-                          </div>
-                        ))}
+                      {/* Features text area (Single text area split by line) */}
+                      <div className="md:col-span-2">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-neutral-300 mb-2">
+                          Key Features (Write one feature per line)
+                        </label>
+                        <textarea
+                          rows={4}
+                          value={currentProduct.featuresText}
+                          onChange={(e) => handleFieldChange("featuresText", e.target.value)}
+                          placeholder="E.g.:&#10;Premium matte laminate finish&#10;Durable 350gsm cardstock&#10;Dual-side high resolution printing"
+                          className="block w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition font-mono leading-relaxed"
+                        />
                       </div>
                     </div>
 
                     {/* Specifications table */}
                     <div className="space-y-4">
                       <div className="flex items-center justify-between border-b border-white/5 pb-2">
-                        <h3 className="text-sm font-bold text-neutral-200">Product Specifications Table</h3>
+                        <h3 className="text-sm font-bold text-neutral-200">Specification Details (Properties)</h3>
                         <button
                           type="button"
                           onClick={addSpecField}
                           className="flex items-center gap-1 text-xs text-[#00AEEF] font-bold hover:underline cursor-pointer"
                         >
-                          <Plus className="h-3.5 w-3.5" /> Add Row
+                          <Plus className="h-3.5 w-3.5" /> Add Property
                         </button>
                       </div>
                       <div className="space-y-2">
@@ -771,14 +792,14 @@ export default function AdminPage() {
                               type="text"
                               value={spec.key}
                               onChange={(e) => handleSpecChange(idx, "key", e.target.value)}
-                              placeholder="Key: E.g., Card Weight"
+                              placeholder="Property (e.g., Sizes)"
                               className="block w-1/3 rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition"
                             />
                             <input
                               type="text"
                               value={spec.value}
                               onChange={(e) => handleSpecChange(idx, "value", e.target.value)}
-                              placeholder="Value: E.g., 350 GSM Art Card"
+                              placeholder="Details (e.g., 2 x 3.5 inches)"
                               className="block flex-grow rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition"
                             />
                             <button
@@ -796,7 +817,7 @@ export default function AdminPage() {
                     {/* FAQs list */}
                     <div className="space-y-4">
                       <div className="flex items-center justify-between border-b border-white/5 pb-2">
-                        <h3 className="text-sm font-bold text-neutral-200">FAQs List</h3>
+                        <h3 className="text-sm font-bold text-neutral-200">Customer FAQs</h3>
                         <button
                           type="button"
                           onClick={addFaqField}
@@ -811,7 +832,7 @@ export default function AdminPage() {
                             <button
                               type="button"
                               onClick={() => removeFaqField(idx)}
-                              className="absolute top-2 right-2 p-1 rounded-lg bg-red-950/40 text-red-400 border border-red-500/10 hover:bg-red-950/70 transition cursor-pointer"
+                              className="absolute top-2 right-2 p-1 rounded bg-red-950/40 text-red-400 border border-red-500/10 hover:bg-red-950/70 transition cursor-pointer"
                             >
                               <X className="h-3.5 w-3.5" />
                             </button>
@@ -820,7 +841,7 @@ export default function AdminPage() {
                                 type="text"
                                 value={faq.question}
                                 onChange={(e) => handleFaqChange(idx, "question", e.target.value)}
-                                placeholder="Question: E.g., What is the minimum order quantity?"
+                                placeholder="Question (e.g., What is the minimum order?)"
                                 className="block w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition"
                               />
                             </div>
@@ -829,7 +850,7 @@ export default function AdminPage() {
                                 rows={2}
                                 value={faq.answer}
                                 onChange={(e) => handleFaqChange(idx, "answer", e.target.value)}
-                                placeholder="Answer: E.g., Our minimum order starts at 100 cards..."
+                                placeholder="Answer details..."
                                 className="block w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition"
                               />
                             </div>
@@ -848,7 +869,7 @@ export default function AdminPage() {
                         {isSubmitting ? (
                           <Loader2 className="h-5 w-5 animate-spin" />
                         ) : (
-                          "Save Changes & Push to GitHub"
+                          "Save Product & Publish"
                         )}
                       </button>
                       <button
@@ -869,7 +890,7 @@ export default function AdminPage() {
               <div className="rounded-xl border border-white/10 bg-white/5 p-6 md:p-8 space-y-6">
                 <div>
                   <h2 className="text-lg font-bold text-white">Hero Slider Banners</h2>
-                  <p className="text-xs text-neutral-400 mb-6">Manage full-bleed images on the homepage hero slider. Slide order matches list order.</p>
+                  <p className="text-xs text-neutral-400 mb-6">Upload full-bleed banner images for the homepage slider. Slide order matches list order.</p>
                 </div>
 
                 <div className="space-y-4">
@@ -889,34 +910,69 @@ export default function AdminPage() {
                         <span className="text-xs font-black uppercase text-[#00AEEF]">Slide #{idx + 1}</span>
                       </div>
 
-                      {/* Image path */}
-                      <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-neutral-400 mb-1.5">
-                          Image Source URL (E.g. /images/hero/slide-1.png)
+                      {/* Left: Image Upload & Preview */}
+                      <div className="space-y-4">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-neutral-400">
+                          Upload Banner Image
                         </label>
-                        <input
-                          type="text"
-                          required
-                          value={slide.src}
-                          onChange={(e) => handleSlideChange(idx, "src", e.target.value)}
-                          placeholder="/images/hero/slide-x.png"
-                          className="block w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition"
-                        />
+                        <div className="flex items-center justify-center w-full">
+                          <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-white/10 border-dashed rounded-lg cursor-pointer bg-black/20 hover:bg-black/35 hover:border-white/20 transition">
+                            <div className="flex flex-col items-center justify-center pt-2">
+                              {uploadingImage ? (
+                                <Loader2 className="w-6 h-6 animate-spin text-[#00AEEF]" />
+                              ) : (
+                                <>
+                                  <Upload className="w-6 h-6 text-neutral-400 mb-1" />
+                                  <span className="text-[10px] text-neutral-300 font-bold">Upload Slide Image</span>
+                                </>
+                              )}
+                            </div>
+                            <input 
+                              type="file" 
+                              accept="image/*"
+                              disabled={uploadingImage}
+                              onChange={(e) => handleSlideImageUpload(e, idx)}
+                              className="hidden" 
+                            />
+                          </label>
+                        </div>
+                        {slide.src && (
+                          <div className="relative aspect-[1672/941] w-full border border-white/10 rounded-lg overflow-hidden bg-black/60">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={slide.src} alt="Slide Preview" className="w-full h-full object-cover" />
+                          </div>
+                        )}
                       </div>
 
-                      {/* Alt text */}
-                      <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-neutral-400 mb-1.5">
-                          Accessibility description (Alt tag text)
-                        </label>
-                        <input
-                          type="text"
-                          required
-                          value={slide.alt}
-                          onChange={(e) => handleSlideChange(idx, "alt", e.target.value)}
-                          placeholder="Describe the image content..."
-                          className="block w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition"
-                        />
+                      {/* Right: Manual Input Paths & Alt */}
+                      <div className="space-y-4 self-end">
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-neutral-400 mb-1.5">
+                            Image Path (Alternative URL)
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            value={slide.src}
+                            onChange={(e) => handleSlideChange(idx, "src", e.target.value)}
+                            placeholder="/images/hero/slide-x.png"
+                            className="block w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-bold uppercase tracking-wider text-neutral-400 mb-1.5">
+                            Image Description (Alt tag)
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            value={slide.alt}
+                            onChange={(e) => handleSlideChange(idx, "alt", e.target.value)}
+                            placeholder="Describe slide contents..."
+                            className="block w-full rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#00AEEF] focus:border-[#00AEEF] transition"
+                          />
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -946,7 +1002,7 @@ export default function AdminPage() {
                       {isSubmitting ? (
                         <Loader2 className="h-5 w-5 animate-spin" />
                       ) : (
-                        "Save Banners & Push to GitHub"
+                        "Save Banners & Publish"
                       )}
                     </button>
                   </div>

@@ -186,3 +186,52 @@ export async function saveSlides(slides: any[]) {
 
   return { success: true };
 }
+
+export async function uploadImageToGithub(category: string, filename: string, base64Content: string) {
+  if (!(await checkAdminAuth())) {
+    throw new Error("Unauthorized");
+  }
+
+  const token = process.env.GITHUB_TOKEN;
+  const cleanName = `${Date.now()}-${filename.toLowerCase().replace(/[^a-z0-9.]/g, "-")}`;
+  const githubPath = `public/images/products/${category}/${cleanName}`;
+  const relativePath = `/images/products/${category}/${cleanName}`;
+
+  if (isDev) {
+    const localDir = path.join(process.cwd(), "public/images/products", category);
+    if (!fs.existsSync(localDir)) {
+      fs.mkdirSync(localDir, { recursive: true });
+    }
+    const buffer = Buffer.from(base64Content, "base64");
+    fs.writeFileSync(path.join(localDir, cleanName), buffer);
+    return { url: relativePath };
+  } else {
+    if (!token) {
+      throw new Error("GITHUB_TOKEN is not configured in production.");
+    }
+    const OWNER = "shaqimalik77";
+    const REPO = "Ramadan-Flex-Printers";
+    const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${githubPath}`;
+
+    const putRes = await fetch(url, {
+      method: "PUT",
+      headers: {
+        Authorization: `token ${token}`,
+        Accept: "application/vnd.github.v3+json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: `Upload product image: ${cleanName}`,
+        content: base64Content,
+        branch: "main",
+      }),
+    });
+
+    if (!putRes.ok) {
+      const err = await putRes.json().catch(() => ({}));
+      throw new Error(`GitHub image upload failed: ${err.message || putRes.statusText}`);
+    }
+
+    return { url: relativePath };
+  }
+}
