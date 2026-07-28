@@ -11,13 +11,25 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "Ramdan123!";
 
 // Helper to read JSON data (local in dev, GitHub in prod)
 async function getJSONData(filename: string): Promise<{ data: any; sha?: string }> {
+  const isArrayType = filename.includes("users") || filename.includes("bestSelling") || filename.includes("categoryProducts") || filename.includes("heroSlides");
+  
   if (isDev) {
     const filePath = path.join(process.cwd(), "data", filename);
+    if (!fs.existsSync(filePath)) {
+      return { data: isArrayType ? [] : {} };
+    }
     const content = fs.readFileSync(filePath, "utf-8");
     return { data: JSON.parse(content) };
   } else {
-    const { content, sha } = await fetchFileFromGithub(`data/${filename}`);
-    return { data: JSON.parse(content), sha };
+    try {
+      const { content, sha } = await fetchFileFromGithub(`data/${filename}`);
+      return { data: JSON.parse(content), sha };
+    } catch (error: any) {
+      if (error.message && (error.message.includes("Not Found") || error.message.includes("404"))) {
+        return { data: isArrayType ? [] : {}, sha: undefined };
+      }
+      throw error;
+    }
   }
 }
 
@@ -29,11 +41,14 @@ async function writeJSONData(filename: string, data: any, sha?: string, message?
     fs.writeFileSync(filePath, content, "utf-8");
   } else {
     if (!sha) {
-      // Fetch current SHA if not provided to prevent out-of-sync errors
-      const fetched = await fetchFileFromGithub(`data/${filename}`);
-      sha = fetched.sha;
+      try {
+        const fetched = await fetchFileFromGithub(`data/${filename}`);
+        sha = fetched.sha;
+      } catch (e) {
+        sha = undefined; // File does not exist, commit with undefined sha (creates file)
+      }
     }
-    await commitFileToGithub(`data/${filename}`, content, sha, message || `Update ${filename} via Admin Panel`);
+    await commitFileToGithub(`data/${filename}`, content, sha || "", message || `Update ${filename} via Admin Panel`);
   }
 }
 
