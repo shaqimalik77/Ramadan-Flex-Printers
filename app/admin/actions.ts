@@ -48,7 +48,7 @@ async function writeJSONData(filename: string, data: any, sha?: string, message?
         sha = undefined; // File does not exist, commit with undefined sha (creates file)
       }
     }
-    await commitFileToGithub(`data/${filename}`, content, sha || "", message || `Update ${filename} via Admin Panel`);
+    await commitFileToGithub(`data/${filename}`, content, sha, message || `Update ${filename} via Admin Panel`);
   }
 }
 

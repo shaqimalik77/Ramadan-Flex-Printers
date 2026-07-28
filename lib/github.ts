@@ -29,13 +29,24 @@ export async function fetchFileFromGithub(path: string): Promise<{ content: stri
   };
 }
 
-export async function commitFileToGithub(path: string, content: string, sha: string, commitMessage: string) {
+export async function commitFileToGithub(path: string, content: string, sha: string | undefined, commitMessage: string) {
   const token = process.env.GITHUB_TOKEN;
   if (!token) {
     throw new Error("GITHUB_TOKEN is not configured in environment variables.");
   }
 
   const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${path}`;
+  
+  const payload: any = {
+    message: commitMessage,
+    content: Buffer.from(content).toString("base64"),
+    branch: "main",
+  };
+
+  if (sha && sha.trim() !== "") {
+    payload.sha = sha;
+  }
+
   const response = await fetch(url, {
     method: "PUT",
     headers: {
@@ -43,12 +54,7 @@ export async function commitFileToGithub(path: string, content: string, sha: str
       Accept: "application/vnd.github.v3+json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      message: commitMessage,
-      content: Buffer.from(content).toString("base64"),
-      sha,
-      branch: "main",
-    }),
+    body: JSON.stringify(payload),
   });
 
   if (!response.ok) {
