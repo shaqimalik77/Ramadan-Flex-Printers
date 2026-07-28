@@ -16,7 +16,8 @@ import {
   Loader2, 
   Search,
   Upload,
-  Image as ImageIcon
+  Image as ImageIcon,
+  User
 } from "lucide-react";
 import { 
   loginAdmin, 
@@ -60,13 +61,14 @@ export default function AdminPage() {
   const [authError, setAuthError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
-  const [activeTab, setActiveTab] = useState<"products" | "slides">("products");
+  const [activeTab, setActiveTab] = useState<"products" | "slides" | "users">("products");
 
   // Data State
   const [loadingData, setLoadingData] = useState(false);
   const [products, setProducts] = useState<any[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
   const [slides, setSlides] = useState<any[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
   const [message, setMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
 
   // Search/Filter State
@@ -104,6 +106,7 @@ export default function AdminPage() {
       setProducts(res.products);
       setCategories(res.categories);
       setSlides(res.slides);
+      setUsers(res.users || []);
     } catch (err: any) {
       showMsg("Failed to load website data", "error");
     } finally {
@@ -140,6 +143,7 @@ export default function AdminPage() {
     setIsAuthenticated(false);
     setProducts([]);
     setSlides([]);
+    setUsers([]);
   }
 
   // Slide CRUD Handlers
@@ -531,6 +535,17 @@ export default function AdminPage() {
             >
               <Sliders className="h-4 w-4" />
               Home Banners ({slides.length})
+            </button>
+            <button
+              onClick={() => setActiveTab("users")}
+              className={`flex items-center gap-2 px-6 py-3 text-sm font-bold border-b-2 transition cursor-pointer ${
+                activeTab === "users" 
+                  ? "border-[#E41F26] text-white" 
+                  : "border-transparent text-neutral-400 hover:text-neutral-200"
+              }`}
+            >
+              <User className="h-4 w-4" />
+              Registered Users ({users.length})
             </button>
           </div>
         )}
@@ -1006,6 +1021,52 @@ export default function AdminPage() {
                       )}
                     </button>
                   </div>
+                </div>
+              </div>
+            )}
+
+            {/* ================= TAB 3: REGISTERED USERS ================= */}
+            {activeTab === "users" && (
+              <div className="rounded-xl border border-white/10 bg-white/5 p-6 md:p-8 space-y-6">
+                <div>
+                  <h2 className="text-lg font-bold text-white">Registered Customer Accounts</h2>
+                  <p className="text-xs text-neutral-400 mb-6">List of all customers who have created an account/logged in on the site.</p>
+                </div>
+
+                <div className="overflow-x-auto rounded-lg border border-white/10 bg-black/20">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-white/10 bg-white/5 text-xs font-bold uppercase tracking-wider text-neutral-400">
+                        <th className="px-6 py-4">Customer Name</th>
+                        <th className="px-6 py-4">Email Address</th>
+                        <th className="px-6 py-4">Registration Date</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5 text-sm">
+                      {users.map((u, idx) => (
+                        <tr key={idx} className="hover:bg-white/5 transition">
+                          <td className="px-6 py-4 font-bold text-white">{u.name}</td>
+                          <td className="px-6 py-4 text-neutral-300">{u.email}</td>
+                          <td className="px-6 py-4 text-neutral-400">
+                            {u.createdAt ? new Date(u.createdAt).toLocaleDateString("en-US", {
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                              hour: "2-digit",
+                              minute: "2-digit"
+                            }) : "N/A"}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+
+                  {users.length === 0 && (
+                    <div className="text-center py-12">
+                      <User className="mx-auto h-10 w-10 text-neutral-500 mb-2" />
+                      <p className="text-sm text-neutral-400">No registered customers yet.</p>
+                    </div>
+                  )}
                 </div>
               </div>
             )}

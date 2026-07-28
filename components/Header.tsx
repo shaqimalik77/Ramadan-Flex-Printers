@@ -18,8 +18,16 @@ import {
   Send,
   Tag,
   Truck,
+  Loader2,
+  AlertCircle
 } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
+import { 
+  registerUserAction, 
+  loginUserAction, 
+  logoutUserAction, 
+  getCurrentUserAction 
+} from "@/app/admin/actions";
 
 /* ------------------------------------------------------------------ */
 /*  Config — edit these to fit your business, no markup changes needed */
@@ -104,6 +112,24 @@ export default function Header() {
   const [authTab, setAuthTab] = useState<"login" | "register">("login");
   const [guideOpen, setGuideOpen] = useState(false);
 
+  // Real Auth States
+  const [currentUser, setCurrentUser] = useState<{ name: string; email: string } | null>(null);
+  const [authName, setAuthName] = useState("");
+  const [authEmail, setAuthEmail] = useState("");
+  const [authPassword, setAuthPassword] = useState("");
+  const [authConfirmPassword, setAuthConfirmPassword] = useState("");
+  const [authError, setAuthError] = useState("");
+  const [authLoading, setAuthLoading] = useState(false);
+
+  // Check active user session on mount
+  useEffect(() => {
+    async function fetchUser() {
+      const user = await getCurrentUserAction();
+      setCurrentUser(user);
+    }
+    fetchUser();
+  }, []);
+
   // Drives the shrink-on-scroll effect. Sticky (not fixed) keeps the
   // header in normal document flow, so Hero always starts right below
   // it and shrinking never overlaps page content.
@@ -138,6 +164,54 @@ export default function Header() {
       setAuthModalOpen(false);
     }
   };
+
+  async function handleAuthSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setAuthError("");
+    setAuthLoading(true);
+
+    try {
+      if (authTab === "register") {
+        if (authPassword !== authConfirmPassword) {
+          setAuthError("Passwords do not match");
+          setAuthLoading(false);
+          return;
+        }
+        const res = await registerUserAction(authName, authEmail, authPassword);
+        if (res.success) {
+          setCurrentUser({ name: authName, email: authEmail });
+          setAuthModalOpen(false);
+          // Reset fields
+          setAuthName("");
+          setAuthEmail("");
+          setAuthPassword("");
+          setAuthConfirmPassword("");
+        } else {
+          setAuthError(res.error || "Failed to register");
+        }
+      } else {
+        const res = await loginUserAction(authEmail, authPassword);
+        if (res.success) {
+          setCurrentUser({ name: res.name || "User", email: authEmail });
+          setAuthModalOpen(false);
+          // Reset fields
+          setAuthEmail("");
+          setAuthPassword("");
+        } else {
+          setAuthError(res.error || "Failed to login");
+        }
+      }
+    } catch (err) {
+      setAuthError("Failed to connect to authentication server.");
+    } finally {
+      setAuthLoading(false);
+    }
+  }
+
+  async function handleUserLogout() {
+    await logoutUserAction();
+    setCurrentUser(null);
+  }
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -222,13 +296,28 @@ export default function Header() {
         </div>
 
         {/* Auth — desktop only */}
-        <button
-          onClick={() => setAuthModalOpen(true)}
-          className="hidden shrink-0 items-center gap-1.5 whitespace-nowrap text-[13px] font-medium text-[#1A1A1A] transition-colors hover:text-[#E41F26] lg:flex cursor-pointer"
-        >
-          <User className="h-4 w-4" />
-          Login / Register
-        </button>
+        {currentUser ? (
+          <div className="hidden shrink-0 items-center gap-3 text-[13px] font-medium text-[#1A1A1A] lg:flex">
+            <span className="flex items-center gap-1.5">
+              <User className="h-4 w-4 text-[#E41F26]" />
+              Hi, <span className="font-bold text-[#E41F26]">{currentUser.name}</span>
+            </span>
+            <button
+              onClick={handleUserLogout}
+              className="text-neutral-500 hover:text-[#E41F26] transition font-semibold cursor-pointer"
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => setAuthModalOpen(true)}
+            className="hidden shrink-0 items-center gap-1.5 whitespace-nowrap text-[13px] font-medium text-[#1A1A1A] transition-colors hover:text-[#E41F26] lg:flex cursor-pointer"
+          >
+            <User className="h-4 w-4" />
+            Login / Register
+          </button>
+        )}
 
         {/* How to Order — always visible */}
         <button
@@ -518,18 +607,36 @@ export default function Header() {
             <Phone className="h-4 w-4 text-[#E41F26]" />
             <a href={`tel:${META.phone.replace(/\s/g, "")}`}>{META.phone}</a>
           </li>
-          <li className="py-3">
-            <button
-              onClick={() => {
-                setMobileOpen(false);
-                setAuthModalOpen(true);
-              }}
-              className="flex items-center gap-2 text-sm font-medium text-[#1A1A1A] w-full text-left cursor-pointer"
-            >
-              <User className="h-4 w-4" />
-              Login / Register
-            </button>
-          </li>
+          {currentUser ? (
+            <li className="py-3 flex items-center justify-between">
+              <span className="flex items-center gap-2 text-sm font-medium text-[#1A1A1A]">
+                <User className="h-4 w-4 text-[#E41F26]" />
+                Hi, <span className="font-bold text-[#E41F26]">{currentUser.name}</span>
+              </span>
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  handleUserLogout();
+                }}
+                className="text-xs text-neutral-500 hover:text-[#E41F26] font-bold cursor-pointer"
+              >
+                Logout
+              </button>
+            </li>
+          ) : (
+            <li className="py-3">
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  setAuthModalOpen(true);
+                }}
+                className="flex items-center gap-2 text-sm font-medium text-[#1A1A1A] w-full text-left cursor-pointer"
+              >
+                <User className="h-4 w-4" />
+                Login / Register
+              </button>
+            </li>
+          )}
         </ul>
       </div>
 
@@ -573,8 +680,7 @@ export default function Header() {
               </button>
             </div>
 
-            {/* Form */}
-            <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+            <form onSubmit={handleAuthSubmit} className="space-y-4">
               {authTab === "register" && (
                 <div>
                   <label className="block text-xs font-semibold text-gray-600 uppercase mb-1.5">
@@ -583,6 +689,8 @@ export default function Header() {
                   <input
                     type="text"
                     required
+                    value={authName}
+                    onChange={(e) => setAuthName(e.target.value)}
                     placeholder="Enter your name"
                     className="w-full rounded-xl border border-[#ECECEC] bg-white px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-gray-400 outline-none transition focus:border-[#E41F26] focus:ring-2 focus:ring-[#E41F26]/10"
                   />
@@ -596,6 +704,8 @@ export default function Header() {
                 <input
                   type="email"
                   required
+                  value={authEmail}
+                  onChange={(e) => setAuthEmail(e.target.value)}
                   placeholder="Enter your email"
                   className="w-full rounded-xl border border-[#ECECEC] bg-white px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-gray-400 outline-none transition focus:border-[#E41F26] focus:ring-2 focus:ring-[#E41F26]/10"
                 />
@@ -608,6 +718,8 @@ export default function Header() {
                 <input
                   type="password"
                   required
+                  value={authPassword}
+                  onChange={(e) => setAuthPassword(e.target.value)}
                   placeholder="Enter your password"
                   className="w-full rounded-xl border border-[#ECECEC] bg-white px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-gray-400 outline-none transition focus:border-[#E41F26] focus:ring-2 focus:ring-[#E41F26]/10"
                 />
@@ -621,21 +733,23 @@ export default function Header() {
                   <input
                     type="password"
                     required
+                    value={authConfirmPassword}
+                    onChange={(e) => setAuthConfirmPassword(e.target.value)}
                     placeholder="Confirm your password"
                     className="w-full rounded-xl border border-[#ECECEC] bg-white px-4 py-3 text-sm text-[#1A1A1A] placeholder:text-gray-400 outline-none transition focus:border-[#E41F26] focus:ring-2 focus:ring-[#E41F26]/10"
                   />
                 </div>
               )}
 
+              {authError && (
+                <div className="flex items-center gap-2 rounded-lg bg-red-50 border border-red-200 p-3 text-xs text-red-600">
+                  <AlertCircle className="h-4 w-4 shrink-0 text-red-500" />
+                  <span>{authError}</span>
+                </div>
+              )}
+
               {authTab === "login" ? (
-                <div className="flex items-center justify-between text-xs sm:text-sm">
-                  <label className="flex items-center gap-2 text-gray-600 cursor-pointer select-none">
-                    <input
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-[#ECECEC] text-[#E41F26] focus:ring-[#E41F26]/20 cursor-pointer"
-                    />
-                    Remember Me
-                  </label>
+                <div className="flex items-center justify-end text-xs sm:text-sm">
                   <button
                     type="button"
                     className="font-semibold text-[#E41F26] hover:underline cursor-pointer"
@@ -648,9 +762,16 @@ export default function Header() {
 
               <button
                 type="submit"
-                className="w-full rounded-xl bg-[#E41F26] py-3.5 text-sm font-bold text-white transition-all hover:brightness-110 active:scale-[0.98] shadow-md shadow-[#E41F26]/10 cursor-pointer"
+                disabled={authLoading}
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#E41F26] py-3.5 text-sm font-bold text-white transition-all hover:brightness-110 active:scale-[0.98] shadow-md shadow-[#E41F26]/10 cursor-pointer disabled:opacity-50"
               >
-                {authTab === "login" ? "Sign In" : "Create Account"}
+                {authLoading ? (
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                ) : authTab === "login" ? (
+                  "Sign In"
+                ) : (
+                  "Create Account"
+                )}
               </button>
             </form>
           </div>

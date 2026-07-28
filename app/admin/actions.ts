@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import fs from "fs";
 import path from "path";
+import crypto from "crypto";
 import { fetchFileFromGithub, commitFileToGithub } from "@/lib/github";
 
 const isDev = process.env.NODE_ENV === "development";
@@ -71,11 +72,23 @@ export async function getAdminData() {
   const { data: categories } = await getJSONData("categoryProducts.json");
   const { data: products } = await getJSONData("productDetails.json");
   const { data: slides } = await getJSONData("heroSlides.json");
+  
+  let users = [];
+  try {
+    const { data } = await getJSONData("users.json");
+    // Strip hashes before exposing to dashboard UI
+    users = (data || []).map((u: any) => ({
+      name: u.name,
+      email: u.email,
+      createdAt: u.createdAt
+    }));
+  } catch (e) {}
 
   return {
     categories,
     products,
     slides,
+    users,
   };
 }
 
@@ -233,5 +246,89 @@ export async function uploadImageToGithub(category: string, filename: string, ba
     }
 
     return { url: relativePath };
+  }
+}
+
+// User Authentication Actions
+function hashPassword(password: string): string {
+  return crypto.createHash("sha256").update(password).digest("hex");
+}
+
+export async function registerUserAction(name: string, email: string, pass: string): Promise<{ success: boolean; error?: string }> {
+  try {
+    const { data: users, sha } = await getJSONData("users.json");
+    
+    // Normalize email
+    const cleanEmail = email.toLowerCase().trim();
+    if (users.some((u: any) => u.email === cleanEmail)) {
+      return { success: false, error: "Email is already registered" };
+    }
+
+    const newUser = {
+      name: name.trim(),
+      email: cleanEmail,
+      passwordHash: hashPassword(pass),
+      createdAt: new Date().toISOString()
+    };
+
+    users.push(newUser);
+
+    // Save back
+    await writeJSONData("users.json", users, sha, `Register user: ${newUser.name}`);
+
+    // Set cookie
+    const cookieStore = await cookies();
+    cookieStore.set("user_session", JSON.stringify({ name: newUser.name, email: newUser.email }), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60 * 24 * 30, // 30 days
+      path: "/",
+    });
+
+    return { success: true };
+  } catch (e: any) {
+    return { success: false, error: e.message || "Failed to register" };
+  }
+}
+
+export async function loginUserAction(email: string, pass: string): Promise<{ success: boolean; error?: string; name?: string }> {
+  try {
+    const { data: users } = await getJSONData("users.json");
+    
+    const cleanEmail = email.toLowerCase().trim();
+    const user = users.find((u: any) => u.email === cleanEmail);
+    if (!user || user.passwordHash !== hashPassword(pass)) {
+      return { success: false, error: "Invalid email or password" };
+    }
+
+    // Set cookie
+    const cookieStore = await cookies();
+    cookieStore.set("user_session", JSON.stringify({ name: user.name, email: user.email }), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60 * 24 * 30, // 30 days
+      path: "/",
+    });
+
+    return { success: true, name: user.name };
+  } catch (e: any) {
+    return { success: false, error: e.message || "Failed to login" };
+  }
+}
+
+export async function logoutUserAction() {
+  const cookieStore = await cookies();
+  cookieStore.delete("user_session");
+  return { success: true };
+}
+
+export async function getCurrentUserAction(): Promise<{ name: string; email: string } | null> {
+  const cookieStore = await cookies();
+  const session = cookieStore.get("user_session")?.value;
+  if (!session) return null;
+  try {
+    return JSON.parse(session);
+  } catch (e) {
+    return null;
   }
 }
