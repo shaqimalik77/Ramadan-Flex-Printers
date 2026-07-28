@@ -19,6 +19,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Ramdan Flex Printers | Premium Printing & Packaging",
   description: "Your trusted printing and packaging partner in Pakistan, offering custom boxes, stickers, tags, ribbons, and more with fast turnaround.",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  }
 };
 
 export default function RootLayout({
