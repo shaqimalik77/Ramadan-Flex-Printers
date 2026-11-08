@@ -156,7 +156,7 @@ export default function Footer() {
               </li>
               <li className="flex items-start gap-3">
                 <Clock className="w-4 h-4 mt-0.5 text-red-500 shrink-0" aria-hidden="true" />
-                <span>Mon - Sat: 9:00 AM - 7:00 PM</span>
+                <span>{siteConfig.hoursDays}: {siteConfig.hoursTime}</span>
               </li>
             </ul>
           </div>

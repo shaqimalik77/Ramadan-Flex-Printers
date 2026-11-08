@@ -5,7 +5,12 @@
  */
 export const siteConfig = {
   name: "Ramdan Flex Printers",
-  address: "Lahore, Pakistan",
+  /** Must match the Google Business Profile exactly. */
+  address: "Lakshmi Chowk, Royal Park, Lahore",
+
+  /** Opening hours. Must match the Google Business Profile. */
+  hoursDays: "Mon – Sat",
+  hoursTime: "9:00 AM – 11:00 PM",
   email: "ramdanprinters@gmail.com",
 
   /** Display format, e.g. for footers or "Call us" links */

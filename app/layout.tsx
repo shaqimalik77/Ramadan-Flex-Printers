@@ -39,10 +39,9 @@ export const metadata: Metadata = {
   // Favicons come from the file conventions app/icon.svg and app/apple-icon.png.
 };
 
-// LocalBusiness structured data, shown on every page.
-// TODO: add openingHoursSpecification once the owner confirms the hours
-// (header/contact page say 11 AM–7 PM, footer says 9 AM–7 PM), and add the
-// Facebook / Instagram / Google Business Profile URLs to sameAs.
+// LocalBusiness structured data, shown on every page. Address, phone and
+// hours must match the Google Business Profile.
+// TODO: add the Facebook / Instagram / Google Business Profile URLs to sameAs.
 const businessJsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
@@ -55,11 +54,20 @@ const businessJsonLd = {
   email: siteConfig.email,
   address: {
     "@type": "PostalAddress",
-    streetAddress: "A Block, Valencia Town",
+    streetAddress: "Lakshmi Chowk, Royal Park",
     addressLocality: "Lahore",
     addressRegion: "Punjab",
+    postalCode: "54000",
     addressCountry: "PK",
   },
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      opens: "09:00",
+      closes: "23:00",
+    },
+  ],
   areaServed: { "@type": "Country", name: "Pakistan" },
 };
 

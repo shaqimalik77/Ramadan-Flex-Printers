@@ -34,8 +34,8 @@ import {
 /* ------------------------------------------------------------------ */
 
 const META = {
-  location: "Lahore Valencia Town A Block",
-  hours: "11:00 AM - 7:00 PM",
+  location: "Lakshmi Chowk, Royal Park, Lahore",
+  hours: "9:00 AM - 11:00 PM",
   phone: "0301 7413377",
 };
 

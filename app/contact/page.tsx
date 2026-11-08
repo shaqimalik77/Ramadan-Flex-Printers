@@ -11,7 +11,7 @@ import GoogleMap from "@/components/GoogleMap";
 export const metadata: Metadata = pageMeta({
   title: "Contact Us",
   description:
-    "Contact Ramdan Flex Printers in Valencia Town, Lahore. Call or WhatsApp 0301 7413377, email us, or visit our shop for printing and packaging quotes.",
+    "Contact Ramdan Flex Printers in Royal Park, Lahore. Call or WhatsApp 0301 7413377, email us, or visit our shop for printing and packaging quotes.",
   path: "/contact",
 });
 
@@ -41,7 +41,7 @@ export default function ContactPage() {
             Find Us
           </h2>
           <p className="text-neutral-600">
-            Visit our Lahore Valencia Town branch for walk-in consultations and orders.
+            Visit our office at Lakshmi Chowk, Royal Park, Lahore, or order online on WhatsApp.
           </p>
         </div>
         <GoogleMap />

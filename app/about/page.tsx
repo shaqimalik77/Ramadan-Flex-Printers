@@ -11,7 +11,7 @@ import AboutCTA from "@/components/AboutCTA";
 export const metadata: Metadata = pageMeta({
   title: "About Us",
   description:
-    "Ramdan Flex Printers is a printing and packaging company in Valencia Town, Lahore, serving businesses across Pakistan with quality work and fast turnaround.",
+    "Ramdan Flex Printers is a printing and packaging company in Royal Park, Lahore, serving businesses across Pakistan with quality work and fast turnaround.",
   path: "/about",
 });
 

@@ -2,8 +2,8 @@ export default function GoogleMap() {
   return (
     <div className="w-full rounded-2xl overflow-hidden border border-neutral-100 shadow-sm">
       <iframe
-        title="Ramdan Flex Printers Location - Lahore Valencia Town Branch"
-        src="https://www.google.com/maps?q=Valencia%20Town%20Lahore%2C%20Pakistan&output=embed"
+        title="Ramdan Flex Printers location: Lakshmi Chowk, Royal Park, Lahore"
+        src="https://www.google.com/maps?q=Lakshmi%20Chowk%2C%20Royal%20Park%2C%20Lahore%2C%20Pakistan&output=embed"
         width="100%"
         height="420"
         style={{ border: 0 }}

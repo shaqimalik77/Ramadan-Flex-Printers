@@ -5,7 +5,7 @@ const contactCards = [
   {
     icon: MapPin,
     title: "Address",
-    lines: ["Lahore Valencia Town Branch"],
+    lines: [siteConfig.address],
   },
   {
     icon: Phone,
@@ -20,7 +20,7 @@ const contactCards = [
   {
     icon: Clock,
     title: "Working Hours",
-    lines: ["Mon – Sat", "11:00 AM – 7:00 PM"],
+    lines: [siteConfig.hoursDays, siteConfig.hoursTime],
   },
 ];
 
@@ -74,7 +74,7 @@ export default function ContactInfo() {
               Business Hours
             </h3>
             <p className="text-neutral-600 text-sm leading-relaxed">
-              Monday – Saturday: 11:00 AM – 7:00 PM
+              Monday – Saturday: {siteConfig.hoursTime}
               <br />
               Sunday: Closed
             </p>
