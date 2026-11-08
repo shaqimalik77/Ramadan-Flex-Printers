@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/lib/siteConfig";
+// Imported (not placed in /public) so the build copies it to
+// /_next/static/media/. On Hostinger, files newly added to /public return
+// 404 on the live site, while /_next/static files are always served.
+import ogImage from "@/assets/og-image.jpg";
 
 /** The one canonical origin for the site (www, https). */
 export const SITE_URL = "https://www.ramdanflexprinters.com";
 
 export const DEFAULT_OG_IMAGE = {
-  url: "/og-image.jpg",
+  url: ogImage.src,
   width: 1200,
   height: 630,
   alt: "Ramdan Flex Printers: printing and packaging in Lahore",

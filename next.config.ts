@@ -21,10 +21,6 @@ const nextConfig: NextConfig = {
         source: "/images/:path*",
         headers: [{ key: "Cache-Control", value: IMAGE_CACHE }],
       },
-      {
-        source: "/og-image.jpg",
-        headers: [{ key: "Cache-Control", value: IMAGE_CACHE }],
-      },
     ];
   },
 
