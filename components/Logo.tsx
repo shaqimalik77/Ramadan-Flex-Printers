@@ -7,7 +7,7 @@ export default function Logo() {
       alt="Ramdan Flex Printers"
       width={80}
       height={40}
-      priority
+      preload
       className="h-auto w-auto"
     />
   );

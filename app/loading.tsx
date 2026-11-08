@@ -28,7 +28,8 @@ export default function Loading() {
             src="/images/logo/logo.png"
             alt="Ramdan Flex Printers Logo"
             fill
-            priority
+            sizes="90px"
+            preload
             className="object-contain"
           />
         </div>

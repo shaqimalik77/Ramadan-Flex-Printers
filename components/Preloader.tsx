@@ -122,7 +122,8 @@ export default function Preloader() {
               src="/images/logo/logo.png"
               alt="Ramdan Flex Printers"
               fill
-              priority
+              sizes="130px"
+              preload
               className="object-contain"
             />
           </div>

@@ -250,7 +250,7 @@ export default function Header() {
             width={703}
             height={401}
             className="h-[48px] sm:h-[58px] w-auto object-contain"
-            priority
+            preload
           />
         </Link>
 

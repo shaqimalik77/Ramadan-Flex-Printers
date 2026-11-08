@@ -13,6 +13,7 @@ import ProductInfo from "@/components/ProductInfo";
 import ProductSpecs from "@/components/ProductSpecs";
 import ProductFAQ from "@/components/ProductFAQ";
 import RelatedProducts from "@/components/RelatedProducts";
+import { pageMeta } from "@/lib/seo";
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>;
@@ -24,6 +25,9 @@ export function generateStaticParams() {
   return productDetails.map((product) => ({ slug: product.slug }));
 }
 
+// Unknown slugs return a real HTTP 404 instead of a streamed 200 (soft 404).
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
@@ -34,20 +38,19 @@ export async function generateMetadata({
     return {};
   }
 
-  const title = `${product.title} | Custom Printing & Packaging in Pakistan`;
-  const description = product.shortDescription;
-  const image = product.images[0];
+  // Keep descriptions under ~155 characters.
+  const short = product.shortDescription.trim();
+  const description =
+    short.length < 110
+      ? `${short} Made in Lahore, delivered across Pakistan.`
+      : `${short} Delivery across Pakistan.`;
 
-  return {
-    title,
+  return pageMeta({
+    title: `${product.title} in Lahore`,
     description,
-    openGraph: {
-      title,
-      description,
-      images: image ? [{ url: image }] : undefined,
-      type: "website",
-    },
-  };
+    path: `/products/${product.slug}`,
+    image: product.images[0],
+  });
 }
 
 export default async function ProductDetailPage({ params }: ProductPageProps) {

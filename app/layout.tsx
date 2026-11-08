@@ -5,6 +5,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingWhatsApp from "@/components/FloatingWhatsapp";
 import Preloader from "@/components/Preloader";
+import { siteConfig } from "@/lib/siteConfig";
+import { SITE_URL, DEFAULT_OG_IMAGE, absoluteUrl, jsonLd } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,13 +19,45 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ramdan Flex Printers | Premium Printing & Packaging",
-  description: "Your trusted printing and packaging partner in Pakistan, offering custom boxes, stickers, tags, ribbons, and more with fast turnaround.",
-  icons: {
-    icon: "/icon.svg",
-    shortcut: "/icon.svg",
-    apple: "/icon.svg",
-  }
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Ramdan Flex Printers | Printing & Packaging in Lahore",
+    template: "%s | Ramdan Flex Printers",
+  },
+  description:
+    "Custom boxes, stickers, business cards, hang tags, wedding cards and flex printing in Lahore. Delivery across Pakistan. Get a free quote on WhatsApp.",
+  openGraph: {
+    type: "website",
+    siteName: siteConfig.name,
+    locale: "en_PK",
+    images: [DEFAULT_OG_IMAGE],
+  },
+  twitter: { card: "summary_large_image" },
+  // Favicons come from the file conventions app/icon.svg and app/apple-icon.png.
+};
+
+// LocalBusiness structured data, shown on every page.
+// TODO: add openingHoursSpecification once the owner confirms the hours
+// (header/contact page say 11 AM–7 PM, footer says 9 AM–7 PM), and add the
+// Facebook / Instagram / Google Business Profile URLs to sameAs.
+const businessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": `${SITE_URL}/#business`,
+  name: siteConfig.name,
+  url: SITE_URL,
+  logo: absoluteUrl("/images/logo/logo.png"),
+  image: absoluteUrl(DEFAULT_OG_IMAGE.url),
+  telephone: "+92-301-7413377",
+  email: siteConfig.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "A Block, Valencia Town",
+    addressLocality: "Lahore",
+    addressRegion: "Punjab",
+    addressCountry: "PK",
+  },
+  areaServed: { "@type": "Country", name: "Pakistan" },
 };
 
 export default function RootLayout({
@@ -37,6 +71,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-white text-gray-900">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLd(businessJsonLd) }}
+        />
         <Preloader />
         <Header />
         <div className="flex-grow">{children}</div>

@@ -6,6 +6,8 @@ import { blogDetails, BlogDetail } from "@/data/blogDetails";
 import BlogHero from "@/components/BlogHero";
 import BlogContent from "@/components/BlogContent";
 import RelatedBlogs from "@/components/RelatedBlogs";
+import { pageMeta, jsonLd, absoluteUrl, SITE_URL } from "@/lib/seo";
+import { siteConfig } from "@/lib/siteConfig";
 
 interface BlogPageProps {
   params: Promise<{ slug: string }>;
@@ -112,6 +114,24 @@ export async function generateStaticParams() {
   return Array.from(slugs).map((slug) => ({ slug }));
 }
 
+// Unknown slugs return a real HTTP 404 instead of a streamed 200 (soft 404).
+export const dynamicParams = false;
+
+/**
+ * Posts in data/Blogposts.ts and data/blogData.ts without an entry in
+ * data/blogDetails.ts are rendered from one shared template, so their text is
+ * almost identical. Keep them out of Google until real articles are written:
+ * move a post into blogDetails.ts and it becomes indexable automatically.
+ */
+function hasRealContent(slug: string): boolean {
+  return blogDetails.some((b) => b.slug === slug);
+}
+
+function toIsoDate(date: string): string | undefined {
+  const d = new Date(date);
+  return isNaN(d.getTime()) ? undefined : d.toISOString().slice(0, 10);
+}
+
 export async function generateMetadata({
   params,
 }: BlogPageProps): Promise<Metadata> {
@@ -122,10 +142,17 @@ export async function generateMetadata({
     return {};
   }
 
-  return {
-    title: `${post.title} | Blog | Ramdan Flex Printers`,
+  const meta = pageMeta({
+    title: post.title,
     description: post.excerpt,
-  };
+    path: `/blog/${post.slug}`,
+    image: post.heroImage,
+    type: "article",
+  });
+
+  return hasRealContent(post.slug)
+    ? meta
+    : { ...meta, robots: { index: false, follow: true } };
 }
 
 export default async function BlogPostPage({ params }: BlogPageProps) {
@@ -171,8 +198,26 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
     .filter((b) => b.slug !== slug)
     .slice(0, 3);
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    image: absoluteUrl(post.heroImage),
+    datePublished: toIsoDate(post.publishDate),
+    author: { "@type": "Person", name: post.author },
+    publisher: { "@id": `${SITE_URL}/#business`, "@type": "Organization", name: siteConfig.name },
+    mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
+  };
+
   return (
     <main className="bg-white pb-16">
+      {hasRealContent(post.slug) && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: jsonLd(articleJsonLd) }}
+        />
+      )}
       <BlogHero post={post} />
       <BlogContent blocks={post.content} />
       <RelatedBlogs posts={relatedPosts} />

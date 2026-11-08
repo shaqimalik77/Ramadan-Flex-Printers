@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { categoryProducts } from "@/data/categoryProducts";
+import { categoryProducts, getCategoryImage } from "@/data/categoryProducts";
 import SmartImage from "@/components/Smartimage";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Product Categories | Ramdan Flex Printers",
-  description: "Browse all our high-quality customized printing and packaging categories.",
-};
+export const metadata: Metadata = pageMeta({
+  title: "Printing & Packaging Categories",
+  description:
+    "Browse all printing and packaging categories at Ramdan Flex Printers, Lahore: boxes, pouches, stickers, tags, cards, mugs, signs and more. Get a quote.",
+  path: "/categories",
+});
 
 export default function CategoriesPage() {
   return (
@@ -25,9 +28,10 @@ export default function CategoriesPage() {
             >
               <div className="relative aspect-[4/3] w-full bg-neutral-100 overflow-hidden">
                 <SmartImage
-                  src={`/images/categories/${category.slug}.png`}
+                  src={getCategoryImage(category.slug)}
                   alt={category.name}
                   fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                 />
               </div>

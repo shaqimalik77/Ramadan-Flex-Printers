@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import BlogGrid from "@/components/BlogGrid";
 
 // Header and Footer come from the root layout — not repeated here.
-export const metadata: Metadata = {
-  title: "Printing & Packaging Blog | Ramdan Flex Printers",
+export const metadata: Metadata = pageMeta({
+  title: "Printing & Packaging Blog",
   description:
     "Guides and tips on custom packaging, business cards, stickers, corporate gifts, wedding cards and more from Ramdan Flex Printers, Lahore.",
-};
+  path: "/blog",
+});
 
 export default function BlogPage() {
   return (

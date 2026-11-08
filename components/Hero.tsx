@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
 import { heroSlides } from "@/data/heroSlides";
 import { siteConfig } from "@/lib/siteConfig";
@@ -76,11 +77,13 @@ export default function Hero() {
               tabIndex={index === current ? 0 : -1}
               aria-hidden={index !== current}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={slide.src}
                 alt={slide.alt}
-                className="h-full w-full object-cover object-center"
+                fill
+                sizes="100vw"
+                className="object-cover object-center"
+                preload={index === 0}
                 loading={index === 0 ? "eager" : "lazy"}
                 draggable={false}
               />

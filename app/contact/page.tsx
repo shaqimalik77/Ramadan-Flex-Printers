@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { MessageCircle } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
 
@@ -7,11 +8,12 @@ import ContactInfo, { ContactCards } from "@/components/ContactInfo";
 import ContactForm from "@/components/ContactForm";
 import GoogleMap from "@/components/GoogleMap";
 
-export const metadata: Metadata = {
-  title: "Contact Us | Ramdan Flex Printers",
+export const metadata: Metadata = pageMeta({
+  title: "Contact Us",
   description:
-    "Get in touch with Ramdan Flex Printers for all your printing and branding requirements. Visit our Lahore Valencia Town branch, call, email, or message us on WhatsApp.",
-};
+    "Contact Ramdan Flex Printers in Valencia Town, Lahore. Call or WhatsApp 0301 7413377, email us, or visit our shop for printing and packaging quotes.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (

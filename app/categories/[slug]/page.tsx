@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { categoryProducts, getCategoryBySlug } from "@/data/categoryProducts";
+import { categoryProducts, getCategoryBySlug, getCategoryImage } from "@/data/categoryProducts";
 import CategoryHero from "@/components/CategoryHero";
 import CategoryProducts from "@/components/CategoryProducts";
+import { getCategorySeo } from "@/data/categorySeo";
+import { pageMeta } from "@/lib/seo";
 
 interface CategoryPageProps {
   params: Promise<{ slug: string }>;
@@ -16,6 +18,12 @@ export function generateStaticParams() {
   return categoryProducts.map((category) => ({ slug: category.slug }));
 }
 
+// Unknown slugs get a real HTTP 404. Without this, the root loading.tsx makes
+// the response stream with status 200 before notFound() runs (a "soft 404").
+// Category data is read at build time anyway, so a category added in the
+// admin panel only appears after the next build, with or without this.
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: CategoryPageProps): Promise<Metadata> {
@@ -26,12 +34,14 @@ export async function generateMetadata({
     return {};
   }
 
-  const description = category.seoDescription[0]?.slice(0, 160);
+  const seo = getCategorySeo(category.slug, category.name);
 
-  return {
-    title: `${category.name} Printing & Packaging in Pakistan | Custom Branding`,
-    description,
-  };
+  return pageMeta({
+    title: seo.title,
+    description: seo.description,
+    path: `/categories/${category.slug}`,
+    image: getCategoryImage(category.slug),
+  });
 }
 
 export default async function CategoryDetailPage({ params }: CategoryPageProps) {
