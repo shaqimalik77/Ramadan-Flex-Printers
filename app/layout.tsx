@@ -33,6 +33,9 @@ export const metadata: Metadata = {
     images: [DEFAULT_OG_IMAGE],
   },
   twitter: { card: "summary_large_image" },
+  // Google Search Console ownership (HTML tag method). Keep it, or the
+  // site loses its verified status.
+  verification: { google: "F506eFWARFb1G4Vk6kvpVX0R6jNd6F8UcBrojldxbRA" },
   // Favicons come from the file conventions app/icon.svg and app/apple-icon.png.
 };
 
