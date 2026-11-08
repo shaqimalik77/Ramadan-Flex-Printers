@@ -552,6 +552,52 @@
     ]
   },
   {
+    "slug": "cosmetic-boxes",
+    "name": "Cosmetic Boxes",
+    "seoDescription": [
+      "Cosmetic boxes are the packaging customers see on a shelf, in an online listing and on their dressing table, which makes custom printing one of the most important decisions a beauty brand makes. For skincare, makeup and perfume products, the box often has to sell the product before anyone tries it.",
+      "Custom printing for cosmetic boxes covers small folding cartons for lipsticks, serums and creams, as well as rigid boxes for perfumes and gift sets. Each box is sized to the product, so bottles and jars sit firmly inside instead of moving around during delivery.",
+      "Corporate branding matters a great deal in beauty, where customers often choose between products that look similar inside the bottle. Consistent colours, a clear logo and a premium finish across a whole product range help a new brand look established and make repeat customers recognise it instantly.",
+      "Bulk orders suit beauty brands that sell a fixed product range, since the cost per box drops as quantities grow. Brands that are just starting out can begin with a smaller run for a launch and reorder in larger quantities once they know which products sell best.",
+      "Premium quality on cosmetic packaging depends on sharp printing, accurate colours and clean folds, along with finishes like gold or silver foil, spot UV, embossing or matte and gloss lamination. These details are what make a box feel like part of a high-end product rather than plain packaging.",
+      "Fast delivery helps brands meet launch dates, seasonal sales and restocks. Digital proofs are shared for approval of size, artwork and finish before production, and bulk orders are typically completed within about a week, depending on the box style and finishing.",
+      "Nationwide delivery reaches beauty, skincare and perfume brands in Lahore, Karachi, Islamabad, Faisalabad, Multan and Sialkot, as well as home-based and online sellers in smaller cities building their own product line.",
+      "For any beauty brand that wants its products to stand out on a shelf, in a parcel or in an unboxing video, custom printed cosmetic boxes are one of the most effective ways to build a recognisable and trusted brand."
+    ],
+    "products": [
+      {
+        "slug": "skincare-boxes",
+        "title": "Skincare Boxes",
+        "shortDescription": "Custom printed boxes for creams, serums and face washes, sized to fit your bottles and jars.",
+        "image": "/images/categories/hard-drawer-boxes.png"
+      },
+      {
+        "slug": "makeup-boxes",
+        "title": "Makeup Boxes",
+        "shortDescription": "Compact printed cartons for lipsticks, foundations and palettes with your brand colours.",
+        "image": "/images/categories/hard-drawer-boxes.png"
+      },
+      {
+        "slug": "perfume-boxes",
+        "title": "Perfume Boxes",
+        "shortDescription": "Rigid or folding perfume boxes with foil stamping and inserts that hold the bottle securely.",
+        "image": "/images/categories/hard-drawer-boxes.png"
+      },
+      {
+        "slug": "cosmetic-gift-set-boxes",
+        "title": "Cosmetic Gift Set Boxes",
+        "shortDescription": "Premium boxes for beauty gift sets and bundles, ideal for Eid, weddings and seasonal sales.",
+        "image": "/images/categories/hard-drawer-boxes.png"
+      },
+      {
+        "slug": "custom-printed-cosmetic-boxes",
+        "title": "Custom Printed Cosmetic Boxes",
+        "shortDescription": "Fully custom size, artwork and finish, including foil, spot UV and matte or gloss lamination.",
+        "image": "/images/categories/hard-drawer-boxes.png"
+      }
+    ]
+  },
+  {
     "slug": "ziplock-frosted-bags",
     "name": "Ziplock Frosted Bags",
     "seoDescription": [
@@ -593,6 +639,98 @@
         "slug": "reusable-ziplock-pouches",
         "title": "Reusable Ziplock Pouches",
         "shortDescription": "Durable, reusable pouches customers can keep and use again after the original purchase.",
+        "image": "/images/categories/ziplock-frosted-bags.png"
+      }
+    ]
+  },
+  {
+    "slug": "gift-bags",
+    "name": "Gift Bags",
+    "seoDescription": [
+      "Gift bags turn a simple present into something that feels special before it is even opened, which is why custom printed gift bags are popular for weddings, events, boutiques and corporate gifting. A printed bag also keeps a brand or family name in view long after the event is over.",
+      "Custom printing for gift bags covers paper bags with rope or ribbon handles, frosted bags for a modern look and premium laminated bags for luxury gifts. Sizes can be chosen to fit anything from small favours and jewellery to clothing, sweets and hampers.",
+      "Corporate branding through gift bags works well for companies giving gifts to clients and staff, and for shops that want every purchase to leave the store looking like a gift. A well-designed bag is often reused, which gives the brand extra visibility at no extra cost.",
+      "Bulk orders are common for weddings, mehndi and other functions, corporate events and festive seasons like Eid, when a large number of identical bags is needed by a fixed date. Planning the order early makes sure every guest or client receives the same quality.",
+      "Premium quality on a gift bag depends on strong paper or film, neat folds, secure handles and clean printing. Finishes such as gold foil, matte lamination and ribbon handles give the bag a polished, high-end feel that matches the gift inside.",
+      "Fast delivery matters most when a gift bag is needed for a wedding date, an event or a festive season. Digital proofs are shared for approval before production, and bulk orders are typically completed within about a week.",
+      "Nationwide delivery reaches families, event planners, boutiques and companies in Lahore, Karachi, Islamabad, Faisalabad, Multan and Sialkot, along with smaller cities across Pakistan.",
+      "Whether it is for a wedding, a corporate event or a boutique that wants every purchase to feel like a present, custom printed gift bags are a simple way to make a lasting impression."
+    ],
+    "products": [
+      {
+        "slug": "paper-gift-bags",
+        "title": "Paper Gift Bags",
+        "shortDescription": "Printed paper gift bags with rope or ribbon handles, available in many sizes and colours.",
+        "image": "/images/categories/ziplock-frosted-bags.png"
+      },
+      {
+        "slug": "wedding-gift-bags",
+        "title": "Wedding Gift Bags",
+        "shortDescription": "Elegant printed bags for wedding favours, mehndi gifts and guest giveaways.",
+        "image": "/images/categories/ziplock-frosted-bags.png"
+      },
+      {
+        "slug": "corporate-gift-bags",
+        "title": "Corporate Gift Bags",
+        "shortDescription": "Branded gift bags for client gifts, staff gifts and corporate events, printed with your logo.",
+        "image": "/images/categories/ziplock-frosted-bags.png"
+      },
+      {
+        "slug": "frosted-gift-bags",
+        "title": "Frosted Gift Bags",
+        "shortDescription": "Modern semi-transparent gift bags with ribbon handles for a clean, premium look.",
+        "image": "/images/categories/ziplock-frosted-bags.png"
+      },
+      {
+        "slug": "luxury-laminated-gift-bags",
+        "title": "Luxury Laminated Gift Bags",
+        "shortDescription": "Rigid laminated bags with foil printing for high-end gifts and boutique packaging.",
+        "image": "/images/categories/ziplock-frosted-bags.png"
+      }
+    ]
+  },
+  {
+    "slug": "shopping-bags",
+    "name": "Shopping Bags",
+    "seoDescription": [
+      "Shopping bags carry a brand out of the shop and into the street, which makes them one of the most visible forms of packaging a retail business can use. Custom printed shopping bags help clothing stores, boutiques and other shops look professional and get noticed every time a customer walks out with a purchase.",
+      "Custom printing for shopping bags covers paper and kraft bags with twisted or flat handles, frosted bags with ribbon handles and laminated bags for premium stores. The size, colour and handle style can be matched to the products a shop sells and to its brand look.",
+      "Corporate branding through shopping bags works because customers reuse a good bag again and again, carrying the brand name to offices, markets and homes. For a clothing or accessory brand, a strong bag design is advertising that keeps working long after the sale.",
+      "Bulk orders suit shops that hand out bags with every purchase, since the cost per bag drops as the quantity grows. Shops often order ahead of busy periods like Eid, wedding season and sales, so they never run out at the busiest time.",
+      "Premium quality on a shopping bag depends on the strength of the paper or film, firmly attached handles and a base that holds its shape under weight. Clean printing and finishes like matte lamination or gold foil make the bag feel as good as the products inside it.",
+      "Fast delivery helps shops that are opening a new branch, launching a collection or restocking before a sale. Digital proofs are shared for approval before production, and bulk orders are typically completed within about a week.",
+      "Nationwide delivery reaches clothing stores, boutiques, shoe shops and other retailers in Lahore, Karachi, Islamabad, Faisalabad, Multan and Sialkot, along with growing businesses in smaller cities.",
+      "For any shop that wants customers to remember where they bought something, custom printed shopping bags are one of the simplest and most cost-effective ways to build a brand that people see every day."
+    ],
+    "products": [
+      {
+        "slug": "paper-shopping-bags",
+        "title": "Paper Shopping Bags",
+        "shortDescription": "Printed paper shopping bags with twisted or flat handles for everyday retail use.",
+        "image": "/images/categories/ziplock-frosted-bags.png"
+      },
+      {
+        "slug": "kraft-shopping-bags",
+        "title": "Kraft Shopping Bags",
+        "shortDescription": "Natural brown kraft bags printed with your logo for a simple, classic look.",
+        "image": "/images/categories/ziplock-frosted-bags.png"
+      },
+      {
+        "slug": "boutique-shopping-bags",
+        "title": "Boutique Shopping Bags",
+        "shortDescription": "Premium printed bags for clothing and fashion boutiques, with ribbon or rope handles.",
+        "image": "/images/categories/ziplock-frosted-bags.png"
+      },
+      {
+        "slug": "frosted-shopping-bags",
+        "title": "Frosted Shopping Bags",
+        "shortDescription": "Semi-transparent frosted bags with a modern finish, popular with clothing brands.",
+        "image": "/images/categories/ziplock-frosted-bags.png"
+      },
+      {
+        "slug": "custom-printed-shopping-bags",
+        "title": "Custom Printed Shopping Bags",
+        "shortDescription": "Fully custom size, colours, handles and finish to match your shop's brand.",
         "image": "/images/categories/ziplock-frosted-bags.png"
       }
     ]

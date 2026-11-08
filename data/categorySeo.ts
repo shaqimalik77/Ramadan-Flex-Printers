@@ -78,6 +78,21 @@ const categorySeo: Record<string, CategorySeo> = {
     description:
       "Premium rigid drawer boxes made in Lahore for gifts, jewellery and luxury products. Custom size, print and finish. Delivery across Pakistan. Get a quote.",
   },
+  "cosmetic-boxes": {
+    title: "Custom Cosmetic Boxes in Lahore",
+    description:
+      "Custom printed cosmetic boxes in Lahore for skincare, makeup and perfume brands. Any size, foil or matte finish. Delivery across Pakistan. Get a quote.",
+  },
+  "gift-bags": {
+    title: "Custom Printed Gift Bags in Lahore",
+    description:
+      "Custom printed gift bags in Lahore for weddings, events, boutiques and corporate gifts. Paper or frosted, ribbon handles. Delivery across Pakistan.",
+  },
+  "shopping-bags": {
+    title: "Custom Printed Shopping Bags in Lahore",
+    description:
+      "Custom printed shopping bags in Lahore for clothing stores and boutiques. Paper, kraft or frosted, with your logo. Delivery across Pakistan. Get a quote.",
+  },
   "ziplock-frosted-bags": {
     title: "Custom Ziplock Frosted Bags in Lahore",
     description:

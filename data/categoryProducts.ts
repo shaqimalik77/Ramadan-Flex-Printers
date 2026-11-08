@@ -26,6 +26,11 @@ const categoryImageOverrides: Record<string, string> = {
   "custom-t-shirts": "custom-tshirts.png",
   "stand-up-pouches": "standup-pouches.png",
   "thank-you-cards": "thankyou-cards.png",
+  // TEMPORARY: these categories have no photos of their own yet, so they
+  // borrow the closest existing image. Replace them with real photos.
+  "cosmetic-boxes": "hard-drawer-boxes.png",
+  "gift-bags": "ziplock-frosted-bags.png",
+  "shopping-bags": "ziplock-frosted-bags.png",
 };
 
 /** Cover image for a category card. */

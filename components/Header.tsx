@@ -72,9 +72,9 @@ const NAV_ITEMS: NavItem[] = [
       { label: "Butter Paper", href: "/categories/butter-paper" },
       { label: "Shirts", href: "/categories/custom-t-shirts" },
       { label: "Polaroids", href: "/categories/polaroids" },
-      { label: "Cosmetic Boxes", href: "/categories/ecommerce-boxes" },
-      { label: "Gift Bags", href: "/categories/ecommerce-boxes" },
-      { label: "Shopping Bags", href: "/categories/ecommerce-boxes" },
+      { label: "Cosmetic Boxes", href: "/categories/cosmetic-boxes" },
+      { label: "Gift Bags", href: "/categories/gift-bags" },
+      { label: "Shopping Bags", href: "/categories/shopping-bags" },
       { label: "Drawer Hard Box", href: "/categories/hard-drawer-boxes" },
       { label: "Standup Pouches", href: "/categories/stand-up-pouches" },
       { label: "Ziplock Frosted Bags", href: "/categories/ziplock-frosted-bags" },
@@ -479,9 +479,9 @@ export default function Header() {
                         Boxes & Bags
                       </h4>
                       <ul className="space-y-2">
-                        <li><Link href="/categories/ecommerce-boxes" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Cosmetic Boxes</Link></li>
-                        <li><Link href="/categories/ecommerce-boxes" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Gift Bags</Link></li>
-                        <li><Link href="/categories/ecommerce-boxes" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Shopping Bags</Link></li>
+                        <li><Link href="/categories/cosmetic-boxes" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Cosmetic Boxes</Link></li>
+                        <li><Link href="/categories/gift-bags" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Gift Bags</Link></li>
+                        <li><Link href="/categories/shopping-bags" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Shopping Bags</Link></li>
                         <li><Link href="/categories/hard-drawer-boxes" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Drawer Hard Box</Link></li>
                         <li><Link href="/categories/stand-up-pouches" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Standup Pouches</Link></li>
                         <li><Link href="/categories/ziplock-frosted-bags" className="block text-[11px] font-semibold text-neutral-500 hover:text-[#E41F26] uppercase transition-colors whitespace-normal">Ziplock Frosted Bags</Link></li>
