@@ -4,6 +4,7 @@ import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
 import { brandFont, INK } from "@/lib/brand";
 import InkStripe from "@/components/InkStripe";
+import ramdanLogo from "@/assets/brand/ramdan-logo.png";
 
 const productLinks = [
   { label: "Packaging Boxes", href: "/categories/ecommerce-boxes" },
@@ -51,12 +52,10 @@ export default function NewFooter() {
           {/* Brand */}
           <div>
             <Image
-              src="/images/logo/logo.png"
+              src={ramdanLogo}
               alt={siteConfig.name}
-              width={150}
-              height={88}
-              sizes="96px"
-              className="h-14 w-auto mix-blend-multiply"
+              unoptimized
+              className="h-14 w-auto"
             />
             <p className="mt-4 max-w-xs text-[15px] leading-relaxed text-neutral-600">
               Printing and packaging for brands, shops and events. Made in Lahore, delivered across

@@ -8,6 +8,7 @@ import { ChevronDown, Menu, MessageCircle, Phone, X } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
 import { brandFont, INK } from "@/lib/brand";
 import InkStripe from "@/components/InkStripe";
+import ramdanLogo from "@/assets/brand/ramdan-logo.png";
 
 type NavLink = { label: string; href: string };
 type NavGroup = { label: string; href?: string; items?: NavLink[] };
@@ -86,12 +87,10 @@ export default function NewHeader() {
           {/* Logo */}
           <Link href="/" className="shrink-0" aria-label={`${siteConfig.name} home`}>
             <Image
-              src="/images/logo/logo.png"
+              src={ramdanLogo}
               alt={siteConfig.name}
-              width={150}
-              height={88}
               preload
-              sizes="80px"
+              unoptimized
               className="h-11 w-auto"
             />
           </Link>

@@ -17,7 +17,8 @@ import { getCategoryBySlug, getCategoryImage } from "@/data/categoryProducts";
 import InkStripe from "@/components/InkStripe";
 import ReviewsSlider from "@/components/ReviewsSlider";
 import HeroSlider from "@/components/HeroSlider";
-import { clientsData } from "@/data/clientsdata";
+import { clientLogos } from "@/data/clientLogos";
+import ClientMarquee from "@/components/ClientMarquee";
 import {
   GOOGLE_PROFILE_URL,
   GOOGLE_RATING,
@@ -276,30 +277,15 @@ export default function NewHome() {
       </section>
 
       {/* 6. Client logos */}
-      <section className="py-12 sm:py-24">
+      <section className="py-12 sm:py-20">
         <div className="mx-auto max-w-6xl px-5">
           <SectionTitle
             title="Brands we've printed for"
             subtitle="A few of the businesses we work with in Lahore."
           />
-          <ul className="mt-8 grid grid-cols-3 gap-3 sm:mt-12 sm:gap-4 lg:grid-cols-6">
-            {clientsData.map((client) => (
-              <li
-                key={client.id}
-                className="flex aspect-[4/3] items-center justify-center overflow-hidden rounded-xl border border-neutral-200 bg-white p-3"
-              >
-                <div className="relative h-full w-full">
-                  <Image
-                    src={client.image}
-                    alt={`${client.name} logo`}
-                    fill
-                    sizes="(min-width: 1024px) 160px, 30vw"
-                    className="object-contain"
-                  />
-                </div>
-              </li>
-            ))}
-          </ul>
+        </div>
+        <div className="mt-8 sm:mt-10">
+          <ClientMarquee clients={clientLogos} />
         </div>
       </section>
 
