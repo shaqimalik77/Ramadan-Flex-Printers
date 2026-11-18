@@ -16,6 +16,7 @@ import { brandFont, INK } from "@/lib/brand";
 import { getCategoryBySlug, getCategoryImage } from "@/data/categoryProducts";
 import InkStripe from "@/components/InkStripe";
 import ReviewsSlider from "@/components/ReviewsSlider";
+import HeroSlider from "@/components/HeroSlider";
 import { clientsData } from "@/data/clientsdata";
 import {
   GOOGLE_PROFILE_URL,
@@ -97,25 +98,6 @@ const steps = [
   },
 ];
 
-/** Printer's crop marks around a box (decorative). */
-function CropMarks({ color = "#9CA3AF" }: { color?: string }) {
-  const arm = "absolute block bg-current";
-  const corner = (pos: string, h: string, v: string) => (
-    <span className={`absolute ${pos} h-6 w-6`} style={{ color }} aria-hidden>
-      <span className={`${arm} ${h} h-px w-5`} />
-      <span className={`${arm} ${v} h-5 w-px`} />
-    </span>
-  );
-  return (
-    <>
-      {corner("-left-7 -top-7", "right-0 bottom-0", "right-0 bottom-0")}
-      {corner("-right-7 -top-7", "left-0 bottom-0", "left-0 bottom-0")}
-      {corner("-bottom-7 -left-7", "right-0 top-0", "right-0 top-0")}
-      {corner("-bottom-7 -right-7", "left-0 top-0", "left-0 top-0")}
-    </>
-  );
-}
-
 function SectionTitle({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <div className="flex flex-col items-center text-center">
@@ -152,86 +134,8 @@ export default function NewHome() {
 
   return (
     <main className={`${brandFont.className} bg-white text-neutral-900`}>
-      {/* 1. Hero */}
-      <section className="relative overflow-hidden bg-[#FAF8F5]">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-10 sm:py-20 lg:grid-cols-[1fr_1.05fr] lg:gap-16 lg:py-24">
-          <div>
-            <p className="flex items-center gap-3 text-sm font-medium uppercase tracking-[0.18em] text-neutral-500">
-              <InkStripe className="h-1.5 w-10" />
-              Printing &amp; packaging · Lahore
-            </p>
-            <h1 className="mt-6 text-[2.6rem] font-semibold leading-[1.08] tracking-tight sm:text-6xl">
-              Print that makes your brand{" "}
-              <span className="relative whitespace-nowrap">
-                stand out
-                <span
-                  aria-hidden
-                  className="absolute -bottom-1 left-0 h-2 w-full rounded-full opacity-80"
-                  style={{ background: INK.yellow }}
-                />
-              </span>
-              .
-            </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-neutral-600">
-              Custom boxes, stickers, business cards, tags, wedding cards, neon signs and flex
-              printing. Made in Lahore, delivered across Pakistan.
-            </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
-              <WhatsAppButton label="Get a free quote on WhatsApp" />
-              <Link
-                href="/categories"
-                className="inline-flex items-center gap-1.5 px-1 py-3 text-base font-medium text-neutral-800 hover:text-neutral-950"
-              >
-                Browse products <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-            <a
-              href={GOOGLE_PROFILE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-9 inline-flex items-center gap-3 text-[15px] text-neutral-600 hover:text-neutral-950"
-            >
-              <span className="flex" aria-hidden>
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-[#FBBC04] text-[#FBBC04]" />
-                ))}
-              </span>
-              <span>
-                <span className="font-medium text-neutral-900">{GOOGLE_RATING}</span> rating ·{" "}
-                <span className="underline decoration-neutral-300 underline-offset-4">
-                  {GOOGLE_REVIEW_COUNT} Google reviews
-                </span>
-              </span>
-            </a>
-          </div>
-
-          {/* Photo framed like a print proof */}
-          <div className="relative mx-6 my-6 sm:mx-10">
-            <span
-              aria-hidden
-              className="absolute -right-4 -top-4 h-full w-full rounded-2xl"
-              style={{ background: INK.cyan, opacity: 0.18 }}
-            />
-            <span
-              aria-hidden
-              className="absolute -bottom-4 -left-4 h-full w-full rounded-2xl"
-              style={{ background: INK.magenta, opacity: 0.14 }}
-            />
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl">
-              <Image
-                src="/images/categories/promotional-products.png"
-                alt="Branded business cards, bags, mugs, stickers and pouches printed by Ramdan Flex Printers"
-                fill
-                preload
-                loading="eager"
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-            <CropMarks />
-          </div>
-        </div>
-      </section>
+      {/* 1. Hero: service banners slider */}
+      <HeroSlider />
 
       {/* 2. Benefits */}
       <section className="border-y border-neutral-200 bg-white">
