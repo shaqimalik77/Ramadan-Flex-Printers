@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import { HeaderSwitch, FooterSwitch, PreloaderSwitch } from "@/components/RedesignSwitch";
 import FloatingWhatsApp from "@/components/FloatingWhatsapp";
-import Preloader from "@/components/Preloader";
 import { siteConfig } from "@/lib/siteConfig";
 import { SITE_URL, DEFAULT_OG_IMAGE, absoluteUrl, jsonLd } from "@/lib/seo";
 
@@ -86,10 +84,10 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLd(businessJsonLd) }}
         />
-        <Preloader />
-        <Header />
+        <PreloaderSwitch />
+        <HeaderSwitch />
         <div className="flex-grow">{children}</div>
-        <Footer />
+        <FooterSwitch />
         <FloatingWhatsApp />
       </body>
     </html>
