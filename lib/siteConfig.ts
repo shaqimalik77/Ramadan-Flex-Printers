@@ -11,7 +11,7 @@ export const siteConfig = {
   /** Opening hours. Must match the Google Business Profile. */
   hoursDays: "Mon – Sat",
   hoursTime: "9:00 AM – 11:00 PM",
-  email: "ramdanprinters@gmail.com",
+  email: "info@ramdanflexprinters.com",
 
   /** Display format, e.g. for footers or "Call us" links */
   phoneDisplay: "0301 7413377",
