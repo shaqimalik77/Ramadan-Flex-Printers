@@ -37,3 +37,15 @@ const categoryImageOverrides: Record<string, string> = {
 export function getCategoryImage(slug: string): string {
   return `/images/categories/${categoryImageOverrides[slug] ?? `${slug}.png`}`;
 }
+
+/**
+ * True when a product has a photo of its own: not the category cover image,
+ * and not the same file another product in the category also uses.
+ * (Most products reuse the category image; showing it on every card looks
+ * repetitive, so those get a text-only card instead.)
+ */
+export function hasOwnPhoto(product: Product, category: Category): boolean {
+  if (!product.image || product.image === getCategoryImage(category.slug)) return false;
+  if (product.image.includes("/images/categories/")) return false;
+  return category.products.filter((p) => p.image === product.image).length === 1;
+}

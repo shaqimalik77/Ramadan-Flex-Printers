@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { HeaderSwitch, FooterSwitch, PreloaderSwitch } from "@/components/RedesignSwitch";
+import { HeaderSwitch, FooterSwitch, PreloaderSwitch, PreviewLinks } from "@/components/RedesignSwitch";
 import FloatingWhatsApp from "@/components/FloatingWhatsapp";
 import { siteConfig } from "@/lib/siteConfig";
 import { SITE_URL, DEFAULT_OG_IMAGE, absoluteUrl, jsonLd } from "@/lib/seo";
@@ -85,6 +85,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: jsonLd(businessJsonLd) }}
         />
         <PreloaderSwitch />
+        <PreviewLinks />
         <HeaderSwitch />
         <div className="flex-grow">{children}</div>
         <FooterSwitch />
