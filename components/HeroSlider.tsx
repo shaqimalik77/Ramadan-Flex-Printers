@@ -8,6 +8,7 @@ import { siteConfig } from "@/lib/siteConfig";
 import { INK } from "@/lib/brand";
 import InkStripe from "@/components/InkStripe";
 import CropMarks from "@/components/CropMarks";
+import Halftone from "@/components/Halftone";
 import { GOOGLE_PROFILE_URL, GOOGLE_RATING, GOOGLE_REVIEW_COUNT } from "@/data/googleReviews";
 // Photo parts cropped from the old homepage banners (no banner text on them).
 // Imported, not served from /public, because new /public files 404 on Hostinger.
@@ -114,14 +115,18 @@ const slides: Slide[] = [
 const waLink = (message: string) =>
   `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
 
+/** Smooth "ease-out-quint" curve used by all hero transitions. */
+const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+
 export default function HeroSlider() {
   const [active, setActive] = useState(0);
   /** Only the visitor's pause button stops autoplay (not hover or clicks). */
   const [paused, setPaused] = useState(false);
-  const pillRow = useRef<HTMLDivElement>(null);
-  const pills = useRef<(HTMLButtonElement | null)[]>([]);
   const [reducedMotion, setReducedMotion] = useState(false);
   const touchStartX = useRef<number | null>(null);
+  const pillRow = useRef<HTMLDivElement>(null);
+  const pills = useRef<(HTMLButtonElement | null)[]>([]);
+  const indicator = useRef<HTMLSpanElement>(null);
   const total = slides.length;
 
   const go = useCallback((i: number) => setActive((i + total) % total), [total]);
@@ -143,7 +148,7 @@ export default function HeroSlider() {
   const autoplaying = !paused && !reducedMotion;
 
   // Autoplay timer that can pause and resume where it left off, so it stays in
-  // step with the CSS progress line (which pauses with animation-play-state).
+  // step with the CSS progress fill (which pauses with animation-play-state).
   const remaining = useRef(DURATION);
   const startedAt = useRef(0);
 
@@ -163,13 +168,28 @@ export default function HeroSlider() {
     };
   }, [active, autoplaying, next]);
 
-  // Keep the active service pill visible in the scrollable row (mobile),
-  // scrolling only that row, never the page.
+  // Slide the dark pill indicator under the active service pill, and keep the
+  // active pill visible in the scrollable row (mobile) without moving the page.
   useEffect(() => {
     const row = pillRow.current;
-    const pill = pills.current[active];
-    if (!row || !pill || row.scrollWidth <= row.clientWidth) return;
-    row.scrollTo({ left: pill.offsetLeft - row.clientWidth / 2 + pill.clientWidth / 2, behavior: "smooth" });
+    const ind = indicator.current;
+    const place = () => {
+      const pill = pills.current[active];
+      if (!row || !ind || !pill) return;
+      ind.style.width = `${pill.offsetWidth}px`;
+      ind.style.height = `${pill.offsetHeight}px`;
+      ind.style.transform = `translate(${pill.offsetLeft}px, ${pill.offsetTop}px)`;
+      row.dataset.ready = "1";
+      if (row.scrollWidth > row.clientWidth) {
+        row.scrollTo({
+          left: pill.offsetLeft - row.clientWidth / 2 + pill.offsetWidth / 2,
+          behavior: "smooth",
+        });
+      }
+    };
+    place();
+    window.addEventListener("resize", place);
+    return () => window.removeEventListener("resize", place);
   }, [active]);
 
   const progressStyle: React.CSSProperties = reducedMotion
@@ -178,6 +198,8 @@ export default function HeroSlider() {
         animation: `hero-progress ${DURATION}ms linear forwards`,
         animationPlayState: autoplaying ? "running" : "paused",
       };
+
+  const current = slides[active];
 
   return (
     <section
@@ -201,133 +223,167 @@ export default function HeroSlider() {
         @keyframes hero-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
       `}</style>
 
-      {/* All slides sit in the same grid cell and cross-fade. */}
-      <div className="grid">
-        {slides.map((slide, i) => {
-          const isActive = i === active;
-          const Heading = i === 0 ? "h1" : "h2";
-          return (
-            <div
-              key={slide.tab}
-              className={`col-start-1 row-start-1 transition-opacity duration-700 ease-out ${
-                isActive ? "z-10 opacity-100" : "pointer-events-none z-0 opacity-0"
-              }`}
-              aria-roledescription="slide"
-              aria-label={`${i + 1} of ${total}: ${slide.tab}`}
-              aria-hidden={!isActive}
-              inert={!isActive}
-            >
-              <div className="mx-auto grid max-w-7xl items-center gap-8 px-5 pb-4 pt-8 sm:pt-14 lg:grid-cols-[1fr_1.05fr] lg:gap-16 lg:pb-8 lg:pt-16">
-                {/* Text: rises in when the slide becomes active */}
-                <div
-                  className={`transition-all duration-700 ease-out ${
-                    isActive ? "translate-y-0 opacity-100 delay-150" : "translate-y-4 opacity-0"
-                  }`}
-                >
-                  <p className="flex items-center gap-3 text-sm font-medium uppercase tracking-[0.18em] text-neutral-500">
-                    <InkStripe className="h-1.5 w-10" />
-                    {slide.eyebrow}
-                  </p>
-                  <Heading className="mt-4 text-[2.1rem] font-semibold sm:mt-5 leading-[1.08] tracking-tight sm:text-[3.4rem]">
-                    {slide.title}{" "}
-                    <span className="relative inline-block">
-                      {slide.highlight}
-                      <span
-                        aria-hidden
-                        className={`absolute -bottom-1 left-0 h-2 w-full origin-left rounded-full opacity-80 transition-transform duration-700 ease-out ${
-                          isActive ? "scale-x-100 delay-500" : "scale-x-0"
-                        }`}
-                        style={{ background: INK.yellow }}
-                      />
-                    </span>
-                    .
-                  </Heading>
-                  <p className="mt-4 max-w-xl text-base leading-relaxed text-neutral-600 sm:mt-5 sm:text-lg">{slide.text}</p>
-                  <div className="mt-6 flex flex-col gap-2 sm:mt-7 sm:flex-row sm:items-center sm:gap-5">
-                    <a
-                      href={waLink(slide.whatsappMessage)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-base font-medium text-white transition-opacity hover:opacity-90"
-                      style={{ background: INK.red }}
-                    >
-                      <MessageCircle className="h-5 w-5" />
-                      Get a free quote on WhatsApp
-                    </a>
-                    <Link
-                      href={slide.link.href}
-                      className="inline-flex items-center gap-1.5 px-1 py-2 text-base font-medium text-neutral-800 hover:text-neutral-950 sm:py-3"
-                    >
-                      {slide.link.label} <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </div>
+      {/* Printing-style halftone dots in the background */}
+      <Halftone color={INK.cyan} className="-right-24 -top-24 hidden h-[28rem] w-[28rem] sm:block" opacity={0.35} />
+      <Halftone color={INK.magenta} className="-bottom-32 left-1/3 h-80 w-80" opacity={0.18} />
+
+      <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-8 px-5 pb-4 pt-8 sm:pt-14 lg:grid-cols-[1fr_1.05fr] lg:gap-16 lg:pb-8 lg:pt-16">
+        {/* Text: all slides stacked in one cell. The old text leaves first
+            (fast fade up), then the new one rises in, so they never overlap. */}
+        <div className="grid">
+          {slides.map((slide, i) => {
+            const isActive = i === active;
+            const Heading = i === 0 ? "h1" : "h2";
+            return (
+              <div
+                key={slide.tab}
+                className="col-start-1 row-start-1"
+                aria-roledescription="slide"
+                aria-label={`${i + 1} of ${total}: ${slide.tab}`}
+                aria-hidden={!isActive}
+                inert={!isActive}
+                style={{
+                  opacity: isActive ? 1 : 0,
+                  transform: isActive ? "translateY(0)" : "translateY(-10px)",
+                  transitionProperty: "opacity, transform",
+                  transitionTimingFunction: EASE,
+                  transitionDuration: isActive ? "700ms" : "250ms",
+                  transitionDelay: isActive ? "220ms" : "0ms",
+                  pointerEvents: isActive ? "auto" : "none",
+                }}
+              >
+                <p className="flex items-center gap-3 text-sm font-medium uppercase tracking-[0.18em] text-neutral-500">
+                  <InkStripe className="h-1.5 w-10" />
+                  {slide.eyebrow}
+                </p>
+                <Heading className="mt-4 text-[2.1rem] font-semibold leading-[1.08] tracking-tight sm:mt-5 sm:text-[3.4rem]">
+                  {slide.title}{" "}
+                  <span className="relative inline-block">
+                    {slide.highlight}
+                    <span
+                      aria-hidden
+                      className="absolute -bottom-1 left-0 h-2 w-full origin-left rounded-full opacity-80"
+                      style={{
+                        background: INK.yellow,
+                        transform: isActive ? "scaleX(1)" : "scaleX(0)",
+                        transition: `transform 800ms ${EASE} ${isActive ? "650ms" : "0ms"}`,
+                      }}
+                    />
+                  </span>
+                  .
+                </Heading>
+                <p className="mt-4 max-w-xl text-base leading-relaxed text-neutral-600 sm:mt-5 sm:text-lg">
+                  {slide.text}
+                </p>
+                <div className="mt-6 flex flex-col gap-2 sm:mt-7 sm:flex-row sm:items-center sm:gap-5">
                   <a
-                    href={GOOGLE_PROFILE_URL}
+                    href={waLink(slide.whatsappMessage)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center gap-3 text-[15px] sm:mt-7 text-neutral-600 hover:text-neutral-950"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-base font-medium text-white transition hover:-translate-y-0.5 hover:shadow-lg"
+                    style={{ background: INK.red }}
                   >
-                    <span className="flex" aria-hidden>
-                      {Array.from({ length: 5 }).map((_, j) => (
-                        <Star key={j} className="h-4 w-4 fill-[#FBBC04] text-[#FBBC04]" />
-                      ))}
-                    </span>
-                    <span>
-                      <span className="font-medium text-neutral-900">{GOOGLE_RATING}</span> rating ·{" "}
-                      <span className="underline decoration-neutral-300 underline-offset-4">
-                        {GOOGLE_REVIEW_COUNT} Google reviews
-                      </span>
-                    </span>
+                    <MessageCircle className="h-5 w-5" />
+                    Get a free quote on WhatsApp
                   </a>
+                  <Link
+                    href={slide.link.href}
+                    className="inline-flex items-center gap-1.5 px-1 py-2 text-base font-medium text-neutral-800 hover:text-neutral-950 sm:py-3"
+                  >
+                    {slide.link.label} <ArrowRight className="h-4 w-4" />
+                  </Link>
                 </div>
-
-                {/* Photo framed like a print proof; gently zooms out when active */}
-                <div className="relative mx-5 my-5 sm:mx-10 sm:my-6">
-                  <span
-                    aria-hidden
-                    className="absolute -right-4 -top-4 h-full w-full rounded-2xl transition-transform duration-700"
-                    style={{ background: slide.inks[0], opacity: 0.18 }}
-                  />
-                  <span
-                    aria-hidden
-                    className="absolute -bottom-4 -left-4 h-full w-full rounded-2xl"
-                    style={{ background: slide.inks[1], opacity: 0.16 }}
-                  />
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-xl">
-                    <Image
-                      src={slide.image}
-                      alt={slide.alt}
-                      fill
-                      preload={i === 0}
-                      loading={i === 0 ? "eager" : "lazy"}
-                      sizes="(min-width: 1024px) 50vw, 100vw"
-                      className={`object-cover transition-transform duration-[1600ms] ease-out ${
-                        isActive ? "scale-100" : "scale-110"
-                      }`}
-                    />
-                  </div>
-                  <CropMarks />
-                  {/* Previous / next on the photo's corner (bottom-left on phones,
-                      away from the floating WhatsApp button) */}
-                  <div className="absolute bottom-3 left-3 z-10 flex gap-2 sm:bottom-4 sm:left-auto sm:right-4">
-                    <ArrowButton direction="prev" onClick={prev} />
-                    <ArrowButton direction="next" onClick={next} />
-                  </div>
-                </div>
+                <a
+                  href={GOOGLE_PROFILE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-4 inline-flex items-center gap-3 text-[15px] text-neutral-600 hover:text-neutral-950 sm:mt-7"
+                >
+                  <span className="flex" aria-hidden>
+                    {Array.from({ length: 5 }).map((_, j) => (
+                      <Star key={j} className="h-4 w-4 fill-[#FBBC04] text-[#FBBC04]" />
+                    ))}
+                  </span>
+                  <span>
+                    <span className="font-medium text-neutral-900">{GOOGLE_RATING}</span> rating ·{" "}
+                    <span className="underline decoration-neutral-300 underline-offset-4">
+                      {GOOGLE_REVIEW_COUNT} Google reviews
+                    </span>
+                  </span>
+                </a>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+
+        {/* Photo frame stays put; only the photos cross-fade inside it and
+            the ink blocks behind it change colour. */}
+        <div className="relative mx-5 my-5 sm:mx-10 sm:my-6">
+          <span
+            aria-hidden
+            className="absolute -right-4 -top-4 h-full w-full rounded-2xl"
+            style={{ background: current.inks[0], opacity: 0.18, transition: `background-color 900ms ${EASE}` }}
+          />
+          <span
+            aria-hidden
+            className="absolute -bottom-4 -left-4 h-full w-full rounded-2xl"
+            style={{ background: current.inks[1], opacity: 0.16, transition: `background-color 900ms ${EASE}` }}
+          />
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-neutral-200 shadow-xl">
+            {slides.map((slide, i) => {
+              const isActive = i === active;
+              return (
+                <Image
+                  key={slide.tab}
+                  src={slide.image}
+                  alt={isActive ? slide.alt : ""}
+                  aria-hidden={!isActive}
+                  fill
+                  preload={i === 0}
+                  loading={i === 0 ? "eager" : "lazy"}
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover"
+                  style={{
+                    opacity: isActive ? 1 : 0,
+                    transform: isActive ? "scale(1)" : "scale(1.06)",
+                    transition: `opacity 900ms ${EASE}, transform 1600ms ${EASE}`,
+                    zIndex: isActive ? 1 : 0,
+                  }}
+                />
+              );
+            })}
+          </div>
+          <CropMarks />
+          {/* Previous / next on the photo's corner (bottom-left on phones,
+              away from the floating WhatsApp button) */}
+          <div className="absolute bottom-3 left-3 z-10 flex gap-2 sm:bottom-4 sm:left-auto sm:right-4">
+            <ArrowButton direction="prev" onClick={prev} />
+            <ArrowButton direction="next" onClick={next} />
+          </div>
+        </div>
       </div>
 
-      {/* Service pills (with progress) and a pause button */}
+      {/* Service pills with a sliding indicator (and progress) plus pause */}
       <div className="relative z-20 mx-auto flex max-w-7xl items-center gap-3 px-5 pb-8 pt-2 lg:pb-12">
         <div
           ref={pillRow}
-          className="-ml-5 flex min-w-0 flex-1 gap-2 overflow-x-auto py-1 pl-5 pr-1 [mask-image:linear-gradient(to_right,transparent,black_20px,black_calc(100%-28px),transparent)] [scrollbar-width:none] lg:ml-0 lg:[mask-image:none] lg:flex-wrap lg:overflow-visible lg:pl-0 [&::-webkit-scrollbar]:hidden"
+          className="group/pills relative -ml-5 flex min-w-0 flex-1 gap-2 overflow-x-auto py-1 pl-5 pr-1 [mask-image:linear-gradient(to_right,transparent,black_20px,black_calc(100%-28px),transparent)] [scrollbar-width:none] lg:ml-0 lg:flex-wrap lg:overflow-visible lg:pl-0 lg:[mask-image:none] [&::-webkit-scrollbar]:hidden"
           role="tablist"
           aria-label="Choose a service"
         >
+          {/* The dark pill that slides to the active service */}
+          <span
+            ref={indicator}
+            aria-hidden
+            className="pointer-events-none absolute left-0 top-0 overflow-hidden rounded-full bg-neutral-900 opacity-0 group-data-[ready=1]/pills:opacity-100"
+            style={{ transition: `transform 550ms ${EASE}, width 550ms ${EASE}, height 550ms ${EASE}` }}
+          >
+            <span
+              key={`run-${active}`}
+              className="absolute inset-0 origin-left bg-white/15"
+              style={progressStyle}
+            />
+          </span>
           {slides.map((slide, i) => {
             const isActive = i === active;
             return (
@@ -340,26 +396,14 @@ export default function HeroSlider() {
                 role="tab"
                 aria-selected={isActive}
                 onClick={() => go(i)}
-                className={`relative shrink-0 overflow-hidden rounded-full border px-4 py-2 text-sm transition-colors sm:text-[15px] ${
+                className={`relative z-10 shrink-0 rounded-full border px-4 py-2 text-sm transition-colors duration-500 sm:text-[15px] ${
                   isActive
-                    ? "border-neutral-900 bg-neutral-900 text-white"
+                    ? "border-neutral-900 bg-neutral-900 text-white group-data-[ready=1]/pills:bg-transparent"
                     : "border-neutral-300 bg-white text-neutral-700 hover:border-neutral-900 hover:text-neutral-950"
                 }`}
               >
-                {isActive && (
-                  <span
-                    key={`run-${active}`}
-                    aria-hidden
-                    className="absolute inset-0 origin-left bg-white/15"
-                    style={progressStyle}
-                  />
-                )}
-                <span className="relative flex items-center gap-2">
-                  <span
-                    aria-hidden
-                    className="h-2 w-2 rounded-full"
-                    style={{ background: slide.inks[0] }}
-                  />
+                <span className="flex items-center gap-2">
+                  <span aria-hidden className="h-2 w-2 rounded-full" style={{ background: slide.inks[0] }} />
                   {slide.tab}
                 </span>
               </button>
