@@ -3,17 +3,10 @@ import Link from "next/link";
 import {
   ArrowRight,
   ArrowUpRight,
-  BadgeCheck,
-  ExternalLink,
-  FileCheck,
   GraduationCap,
   HeartPulse,
-  Layers,
-  MessageCircle,
   PartyPopper,
-  Send,
   Shirt,
-  Truck,
   UtensilsCrossed,
 } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
@@ -23,19 +16,20 @@ import {
   getCategoryBySlug,
   getCategoryImage,
 } from "@/data/categoryProducts";
-import InkStripe from "@/components/InkStripe";
 import Halftone from "@/components/Halftone";
 import Reveal from "@/components/Reveal";
-import ReviewsSlider from "@/components/ReviewsSlider";
 import HeroSlider from "@/components/HeroSlider";
 import { clientLogos } from "@/data/clientLogos";
 import ClientMarquee from "@/components/ClientMarquee";
+import SectionTitle from "@/components/site/SectionTitle";
+import Benefits from "@/components/site/Benefits";
+import HowToOrder from "@/components/site/HowToOrder";
+import ReviewsSection from "@/components/site/ReviewsSection";
+import ClosingCta from "@/components/site/ClosingCta";
 import neonPhoto from "@/assets/hero/neon-signs.jpg";
 import {
-  GOOGLE_PROFILE_URL,
   GOOGLE_RATING,
   GOOGLE_REVIEW_COUNT,
-  googleReviews,
 } from "@/data/googleReviews";
 
 /**
@@ -47,38 +41,10 @@ import {
  * white space. Every claim and number on this page is real (see comments).
  */
 
-const whatsappHref = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(
-  siteConfig.whatsappDefaultMessage,
-)}`;
+
 
 const YELLOW_TEXT = "#E0A800"; // yellow ink is too light for icons/text on white
 
-const benefits = [
-  {
-    icon: Truck,
-    color: INK.cyan,
-    title: "Delivery across Pakistan",
-    text: "We ship by courier to your door, in Lahore or any other city.",
-  },
-  {
-    icon: MessageCircle,
-    color: INK.magenta,
-    title: "Free quote on WhatsApp",
-    text: "Send us your idea and get the price and timing in a reply.",
-  },
-  {
-    icon: FileCheck,
-    color: YELLOW_TEXT,
-    title: "Design proof first",
-    text: "You approve a digital proof before anything goes to print.",
-  },
-  {
-    icon: Layers,
-    color: INK.key,
-    title: "Small or bulk orders",
-    text: "From a first small run to regular bulk orders for your brand.",
-  },
-];
 
 /**
  * Bento grid of popular products. Taglines only list product types that
@@ -204,77 +170,6 @@ const industries = [
   },
 ];
 
-const steps = [
-  {
-    icon: Send,
-    color: INK.cyan,
-    title: "Send your idea",
-    text: "WhatsApp us your logo, design or a reference picture, with the quantity you need.",
-  },
-  {
-    icon: BadgeCheck,
-    color: INK.magenta,
-    title: "Approve the proof",
-    text: "We reply with the price, timing and a digital proof. Nothing is printed until you say yes.",
-  },
-  {
-    icon: Truck,
-    color: YELLOW_TEXT,
-    title: "Get it delivered",
-    text: "We print your order in Lahore and deliver it to your door anywhere in Pakistan.",
-  },
-];
-
-function SectionTitle({
-  title,
-  subtitle,
-  onDark = false,
-}: {
-  title: string;
-  subtitle: string;
-  onDark?: boolean;
-}) {
-  return (
-    <Reveal className="flex flex-col items-center text-center">
-      <InkStripe onDark={onDark} />
-      <h2
-        className={`mt-5 text-3xl font-semibold tracking-tight sm:text-[2.5rem] sm:leading-tight ${
-          onDark ? "text-white" : "text-neutral-900"
-        }`}
-      >
-        {title}
-      </h2>
-      <p
-        className={`mt-3 text-lg ${onDark ? "text-neutral-300" : "text-neutral-500"}`}
-      >
-        {subtitle}
-      </p>
-    </Reveal>
-  );
-}
-
-function WhatsAppButton({
-  label,
-  light = false,
-}: {
-  label: string;
-  light?: boolean;
-}) {
-  return (
-    <a
-      href={whatsappHref}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-base font-medium transition hover:-translate-y-0.5 hover:shadow-lg ${
-        light ? "bg-white text-neutral-900" : "text-white"
-      }`}
-      style={light ? undefined : { background: INK.red }}
-    >
-      <MessageCircle className="h-5 w-5" />
-      {label}
-    </a>
-  );
-}
 
 export default function NewHome() {
   // Real numbers only.
@@ -303,37 +198,7 @@ export default function NewHome() {
       <HeroSlider />
 
       {/* 2. Benefits */}
-      <section className="border-y border-neutral-200 bg-white">
-        <ul className="mx-auto grid max-w-7xl grid-cols-2 lg:grid-cols-4">
-          {benefits.map(({ icon: Icon, color, title, text }, i) => (
-            <li
-              key={title}
-              className={`group px-5 py-8 sm:px-8 sm:py-10 ${
-                i % 2 === 1 ? "border-l border-neutral-200" : ""
-              } ${i >= 2 ? "border-t border-neutral-200 lg:border-t-0" : ""} ${
-                i === 2 ? "lg:border-l" : ""
-              }`}
-            >
-              <Reveal delay={i * 90} className="flex flex-col gap-3">
-                <span
-                  className="flex h-11 w-11 items-center justify-center rounded-xl transition-transform duration-300 group-hover:-translate-y-1"
-                  style={{ background: `${color}14` }}
-                >
-                  <Icon
-                    className="h-6 w-6"
-                    style={{ color }}
-                    strokeWidth={1.7}
-                  />
-                </span>
-                <h2 className="text-base font-semibold sm:text-lg">{title}</h2>
-                <p className="text-sm leading-relaxed text-neutral-500 sm:text-[15px]">
-                  {text}
-                </p>
-              </Reveal>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <Benefits />
 
       {/* 3. Popular products: bento grid */}
       <section className="py-14 sm:py-24">
@@ -523,93 +388,10 @@ export default function NewHome() {
       </section>
 
       {/* 6. Real Google reviews */}
-      <section className="py-14 sm:py-24">
-        <div className="mx-auto max-w-7xl px-5">
-          <SectionTitle
-            title="What our customers say"
-            subtitle={`Real reviews from our Google Business Profile, rated ${GOOGLE_RATING} by ${GOOGLE_REVIEW_COUNT} customers.`}
-          />
-          <Reveal className="mt-10 sm:mt-12">
-            <ReviewsSlider reviews={googleReviews} />
-          </Reveal>
-          <div className="mt-8 text-center sm:mt-10">
-            <a
-              href={GOOGLE_PROFILE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl border border-neutral-300 px-7 py-3.5 text-base font-medium text-neutral-900 transition-colors hover:border-neutral-900"
-            >
-              Read all {GOOGLE_REVIEW_COUNT} reviews on Google{" "}
-              <ExternalLink className="h-4 w-4" />
-            </a>
-          </div>
-        </div>
-      </section>
+      <ReviewsSection />
 
       {/* 7. How to order: timeline */}
-      <section className="relative overflow-hidden bg-[#FAF8F5] py-14 sm:py-24">
-        <Halftone
-          color={INK.yellow}
-          className="-right-24 top-10 h-80 w-80"
-          opacity={0.4}
-        />
-        <div className="relative mx-auto max-w-6xl px-5">
-          <SectionTitle
-            title="How to order"
-            subtitle="Three simple steps, all on WhatsApp."
-          />
-          <div className="relative mt-12 md:mt-16">
-            {/* Dashed line joining the steps */}
-            <span
-              aria-hidden
-              className="absolute left-[16.7%] right-[16.7%] top-8 hidden border-t-2 border-dashed border-neutral-300 md:block"
-            />
-            <span
-              aria-hidden
-              className="absolute bottom-10 left-8 top-8 border-l-2 border-dashed border-neutral-300 md:hidden"
-            />
-            <ol className="relative grid gap-10 md:grid-cols-3 md:gap-8">
-              {steps.map(({ icon: Icon, color, title, text }, i) => (
-                <li key={title} className="relative">
-                  <Reveal
-                    delay={i * 150}
-                    className="flex gap-5 md:flex-col md:items-center md:text-center"
-                  >
-                    <span className="relative z-10 flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white shadow-md ring-8 ring-[#FAF8F5]">
-                      <Icon
-                        className="h-7 w-7"
-                        style={{ color }}
-                        strokeWidth={1.7}
-                      />
-                      <span
-                        className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold text-white"
-                        style={{ background: color }}
-                      >
-                        {i + 1}
-                      </span>
-                    </span>
-                    <div className="md:mt-6">
-                      <p
-                        className="text-xs font-semibold uppercase tracking-[0.14em]"
-                        style={{ color }}
-                      >
-                        Step {i + 1}
-                      </p>
-                      <h3 className="mt-1 text-xl font-semibold">{title}</h3>
-                      <p className="mt-2 max-w-xs leading-relaxed text-neutral-500 md:mx-auto">
-                        {text}
-                      </p>
-                    </div>
-                  </Reveal>
-                </li>
-              ))}
-            </ol>
-          </div>
-          <Reveal className="mt-12 text-center">
-            <WhatsAppButton label="Start your order on WhatsApp" />
-          </Reveal>
-        </div>
-      </section>
+      <HowToOrder />
 
       {/* 8. Client logos */}
       <section className="py-14 sm:py-20">
@@ -625,36 +407,7 @@ export default function NewHome() {
       </section>
 
       {/* 9. Closing call to action */}
-      <section
-        className="relative overflow-hidden px-5 py-20 text-center text-white sm:py-24"
-        style={{ background: INK.key }}
-      >
-        <Halftone
-          color={INK.magenta}
-          className="-left-16 -top-20 h-80 w-80"
-          opacity={0.3}
-          spacing={12}
-        />
-        <Halftone
-          color={INK.cyan}
-          className="-bottom-24 -right-16 h-96 w-96"
-          opacity={0.25}
-          spacing={12}
-        />
-        <div className="relative">
-          <SectionTitle
-            title="Have something in mind?"
-            subtitle={`Send us a message on WhatsApp and get a free quote today. ${siteConfig.hoursDays}, ${siteConfig.hoursTime}.`}
-            onDark
-          />
-          <Reveal className="mt-9 flex justify-center">
-            <WhatsAppButton
-              label={`WhatsApp ${siteConfig.phoneDisplay}`}
-              light
-            />
-          </Reveal>
-        </div>
-      </section>
+      <ClosingCta />
     </main>
   );
 }

@@ -8,61 +8,8 @@ import { ChevronDown, Menu, MessageCircle, Phone, X } from "lucide-react";
 import { siteConfig } from "@/lib/siteConfig";
 import { brandFont, INK } from "@/lib/brand";
 import InkStripe from "@/components/InkStripe";
+import { NAV } from "@/lib/navigation";
 import ramdanLogo from "@/assets/brand/ramdan-logo.png";
-
-type NavLink = { label: string; href: string };
-type NavGroup = { label: string; href?: string; items?: NavLink[] };
-
-const cat = (label: string, slug: string): NavLink => ({ label, href: `/categories/${slug}` });
-
-const NAV: NavGroup[] = [
-  {
-    label: "Packaging",
-    items: [
-      cat("Ecommerce Boxes", "ecommerce-boxes"),
-      cat("Hard Drawer Boxes", "hard-drawer-boxes"),
-      cat("Cosmetic Boxes", "cosmetic-boxes"),
-      cat("Stand Up Pouches", "stand-up-pouches"),
-      cat("Ziplock Frosted Bags", "ziplock-frosted-bags"),
-      cat("Gift Bags", "gift-bags"),
-      cat("Shopping Bags", "shopping-bags"),
-      cat("Courier Flyer Bags", "courier-flyer-poly-bags"),
-      cat("Butter Paper", "butter-paper"),
-      cat("Ribbons", "ribbons"),
-    ],
-  },
-  {
-    label: "Cards & Tags",
-    items: [
-      cat("Business Cards", "business-cards"),
-      cat("Wedding Cards", "wedding-cards"),
-      cat("Thank You Cards", "thank-you-cards"),
-      cat("Jewellery Cards", "jewellery-cards"),
-      cat("Label & Hang Tags", "label-hang-tags"),
-      cat("Fabric Tags", "fabric-tags"),
-    ],
-  },
-  { label: "Stickers", href: "/categories/stickers" },
-  {
-    label: "Apparel & Gifts",
-    items: [
-      cat("Custom T-Shirts", "custom-t-shirts"),
-      cat("Mugs", "mugs"),
-      cat("Promotional Products", "promotional-products"),
-      cat("Polaroids", "polaroids"),
-    ],
-  },
-  {
-    label: "Signs & Flex",
-    items: [
-      cat("Neon Signs", "neon-signs"),
-      cat("3D Boards", "3d-boards"),
-      cat("Flex Printing", "flex-designs"),
-    ],
-  },
-  { label: "All Products", href: "/categories" },
-  { label: "Blog", href: "/blog" },
-];
 
 const whatsappHref = `https://wa.me/${siteConfig.whatsappNumber}?text=${encodeURIComponent(
   siteConfig.whatsappDefaultMessage
