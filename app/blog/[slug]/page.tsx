@@ -3,9 +3,7 @@ import { notFound } from "next/navigation";
 import { blogPosts as blogPostsFromList } from "@/data/Blogposts";
 import { blogPosts as blogPostsFromData } from "@/data/blogData";
 import { blogDetails, BlogDetail } from "@/data/blogDetails";
-import BlogHero from "@/components/BlogHero";
-import BlogContent from "@/components/BlogContent";
-import RelatedBlogs from "@/components/RelatedBlogs";
+import BlogPostView from "@/components/blog/BlogPostView";
 import { pageMeta, jsonLd, absoluteUrl, SITE_URL } from "@/lib/seo";
 import { siteConfig } from "@/lib/siteConfig";
 
@@ -163,40 +161,8 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
     notFound();
   }
 
-  // Get other blog posts to show as related articles
-  // Exclude the current one, and show up to 3 articles
-  const allSlugs = new Set<string>();
-  const allBlogDetails: BlogDetail[] = [];
-
-  const addDetail = (detail: BlogDetail) => {
-    if (!allSlugs.has(detail.slug)) {
-      allSlugs.add(detail.slug);
-      allBlogDetails.push(detail);
-    }
-  };
-
-  // Get real detailed blogs first
-  blogDetails.forEach(addDetail);
-
-  // Then add fallback details for listed posts
-  blogPostsFromList.forEach((p) => {
-    addDetail(
-      generateFallbackBlogDetail(
-        p.slug,
-        p.title,
-        p.excerpt,
-        p.category,
-        p.publishDate,
-        p.readingTime,
-        p.image
-      )
-    );
-  });
-
-  // Filter out current post
-  const relatedPosts = allBlogDetails
-    .filter((b) => b.slug !== slug)
-    .slice(0, 3);
+  // Related: the other full articles only (placeholder posts stay unlisted).
+  const relatedPosts = blogDetails.filter((b) => b.slug !== slug).slice(0, 3);
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -205,22 +171,20 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
     description: post.excerpt,
     image: absoluteUrl(post.heroImage),
     datePublished: toIsoDate(post.publishDate),
-    author: { "@type": "Person", name: post.author },
+    author: { "@type": "Organization", name: siteConfig.name, url: SITE_URL },
     publisher: { "@id": `${SITE_URL}/#business`, "@type": "Organization", name: siteConfig.name },
     mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
   };
 
   return (
-    <main className="bg-white pb-16">
+    <>
       {hasRealContent(post.slug) && (
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLd(articleJsonLd) }}
         />
       )}
-      <BlogHero post={post} />
-      <BlogContent blocks={post.content} />
-      <RelatedBlogs posts={relatedPosts} />
-    </main>
+      <BlogPostView post={post} related={relatedPosts} />
+    </>
   );
 }

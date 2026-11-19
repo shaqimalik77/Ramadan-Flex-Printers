@@ -33,6 +33,12 @@ const nextConfig: NextConfig = {
         destination: "https://www.ramdanflexprinters.com/:path*",
         permanent: true,
       },
+      {
+        // There is no cart: every order goes through WhatsApp.
+        source: "/cart",
+        destination: "/products",
+        permanent: true,
+      },
     ];
   },
 };

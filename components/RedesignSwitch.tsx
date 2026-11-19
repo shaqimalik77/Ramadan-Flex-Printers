@@ -10,21 +10,17 @@ import NewFooter from "@/components/NewFooter";
 import { PREVIEW_PATH } from "@/lib/brand";
 
 /**
- * TEMPORARY while the redesign is being reviewed: the new header and footer
- * (and no loading spinner) show only on the private preview page (PREVIEW_PATH). Every other
- * page keeps the current header, footer and spinner.
+ * TEMPORARY while the redesign is being finished: new header and footer (and
+ * no loading spinner) on redesigned pages; the old ones on the rest.
  */
 function useIsPreview() {
   const pathname = usePathname() ?? "";
-  // dev/work only (not merged to main until launch): category and product
-  // pages are already redesigned, so they get the new header and footer too.
-  return (
-    pathname === PREVIEW_PATH ||
-    pathname.startsWith("/categories/") ||
-    pathname.startsWith("/products/")
-  );
+  // dev/work only (not merged to main until launch): every page except the
+  // current homepage and the admin panel is already redesigned, so they get
+  // the new header and footer. The homepage switches to NewHome at launch.
+  if (pathname === PREVIEW_PATH) return true;
+  return pathname !== "/" && !pathname.startsWith("/admin");
 }
-
 export function HeaderSwitch() {
   return useIsPreview() ? <NewHeader /> : <Header />;
 }
