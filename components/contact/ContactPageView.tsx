@@ -9,6 +9,7 @@ import Reveal from "@/components/Reveal";
 import Breadcrumbs from "@/components/site/Breadcrumbs";
 import { whatsappLink } from "@/components/site/QuoteButton";
 import ContactWhatsAppForm from "@/components/contact/ContactWhatsAppForm";
+import { TEXT } from "@/lib/typography";
 
 const mapQuery = encodeURIComponent(`${siteConfig.address}, Pakistan`);
 
@@ -60,14 +61,14 @@ export default function ContactPageView() {
         <div className="relative mx-auto max-w-7xl px-5 pb-12 pt-6 sm:pb-16">
           <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Contact" }]} />
           <div className="mt-8 max-w-3xl sm:mt-12">
-            <p className="flex items-center gap-3 text-sm font-medium uppercase tracking-[0.18em] text-neutral-500">
+            <p className={TEXT.eyebrow}>
               <InkStripe className="h-1.5 w-10" />
               Contact
             </p>
-            <h1 className="mt-5 text-[2.3rem] font-semibold leading-[1.08] tracking-tight sm:text-6xl">
+            <h1 className={`mt-5 ${TEXT.display}`}>
               Let&apos;s talk about your printing
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-neutral-600">
+            <p className={`mt-5 max-w-2xl ${TEXT.lead}`}>
               The quickest way to reach us is WhatsApp. Send your idea, logo or a reference picture and
               we&apos;ll reply with the price and timing.
             </p>

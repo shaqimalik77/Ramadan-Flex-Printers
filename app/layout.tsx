@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import {
-  HeaderSwitch,
-  FooterSwitch,
-  PreloaderSwitch,
-  FloatingWhatsAppSwitch,
-} from "@/components/RedesignSwitch";
+import NewHeader from "@/components/NewHeader";
+import NewFooter from "@/components/NewFooter";
+import FloatingWhatsAppSwitch from "@/components/FloatingWhatsAppSwitch";
+import ramdanLogo from "@/assets/brand/ramdan-logo.png";
 import { siteConfig } from "@/lib/siteConfig";
+import { brandFont } from "@/lib/brand";
 import { SITE_URL, DEFAULT_OG_IMAGE, absoluteUrl, jsonLd } from "@/lib/seo";
 
 const geistSans = Geist({
@@ -50,7 +49,7 @@ const businessJsonLd = {
   "@id": `${SITE_URL}/#business`,
   name: siteConfig.name,
   url: SITE_URL,
-  logo: absoluteUrl("/images/logo/logo.png"),
+  logo: absoluteUrl(ramdanLogo.src),
   image: absoluteUrl(DEFAULT_OG_IMAGE.url),
   telephone: "+92-301-7413377",
   email: siteConfig.email,
@@ -83,15 +82,14 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-white text-gray-900">
+      <body className={`${brandFont.className} min-h-full flex flex-col bg-white text-neutral-900`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLd(businessJsonLd) }}
         />
-        <PreloaderSwitch />
-        <HeaderSwitch />
+        <NewHeader />
         <div className="flex-grow">{children}</div>
-        <FooterSwitch />
+        <NewFooter />
         <FloatingWhatsAppSwitch />
       </body>
     </html>

@@ -10,6 +10,7 @@ import Breadcrumbs from "@/components/site/Breadcrumbs";
 import HowToOrder from "@/components/site/HowToOrder";
 import ClosingCta from "@/components/site/ClosingCta";
 import ProductFinder, { type FinderItem } from "@/components/catalog/ProductFinder";
+import { TEXT } from "@/lib/typography";
 
 export const metadata: Metadata = pageMeta({
   title: "All Printing & Packaging Products",
@@ -39,14 +40,14 @@ export default function ProductsPage() {
         <div className="relative mx-auto max-w-7xl px-5 pb-10 pt-6 sm:pb-12">
           <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Products" }]} />
           <div className="mt-8 max-w-3xl sm:mt-12">
-            <p className="flex items-center gap-3 text-sm font-medium uppercase tracking-[0.18em] text-neutral-500">
+            <p className={TEXT.eyebrow}>
               <InkStripe className="h-1.5 w-10" />
               {items.length} products
             </p>
-            <h1 className="mt-5 text-[2.3rem] font-semibold leading-[1.08] tracking-tight sm:text-6xl">
+            <h1 className={`mt-5 ${TEXT.display}`}>
               Find your product
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-neutral-600">
+            <p className={`mt-5 max-w-2xl ${TEXT.lead}`}>
               Search everything we print, or{" "}
               <Link href="/categories" className="font-medium text-neutral-900 underline underline-offset-4">
                 browse by category

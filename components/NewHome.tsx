@@ -33,8 +33,7 @@ import {
 } from "@/data/googleReviews";
 
 /**
- * SAMPLE redesign of the homepage, shown at PREVIEW_PATH (lib/brand.ts) so the
- * client can compare it with the current homepage. Not live on "/".
+ * The homepage.
  *
  * Identity: the four printing inks (CMYK) from the Ramdan logo, crop marks
  * and halftone dots like on printed proofs, a light friendly font and lots of

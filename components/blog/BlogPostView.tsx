@@ -11,6 +11,7 @@ import Breadcrumbs from "@/components/site/Breadcrumbs";
 import QuoteButton from "@/components/site/QuoteButton";
 import SectionTitle from "@/components/site/SectionTitle";
 import ClosingCta from "@/components/site/ClosingCta";
+import { TEXT } from "@/lib/typography";
 
 function Block({ block }: { block: BlogContentBlock }) {
   switch (block.type) {
@@ -58,12 +59,12 @@ export default function BlogPostView({ post, related }: { post: BlogDetail; rela
         <Halftone color={INK.cyan} className="-right-24 -top-24 hidden h-[24rem] w-[24rem] sm:block" opacity={0.3} />
         <div className="relative mx-auto max-w-4xl px-5 pb-10 pt-6 sm:pb-14">
           <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: post.title }]} />
-          <p className="mt-10 flex items-center gap-3 text-sm font-medium uppercase tracking-[0.18em] text-neutral-500">
+          <p className={`mt-10 ${TEXT.eyebrow}`}>
             <InkStripe className="h-1.5 w-10" />
             {post.category}
           </p>
-          <h1 className="mt-5 text-[2.2rem] font-semibold leading-[1.1] tracking-tight sm:text-5xl">{post.title}</h1>
-          <p className="mt-5 text-lg leading-relaxed text-neutral-600 sm:text-xl">{post.excerpt}</p>
+          <h1 className={`mt-5 ${TEXT.display}`}>{post.title}</h1>
+          <p className={`mt-5 ${TEXT.lead}`}>{post.excerpt}</p>
           <p className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-neutral-500">
             <span className="font-medium text-neutral-800">By {siteConfig.name}</span>
             <span>{post.publishDate}</span>

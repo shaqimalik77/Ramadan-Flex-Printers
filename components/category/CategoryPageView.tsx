@@ -21,6 +21,7 @@ import { clientLogos } from "@/data/clientLogos";
 import ReviewsSection from "@/components/site/ReviewsSection";
 import HowToOrder from "@/components/site/HowToOrder";
 import ClosingCta from "@/components/site/ClosingCta";
+import { TEXT } from "@/lib/typography";
 
 const INK_PAIRS: [string, string][] = [
   [INK.cyan, INK.magenta],
@@ -59,14 +60,14 @@ export default function CategoryPageView({ category }: { category: Category }) {
           />
           <div className="mt-6 grid items-center gap-8 lg:mt-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
             <div>
-              <p className="flex items-center gap-3 text-sm font-medium uppercase tracking-[0.18em] text-neutral-500">
+              <p className={TEXT.eyebrow}>
                 <InkStripe className="h-1.5 w-10" />
                 {count} products · Printed in Lahore
               </p>
-              <h1 className="mt-5 text-[2.1rem] font-semibold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.2rem]">
+              <h1 className={`mt-5 ${TEXT.display}`}>
                 {seo.title}
               </h1>
-              <p className="mt-5 max-w-xl text-base leading-relaxed text-neutral-600 sm:text-lg">
+              <p className={`mt-5 max-w-xl ${TEXT.lead}`}>
                 {seo.description}
               </p>
               <div className="mt-7 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-5">

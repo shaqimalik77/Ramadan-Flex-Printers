@@ -16,6 +16,7 @@ import neonPhoto from "@/assets/hero/neon-signs.jpg";
 import boardsPhoto from "@/assets/hero/3d-boards.jpg";
 import flexPhoto from "@/assets/hero/flex-printing.jpg";
 import offsetPhoto from "@/assets/hero/offset-printing.jpg";
+import { TEXT } from "@/lib/typography";
 
 /** How long each slide stays before moving on, in ms. */
 const DURATION = 6000;
@@ -40,7 +41,7 @@ interface Slide {
 const slides: Slide[] = [
   {
     tab: "All printing",
-    eyebrow: "Printing & packaging · Lahore",
+    eyebrow: "Printing & packaging company in Lahore",
     title: "Print that makes your brand",
     highlight: "stand out",
     text: "Custom boxes, stickers, business cards, tags, wedding cards, neon signs and flex printing. Made in Lahore, delivered across Pakistan.",
@@ -233,7 +234,11 @@ export default function HeroSlider() {
         <div className="grid">
           {slides.map((slide, i) => {
             const isActive = i === active;
-            const Heading = i === 0 ? "h1" : "h2";
+            // SEO: on the first slide the keyword line ("…company in Lahore")
+            // is the page's H1 and the big slogan is a paragraph; on the
+            // other slides the eyebrow is text and the title an H2.
+            const Eyebrow = i === 0 ? "h1" : "p";
+            const Heading = i === 0 ? "p" : "h2";
             return (
               <div
                 key={slide.tab}
@@ -252,11 +257,11 @@ export default function HeroSlider() {
                   pointerEvents: isActive ? "auto" : "none",
                 }}
               >
-                <p className="flex items-center gap-3 text-sm font-medium uppercase tracking-[0.18em] text-neutral-500">
+                <Eyebrow className={TEXT.eyebrow}>
                   <InkStripe className="h-1.5 w-10" />
                   {slide.eyebrow}
-                </p>
-                <Heading className="mt-4 text-[2.1rem] font-semibold leading-[1.08] tracking-tight sm:mt-5 sm:text-[3.4rem]">
+                </Eyebrow>
+                <Heading className={`mt-4 sm:mt-5 ${TEXT.display}`}>
                   {slide.title}{" "}
                   <span className="relative inline-block">
                     {slide.highlight}
@@ -272,7 +277,7 @@ export default function HeroSlider() {
                   </span>
                   .
                 </Heading>
-                <p className="mt-4 max-w-xl text-base leading-relaxed text-neutral-600 sm:mt-5 sm:text-lg">
+                <p className={`mt-4 max-w-xl sm:mt-5 ${TEXT.lead}`}>
                   {slide.text}
                 </p>
                 <div className="mt-6 flex flex-col gap-2 sm:mt-7 sm:flex-row sm:items-center sm:gap-5">

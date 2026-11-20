@@ -6,6 +6,7 @@ import { getCategoryBySlug } from "@/data/categoryProducts";
 import Halftone from "@/components/Halftone";
 import InkStripe from "@/components/InkStripe";
 import QuoteButton from "@/components/site/QuoteButton";
+import { TEXT } from "@/lib/typography";
 
 export const metadata: Metadata = {
   title: "Page not found",
@@ -24,8 +25,8 @@ export default function NotFound() {
       <div className="relative mx-auto w-full max-w-3xl px-5 py-20 text-center sm:py-28">
         <InkStripe className="mx-auto h-1.5 w-16" />
         <p className="mt-6 text-sm font-medium uppercase tracking-[0.18em] text-neutral-500">Error 404</p>
-        <h1 className="mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">This page didn&apos;t print</h1>
-        <p className="mx-auto mt-5 max-w-xl text-lg text-neutral-600">
+        <h1 className={`mt-3 ${TEXT.display}`}>This page didn&apos;t print</h1>
+        <p className={`mx-auto mt-5 max-w-xl ${TEXT.lead}`}>
           The page you&apos;re looking for doesn&apos;t exist or has moved. Try one of these instead, or ask us
           on WhatsApp.
         </p>

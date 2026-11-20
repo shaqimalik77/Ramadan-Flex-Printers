@@ -21,9 +21,3 @@ export const brandFont = Figtree({
   weight: ["400", "500", "600"],
   display: "swap",
 });
-
-/**
- * Private preview of the redesign for the client. Hard-to-guess on purpose,
- * noindex, not in the sitemap and not linked from anywhere on the site.
- */
-export const PREVIEW_PATH = "/sample-ghvglx";

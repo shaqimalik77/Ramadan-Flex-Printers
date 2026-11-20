@@ -8,6 +8,7 @@ import InkStripe from "@/components/InkStripe";
 import Reveal from "@/components/Reveal";
 import Breadcrumbs from "@/components/site/Breadcrumbs";
 import ClosingCta from "@/components/site/ClosingCta";
+import { TEXT } from "@/lib/typography";
 
 /**
  * Blog list. Shows only the full articles (data/blogDetails.ts). The other
@@ -24,14 +25,14 @@ export default function BlogIndexView() {
         <div className="relative mx-auto max-w-7xl px-5 pb-12 pt-6 sm:pb-16">
           <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Blog" }]} />
           <div className="mt-8 max-w-3xl sm:mt-12">
-            <p className="flex items-center gap-3 text-sm font-medium uppercase tracking-[0.18em] text-neutral-500">
+            <p className={TEXT.eyebrow}>
               <InkStripe className="h-1.5 w-10" />
               Blog
             </p>
-            <h1 className="mt-5 text-[2.3rem] font-semibold leading-[1.08] tracking-tight sm:text-6xl">
+            <h1 className={`mt-5 ${TEXT.display}`}>
               Printing &amp; packaging guides
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-neutral-600">
+            <p className={`mt-5 max-w-2xl ${TEXT.lead}`}>
               Practical advice on packaging, printing materials and branding for shops and online brands.
             </p>
           </div>

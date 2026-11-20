@@ -19,6 +19,7 @@ import ClosingCta from "@/components/site/ClosingCta";
 import ProductGallery from "@/components/product/ProductGallery";
 import QuoteBuilder from "@/components/product/QuoteBuilder";
 import MobileQuoteBar from "@/components/product/MobileQuoteBar";
+import { TEXT } from "@/lib/typography";
 
 const CHECK_COLORS = [INK.cyan, INK.magenta, "#E0A800", INK.key];
 
@@ -64,7 +65,7 @@ export default function ProductPageView({ product }: { product: ProductDetail })
                   {category.name}
                 </Link>
               )}
-              <h1 className="mt-4 text-[2.1rem] font-semibold leading-[1.1] tracking-tight sm:text-5xl">
+              <h1 className={`mt-4 ${TEXT.display}`}>
                 {product.title}
               </h1>
               <a
@@ -85,7 +86,7 @@ export default function ProductPageView({ product }: { product: ProductDetail })
                   </span>
                 </span>
               </a>
-              <p className="mt-5 text-lg leading-relaxed text-neutral-600">{product.shortDescription}</p>
+              <p className={`mt-5 ${TEXT.lead}`}>{product.shortDescription}</p>
 
               {/* Key facts from the product's own specifications */}
               {(minimumOrder || turnaround) && (

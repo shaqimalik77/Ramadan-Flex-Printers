@@ -18,6 +18,7 @@ import NumbersBand from "@/components/site/NumbersBand";
 import HowToOrder from "@/components/site/HowToOrder";
 import ReviewsSection from "@/components/site/ReviewsSection";
 import ClosingCta from "@/components/site/ClosingCta";
+import { TEXT } from "@/lib/typography";
 
 const GROUP_INKS = [INK.cyan, INK.magenta, "#E0A800", INK.key];
 
@@ -67,14 +68,14 @@ export default function AboutPageView() {
           <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "About us" }]} />
           <div className="mt-6 grid items-center gap-8 lg:mt-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
             <div>
-              <p className="flex items-center gap-3 text-sm font-medium uppercase tracking-[0.18em] text-neutral-500">
+              <p className={TEXT.eyebrow}>
                 <InkStripe className="h-1.5 w-10" />
                 About us
               </p>
-              <h1 className="mt-5 text-[2.3rem] font-semibold leading-[1.08] tracking-tight sm:text-[3.4rem]">
+              <h1 className={`mt-5 ${TEXT.display}`}>
                 Printing and packaging, made in Lahore
               </h1>
-              <p className="mt-5 max-w-xl text-lg leading-relaxed text-neutral-600">
+              <p className={`mt-5 max-w-xl ${TEXT.lead}`}>
                 {siteConfig.name} prints for shops, online brands, schools, clinics, events and families:
                 boxes and bags, cards and tags, stickers, apparel, gifts, signs and flex banners.
               </p>

@@ -34,6 +34,17 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        // The old private client preview now lives on the real pages.
+        source: "/sample-ghvglx",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/sample-ghvglx/:path+",
+        destination: "/:path+",
+        permanent: true,
+      },
+      {
         // There is no cart: every order goes through WhatsApp.
         source: "/cart",
         destination: "/products",
